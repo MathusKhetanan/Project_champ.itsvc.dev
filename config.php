@@ -2,7 +2,7 @@
   if(!isset($_SESSION)){
     session_start();
   }
-
+// การเชื่อมฐานข้อมูล
   $servername = "127.0.0.1";
   $username = "root";
   $password = "";
