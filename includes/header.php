@@ -19,6 +19,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <link rel="icon" href="https://media.discordapp.net/attachments/1120961499196821596/1132934419204816986/logo.png">
@@ -38,40 +39,44 @@
     <!-- Select2 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <!-- DataTables CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.10.20/dataTables.bootstrap4.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.2.1/responsive.bootstrap4.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.10.20/dataTables.bootstrap4.min.css"
+        rel="stylesheet" />
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.2.1/responsive.bootstrap4.min.css"
+        rel="stylesheet" />
     <!-- ================== END PAGE LEVEL STYLE ================== -->
 </head>
 <style>
 ::-webkit-scrollbar {
     width: 8px;
 }
+
 .bd-placeholder-img {
-  font-size: 1.125rem;
-  text-anchor: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
 }
 
 @media (min-width: 768px) {
-  .bd-placeholder-img-lg {
-    font-size: 3.5rem;
-  }
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
 }
 
 .b-example-divider {
-  height: 3rem;
-  background-color: rgba(0, 0, 0, .1);
-  border: solid rgba(0, 0, 0, .15);
-  border-width: 1px 0;
-  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    height: 3rem;
+    background-color: rgba(0, 0, 0, .1);
+    border: solid rgba(0, 0, 0, .15);
+    border-width: 1px 0;
+    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
 }
 
 .b-example-vr {
-  flex-shrink: 0;
-  width: 1.5rem;
-  height: 100vh;
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 100vh;
 }
 
 /* Track */
@@ -115,8 +120,8 @@ body {
 .container-fluid {
     margin-top: 50px
 }
-S
-.footer-copyright {
+
+S .footer-copyright {
     margin-top: 13px
 }
 
@@ -213,14 +218,17 @@ p {
     font-size: 14px;
     color: black;
 }
+
 .carousel-item.active {
-  background-position: center center;
+    background-position: center center;
 }
+
 .product-img {
-  width: 85%;
-  height: auto;
-  
+    width: 85%;
+    height: auto;
+
 }
+
 .item-thumbnail img {
     max-width: 100%;
     height: auto;
@@ -238,22 +246,30 @@ p {
 }
 
 .carousel-item {
-    height: 1vh; /* เพิ่มความสูงของสไลด์เพื่อรองรับรูปภาพ */
+    height: 1vh;
+    /* เพิ่มความสูงของสไลด์เพื่อรองรับรูปภาพ */
     min-height: 300px;
-  }
+}
 
-  .carousel-item img {
-    object-fit: cover; /* ขยายภาพให้เต็มขนาดในช่วงที่เลือก */
-    object-position: center; /* ตั้งภาพให้อยู่ตรงกลางแนวดิ่งและนอน */
-    height: 100%; /* ให้รูปภาพเต็มขนาดในสไลด์ */
-    width: 100%; /* ให้รูปภาพเต็มขนาดในสไลด์ */
-  }
+.carousel-item img {
+    object-fit: cover;
+    /* ขยายภาพให้เต็มขนาดในช่วงที่เลือก */
+    object-position: center;
+    /* ตั้งภาพให้อยู่ตรงกลางแนวดิ่งและนอน */
+    height: 100%;
+    /* ให้รูปภาพเต็มขนาดในสไลด์ */
+    width: 100%;
+    /* ให้รูปภาพเต็มขนาดในสไลด์ */
+}
 
-  .carousel-caption {
-    bottom: 50%; /* ตั้งค่าตำแหน่งต่ำสุดของ caption ให้อยู่ตรงกลาง */
-    transform: translateY(50%); /* ย้าย caption ขึ้นมาให้อยู่กึ่งกลางแนวดิ่ง */
-    text-align: center; /* จัดข้อความกึ่งกลางตามแนวนอน */
-  }
+.carousel-caption {
+    bottom: 50%;
+    /* ตั้งค่าตำแหน่งต่ำสุดของ caption ให้อยู่ตรงกลาง */
+    transform: translateY(50%);
+    /* ย้าย caption ขึ้นมาให้อยู่กึ่งกลางแนวดิ่ง */
+    text-align: center;
+    /* จัดข้อความกึ่งกลางตามแนวนอน */
+}
 </style>
 </head>
 
@@ -304,7 +320,8 @@ p {
             <div class="header-logo">
                 <a href="./">
                     <!-- <span class="brand-logo"></span> -->
-                    <img src="https://media.discordapp.net/attachments/1120961499196821596/1132934419204816986/logo.png" class="ml-2 mr-3" style="width: 50px; height: 50px;">
+                    <img src="https://media.discordapp.net/attachments/1120961499196821596/1132934419204816986/logo.png"
+                        class="ml-2 mr-3" style="width: 50px; height: 50px;">
                     <span class="brand-text">
                         <span class="text-primary">C</span>hamp <span class="text-primary"><span
                                 class="text-primary">S</span>hop
@@ -357,18 +374,18 @@ p {
                                                 </ul>
                                             </div>
                                             <?php } ?>
-                                            </div>
-                                            <h4 class="title">แบรนด์</h4>
-                                            <ul class="dropdown-brand-list m-b-0">
-                                                <?php foreach ($resultBrands as $item){ ?>
-                                                <li><a
-                                                        href="<?php echo ($item['count'] == 0)?"#" :"product.php?brand=".$item['brand_id']; ?>"><img
-                                                            src="<?php echo $item['brand_image']; ?>"
-                                                            onError="this.src='https://media.discordapp.net/attachments/1128198864629940244/1128967842545545287/logo.png'" /></a>
-                                                </li>
-                                                <?php } ?>
-                                            </ul>
                                         </div>
+                                        <h4 class="title">แบรนด์</h4>
+                                        <ul class="dropdown-brand-list m-b-0">
+                                            <?php foreach ($resultBrands as $item){ ?>
+                                            <li><a
+                                                    href="<?php echo ($item['count'] == 0)?"#" :"product.php?brand=".$item['brand_id']; ?>"><img
+                                                        src="<?php echo $item['brand_image']; ?>"
+                                                        onError="this.src='https://media.discordapp.net/attachments/1128198864629940244/1128967842545545287/logo.png'" /></a>
+                                            </li>
+                                            <?php } ?>
+                                        </ul>
+                                    </div>
                                     <!-- END dropdown-menu-content -->
                                 </div>
                                 <!-- END dropdown-menu-container -->
