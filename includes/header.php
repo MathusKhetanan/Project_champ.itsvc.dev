@@ -30,7 +30,7 @@ if (isset($_SESSION['user_id'])) {
     <!-- Bootstrap CSS -->
     <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet'>
     <!-- Font Awesome CSS -->
-
+    <link href='https://use.fontawesome.com/releases/v5.7.2/css/all.css' rel='stylesheet'>
     <!-- Custom CSS -->
     <link href="dist/css/default/app.min.css" rel="stylesheet" />
     <link href="dist/css/e-commerce/app.min.css" rel="stylesheet" />
@@ -451,6 +451,11 @@ p {
                                 </ul>
                             </div>
                         </div>
+                    </li>
+                    <li class="dropdown dropdown-hover dropdown-cart p-0">
+                        <a href="wishlist.php">
+                            <i class="fa fa-heart" style="font-size:19px;"></i></i>
+                        </a>
                     </li>
                     <li class="dropdown dropdown-hover dropdown-cart">
                         <a href="#" class="header-cart" data-toggle="dropdown">
