@@ -59,7 +59,10 @@ $resultReview = $conn->query($sql);
                             <li>ประเภท: <a
                                     href="product.php?category=<?php echo $row['category_id']; ?>"><?php echo $row['category_name']; ?></a>
                             </li>
-                            <!-- <li>/</li> -->
+                            <li>/</li>
+                            <li>แบรนด์: <a
+                                    href="product.php?brand=<?php echo $row['brand_id']; ?>"><?php echo $row['brand_name']; ?></a>
+                            </li>
                         </ul>
                     </div>
                     <!-- END product-warranty -->
