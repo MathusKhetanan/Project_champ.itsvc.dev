@@ -7,7 +7,7 @@
       $sql = "SELECT * FROM product WHERE product_id = ".$product_id;
       $result = $conn->query($sql);
       $row = $result->fetch_assoc();
-      if ($row['brand_image'] != "" && !unlink("../".$row['product_image'])) { 
+      if ($row['brand_image'] != "" && !unlink("images/".$row['product_image'])) { 
         echo "<script>
           alert('ลบรูปสินค้าไม่สำเร็จ');
           window.location.href = 'product.php';
