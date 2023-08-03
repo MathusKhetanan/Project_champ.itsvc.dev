@@ -19,6 +19,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <link rel="icon" href="https://media.discordapp.net/attachments/1120961499196821596/1132934419204816986/logo.png">
@@ -38,40 +39,44 @@
     <!-- Select2 CSS -->
     <link href="dist/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
     <!-- DataTables CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.10.20/dataTables.bootstrap4.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.2.1/responsive.bootstrap4.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.10.20/dataTables.bootstrap4.min.css"
+        rel="stylesheet" />
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.2.1/responsive.bootstrap4.min.css"
+        rel="stylesheet" />
     <!-- ================== END PAGE LEVEL STYLE ================== -->
 </head>
 <style>
 ::-webkit-scrollbar {
     width: 8px;
 }
+
 .bd-placeholder-img {
-  font-size: 1.125rem;
-  text-anchor: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
 }
 
 @media (min-width: 768px) {
-  .bd-placeholder-img-lg {
-    font-size: 3.5rem;
-  }
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
 }
 
 .b-example-divider {
-  height: 3rem;
-  background-color: rgba(0, 0, 0, .1);
-  border: solid rgba(0, 0, 0, .15);
-  border-width: 1px 0;
-  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    height: 3rem;
+    background-color: rgba(0, 0, 0, .1);
+    border: solid rgba(0, 0, 0, .15);
+    border-width: 1px 0;
+    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
 }
 
 .b-example-vr {
-  flex-shrink: 0;
-  width: 1.5rem;
-  height: 100vh;
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 100vh;
 }
 
 /* Track */
@@ -213,14 +218,17 @@ p {
     font-size: 14px;
     color: black;
 }
+
 .carousel-item.active {
-  background-position: center center;
+    background-position: center center;
 }
+
 .product-img {
-  width: 85%;
-  height: auto;
-  
+    width: 85%;
+    height: auto;
+
 }
+
 .item-thumbnail img {
     max-width: 100%;
     height: auto;
@@ -238,22 +246,30 @@ p {
 }
 
 .carousel-item {
-    height: 1vh; /* เพิ่มความสูงของสไลด์เพื่อรองรับรูปภาพ */
+    height: 1vh;
+    /* เพิ่มความสูงของสไลด์เพื่อรองรับรูปภาพ */
     min-height: 300px;
-  }
+}
 
-  .carousel-item img {
-    object-fit: cover; /* ขยายภาพให้เต็มขนาดในช่วงที่เลือก */
-    object-position: center; /* ตั้งภาพให้อยู่ตรงกลางแนวดิ่งและนอน */
-    height: 100%; /* ให้รูปภาพเต็มขนาดในสไลด์ */
-    width: 100%; /* ให้รูปภาพเต็มขนาดในสไลด์ */
-  }
+.carousel-item img {
+    object-fit: cover;
+    /* ขยายภาพให้เต็มขนาดในช่วงที่เลือก */
+    object-position: center;
+    /* ตั้งภาพให้อยู่ตรงกลางแนวดิ่งและนอน */
+    height: 100%;
+    /* ให้รูปภาพเต็มขนาดในสไลด์ */
+    width: 100%;
+    /* ให้รูปภาพเต็มขนาดในสไลด์ */
+}
 
-  .carousel-caption {
-    bottom: 50%; /* ตั้งค่าตำแหน่งต่ำสุดของ caption ให้อยู่ตรงกลาง */
-    transform: translateY(50%); /* ย้าย caption ขึ้นมาให้อยู่กึ่งกลางแนวดิ่ง */
-    text-align: center; /* จัดข้อความกึ่งกลางตามแนวนอน */
-  }
+.carousel-caption {
+    bottom: 50%;
+    /* ตั้งค่าตำแหน่งต่ำสุดของ caption ให้อยู่ตรงกลาง */
+    transform: translateY(50%);
+    /* ย้าย caption ขึ้นมาให้อยู่กึ่งกลางแนวดิ่ง */
+    text-align: center;
+    /* จัดข้อความกึ่งกลางตามแนวนอน */
+}
 </style>
 
 </head>
@@ -425,9 +441,8 @@ p {
 													foreach ($resultNotifications as $list){ 
 											?>
                                         <li class="d-flex align-items-center">
-                                            <div class="-image p-0"
-                                                style="width: 3rem; height: 2.75rem; border: 0px;"><img
-                                                    src="https://cdn-icons-png.flaticon.com/512/60/60977.png"
+                                            <div class="-image p-0" style="width: 3rem; height: 2.75rem; border: 0px;">
+                                                <img src="https://cdn-icons-png.flaticon.com/512/60/60977.png"
                                                     onError="this.src='https://thaigifts.or.th/wp-content/uploads/2017/03/no-image.jpg'" />
                                             </div>
                                             <div class="-info">
@@ -459,8 +474,8 @@ p {
                                 <span class="arrow top"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-cart p-0">
-                                <div
-                                  iv class="cart-header">  <h4 class="cart-title">ตะกร้าสินค้า (x) </h4>
+                                <div iv class="cart-header">
+                                    <h4 class="cart-title">ตะกร้าสินค้า (x) </h4>
                                 </div>
                                 <div class="cart-body">
                                     <ul class="cart-item">
@@ -482,10 +497,11 @@ p {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="https://media.discordapp.net/attachments/1128198864629940244/1128955900594495488/istockphoto-1300845620-612x612.png?width=473&height=473" class="user-img" alt="" />
+                                <img src="https://media.discordapp.net/attachments/1128198864629940244/1128955900594495488/istockphoto-1300845620-612x612.png?width=473&height=473"
+                                    class="user-img" alt="" />
 
 
-                                     <span class="d-none d-xl-inline">
+                                <span class="d-none d-xl-inline">
                                     <?php echo isset($_SESSION['admin_fullname']) ? $_SESSION['admin_fullname'] : "เข้าสู่ระบบ"; ?>
                                 </span>
                             </a>
@@ -498,13 +514,14 @@ p {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="https://media.discordapp.net/attachments/1128198864629940244/1128955900594495488/istockphoto-1300845620-612x612.png?width=473&height=473" class="user-img" alt="" />
+                                <img src="https://media.discordapp.net/attachments/1128198864629940244/1128955900594495488/istockphoto-1300845620-612x612.png?width=473&height=473"
+                                    class="user-img" alt="" />
                                 <span class="d-none d-xl-inline">
                                     <?php echo isset($_SESSION['seller_fullname']) ? $_SESSION['seller_fullname'] : "เข้าสู่ระบบ"; ?>
                                 </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="admin/index.php">ดูหลังบ้าน</a>
+                                <a class="dropdown-item" href="admin/index.php">ดูหลังบ้าน</a>
                                 <a class="dropdown-item" href="admin/logout.php">ออกจากระบบ</a>
                             </div>
                         </li>
@@ -512,7 +529,8 @@ p {
                         <li class="divider"></li>
                         <li>
                             <a href="<?php echo (isset($_SESSION['user_id'])) ? "profile.php" : "login.php" ?>">
-                                <img src="https://media.discordapp.net/attachments/1128198864629940244/1128955900594495488/istockphoto-1300845620-612x612.png?width=473&height=473" class="user-img" alt="" />
+                                <img src="https://media.discordapp.net/attachments/1128198864629940244/1128955900594495488/istockphoto-1300845620-612x612.png?width=473&height=473"
+                                    class="user-img" alt="" />
                                 <span class="d-none d-xl-inline">
                                     <?php echo isset($_SESSION['user_id']) ? $_SESSION['user_fullname'] : "เข้าสู่ระบบ"; ?>
                                 </span>
@@ -527,18 +545,19 @@ p {
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- Smart Wizard JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/smartwizard/4.3.1/js/jquery.smartWizard.min.js"></script>
-    <!-- Select2 JavaScript -->
-    <script src="dist/plugins/select2/dist/js/select2.min.js"></script>
-    <!-- DataTables JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net/1.10.20/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.10.20/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-responsive/2.2.3/dataTables.responsive.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.2.7/responsive.bootstrap4.min.js"></script>
-    <script src="dist/js/e-commerce/app.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Smart Wizard JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/smartwizard/4.3.1/js/jquery.smartWizard.min.js"></script>
+<!-- Select2 JavaScript -->
+<script src="dist/plugins/select2/dist/js/select2.min.js"></script>
+<!-- DataTables JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net/1.10.20/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.10.20/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-responsive/2.2.3/dataTables.responsive.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.2.7/responsive.bootstrap4.min.js">
+</script>
+<script src="dist/js/e-commerce/app.min.js"></script>
 <!-- ================== END BASE JS ================== -->
 
 <!-- ================== BEGIN PAGE LEVEL JS ================== -->
@@ -548,5 +567,6 @@ p {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/css/jquery.dataTables.min.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/3.2.2/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-responsive/2.2.3/dataTables.responsive.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.5.0/responsive.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.5.0/responsive.bootstrap4.min.js">
+</script>
 <script src="dist/js/demo/table-manage-default.demo.js"></script>

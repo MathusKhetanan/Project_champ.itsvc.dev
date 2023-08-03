@@ -27,22 +27,30 @@
 }
 
 .carousel-item {
-    height: 1vh; /* เพิ่มความสูงของสไลด์เพื่อรองรับรูปภาพ */
+    height: 1vh;
+    /* เพิ่มความสูงของสไลด์เพื่อรองรับรูปภาพ */
     min-height: 300px;
-  }
+}
 
-  .carousel-item img {
-    object-fit: cover; /* ขยายภาพให้เต็มขนาดในช่วงที่เลือก */
-    object-position: center; /* ตั้งภาพให้อยู่ตรงกลางแนวดิ่งและนอน */
-    height: 100%; /* ให้รูปภาพเต็มขนาดในสไลด์ */
-    width: 100%; /* ให้รูปภาพเต็มขนาดในสไลด์ */
-  }
+.carousel-item img {
+    object-fit: cover;
+    /* ขยายภาพให้เต็มขนาดในช่วงที่เลือก */
+    object-position: center;
+    /* ตั้งภาพให้อยู่ตรงกลางแนวดิ่งและนอน */
+    height: 100%;
+    /* ให้รูปภาพเต็มขนาดในสไลด์ */
+    width: 100%;
+    /* ให้รูปภาพเต็มขนาดในสไลด์ */
+}
 
-  .carousel-caption {
-    bottom: 50%; /* ตั้งค่าตำแหน่งต่ำสุดของ caption ให้อยู่ตรงกลาง */
-    transform: translateY(50%); /* ย้าย caption ขึ้นมาให้อยู่กึ่งกลางแนวดิ่ง */
-    text-align: center; /* จัดข้อความกึ่งกลางตามแนวนอน */
-  }
+.carousel-caption {
+    bottom: 50%;
+    /* ตั้งค่าตำแหน่งต่ำสุดของ caption ให้อยู่ตรงกลาง */
+    transform: translateY(50%);
+    /* ย้าย caption ขึ้นมาให้อยู่กึ่งกลางแนวดิ่ง */
+    text-align: center;
+    /* จัดข้อความกึ่งกลางตามแนวนอน */
+}
 </style>
 
 <!-- BEGIN #slider -->
