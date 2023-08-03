@@ -9,13 +9,9 @@
     <title> สมัครเข้าสู่ระบบ </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap">
-
     <link rel="stylesheet" href="css/style.css">
-
     <!-- Boxicons CSS -->
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-
-
 </head>
 
 <body>
@@ -34,8 +30,6 @@
                             placeholder="รหัสผ่าน" data-parsley-required="true" value="123456" />
                         <i class='bx bx-hide eye-icon'></i>
                     </div>
-
-
                     <div class="form-link">
                         <a href="#" class="forgot-pass">Forgot password?</a>
                     </div>
@@ -57,9 +51,7 @@
                 </a>
             </div>
         </div>
-
         <!-- Register Form -->
-
         <div class="form signup">
             <div class="form-content">
                 <header>Register</header>
@@ -95,9 +87,6 @@
                     <span>Already have an account? <a href="#" class="link login-link">Login</a></span>
                 </div>
             </div>
-
-
-
             <div class="media-options">
                 <a href="#" class="field google">
                     <img src="https://media.discordapp.net/attachments/1120961499196821596/1133309194368467104/-removebg-preview.png"
@@ -105,12 +94,10 @@
                     <span>Login with Google</span>
                 </a>
             </div>
-
         </div>
     </section>
     <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script src="js/script.js"></script>
 </body>
 
