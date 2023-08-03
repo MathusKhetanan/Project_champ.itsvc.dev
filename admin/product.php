@@ -1,13 +1,13 @@
-<?php 
-  include('../config.php');
-  include('includes/authentication.php'); 
-  include('includes/header.php'); 
+<?php
+include('../config.php');
+include('includes/authentication.php');
+include('includes/header.php');
 
-  $seller_id = $_SESSION['seller_id'];
-  $sql = "SELECT * FROM product 
+$seller_id = $_SESSION['seller_id'];
+$sql = "SELECT * FROM product 
           LEFT JOIN categories ON product.category_id = categories.category_id
           LEFT JOIN brands ON product.brand_id = brands.brand_id WHERE seller_id = $seller_id";
-  $result = $conn->query($sql);
+$result = $conn->query($sql);
 ?>
 <!-- begin #content -->
 <div id="content" class="content">
@@ -35,7 +35,7 @@
         <div class="panel-body" style="overflow-y: scroll;">
             <table id="data-table-default" class="table table-bordered">
                 <thead>
-                <tr>
+                    <tr>
                         <th width="1%"></th>
                         <th width="1%" data-orderable="false"></th>
                         <th class="text-nowrap">ชื่อสินค้า</th>
@@ -49,28 +49,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($result as $key => $row){ ?>
-            <tr>
-                <td><?php echo $key+1; ?></td>
-                <td><img src="../<?php echo $row['product_image']; ?>" class="img-rounded height-30"/></td>
-              <td><?php echo $row['product_name']; ?></td>
-                <td><?php echo $row['brand_name']; ?></td>
-                <td><?php echo $row['category_name']; ?></td>
-                <td>
-                    <div class="ellipsis-3" style="width: 10rem;"><?php echo $row['product_detail']; ?></div>
-                </td>
-                <td><?php echo $row['product_price']; ?></td>
-                <td><?php echo $row['product_qty']; ?></td>
-                <td><?php echo $row['product_use']; ?></td>
-                
-                      
-                        <td class="text-center">
-                            <a class="btn btn-warning"
-                                href="product.edit.php?id=<?php echo $row['product_id']; ?>">แก้ไข</a>
-                            <a class="btn btn-danger"
-                                onclick="if(confirm('คุณต้องการลบข้อมูลสินค้านี้หรือไม่?')){ location.href = 'process_product.delete.php?id=<?php echo $row['product_id']; ?>&action=delete' };">ลบ</a>
-                        </td>
-                    </tr>
+                    <?php foreach ($result as $key => $row) { ?>
+                        <tr>
+                            <td><?php echo $key + 1; ?></td>
+                            <td><img src="../<?php echo $row['product_image']; ?>" class="img-rounded height-30" /></td>
+                            <td><?php echo $row['product_name']; ?></td>
+                            <td><?php echo $row['brand_name']; ?></td>
+                            <td><?php echo $row['category_name']; ?></td>
+                            <td>
+                                <div class="ellipsis-3" style="width: 10rem;"><?php echo $row['product_detail']; ?></div>
+                            </td>
+                            <td><?php echo $row['product_price']; ?></td>
+                            <td><?php echo $row['product_qty']; ?></td>
+                            <td><?php echo $row['product_use']; ?></td>
+                            <td class="text-center">
+                                <a class="btn btn-warning" href="product.edit.php?id=<?php echo $row['product_id']; ?>">แก้ไข</a>
+                                <a class="btn btn-danger" onclick="if(confirm('คุณต้องการลบข้อมูลสินค้านี้หรือไม่?')){ location.href = 'process_product.delete.php?id=<?php echo $row['product_id']; ?>&action=delete' };">ลบ</a>
+                            </td>
+                        </tr>
                     <?php } ?>
                 </tbody>
             </table>

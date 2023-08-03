@@ -8,8 +8,6 @@ include('includes/header.php');
 $sql = "SELECT * FROM tbl_bank";
 $result = $conn->query($sql);
 ?>
-
-
 <!-- begin #content -->
 <div id="content" class="content">
   <!-- begin breadcrumb -->
@@ -20,11 +18,10 @@ $result = $conn->query($sql);
   <!-- end breadcrumb -->
   <!-- begin page-header -->
   <h1 class="page-header">
-    จัดการบัญชีธนาคาร 
+    จัดการบัญชีธนาคาร
     <!-- <small>header small text goes here...</small> -->
   </h1>
   <!-- end page-header -->
-
   <!-- begin panel -->
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -37,8 +34,7 @@ $result = $conn->query($sql);
       <table id="data-table-default" class="table table-bordered">
         <thead>
           <tr>
-            <th width="1%"></th>
-            <th class="text-nowrap">รูป</th>
+            <th width="ลําดับ"></th>
             <th class="text-nowrap">ชื่อธนคาร</th>
             <th class="text-nowrap">เลขที่บัญชีธนาคาร</th>
             <th class="text-nowrap">ประเภทธนคาร</th>
@@ -50,7 +46,6 @@ $result = $conn->query($sql);
           <?php foreach ($result as $key => $row) { ?>
             <tr>
               <td width="1%" class="f-s-600 text-inverse"><?php echo $key + 1; ?></td>
-              <td width="1%" class="with-img"><img src="../<?php echo $row['b_logo']; ?>" class="img-rounded height-30" /></td>
               <td><?php echo $row['b_name']; ?></td>
               <td><?php echo $row['b_number']; ?></td>
               <td><?php echo $row['b_type']; ?></td>
