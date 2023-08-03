@@ -20,9 +20,10 @@
     <!-- ================== END BASE CSS STYLE ================== -->
 
     <!-- ================== BEGIN PAGE LEVEL CSS STYLE ================== -->
-    <link href="../dist/plugins/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css"
+        rel="stylesheet" />
 
-    <link href="../dist/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.10.20/dataTables.bootstrap4.min.css"
         rel="stylesheet" />
@@ -62,16 +63,16 @@
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 4;
     }
-/* สำหรับตารางที่ต้องการกำหนดขนาดความกว้างคอลัมน์ */
-.table-fixed {
-    table-layout: fixed;
-}
 
-/* สำหรับแถบที่ต้องการเลื่อนแนวนอนเมื่อขนาดตารางเกินหน้าจอ */
-.table-responsive {
-    overflow-x: auto;
-}
+    /* สำหรับตารางที่ต้องการกำหนดขนาดความกว้างคอลัมน์ */
+    .table-fixed {
+        table-layout: fixed;
+    }
 
+    /* สำหรับแถบที่ต้องการเลื่อนแนวนอนเมื่อขนาดตารางเกินหน้าจอ */
+    .table-responsive {
+        overflow-x: auto;
+    }
     </style>
 </head>
 

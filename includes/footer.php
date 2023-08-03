@@ -285,7 +285,9 @@ $(".multiple-select2").select2({
     </div>
 </div>
 <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'>
+    
 </script>
+
 <script type='text/javascript'>
 var myLink = document.querySelector('a[href="#"]');
 myLink.addEventListener('click', function(e) {
