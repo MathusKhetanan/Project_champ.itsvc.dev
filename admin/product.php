@@ -62,6 +62,7 @@ $result = $conn->query($sql);
                             <td><?php echo $row['product_price']; ?></td>
                             <td><?php echo $row['product_qty']; ?></td>
                             <td><?php echo $row['product_use']; ?></td>
+
                             <td class="text-center">
                                 <a class="btn btn-warning" href="product.edit.php?id=<?php echo $row['product_id']; ?>">แก้ไข</a>
                                 <a class="btn btn-danger" onclick="if(confirm('คุณต้องการลบข้อมูลสินค้านี้หรือไม่?')){ location.href = 'process_product.delete.php?id=<?php echo $row['product_id']; ?>&action=delete' };">ลบ</a>
