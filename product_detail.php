@@ -1,17 +1,17 @@
-<?php 
-			include('config.php'); 
-			include('includes/header.php'); 
+<?php
+include('config.php');
+include('includes/header.php');
 
-			$sql = "SELECT * FROM product LEFT JOIN brands ON product.brand_id = brands.brand_id LEFT JOIN categories ON product.category_id = categories.category_id LEFT JOIN seller ON product.seller_id = seller.seller_id WHERE product_id = ".$conn->real_escape_string($_GET['id'])." AND product_status = 1";
-			$result = $conn->query($sql);
-			$row = $result->fetch_assoc();
+$sql = "SELECT * FROM product LEFT JOIN brands ON product.brand_id = brands.brand_id LEFT JOIN categories ON product.category_id = categories.category_id LEFT JOIN seller ON product.seller_id = seller.seller_id WHERE product_id = " . $conn->real_escape_string($_GET['id']) . " AND product_status = 1";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
 
-			$sql = "SELECT * FROM product WHERE category_id = ".$row['category_id']." AND product_status = 1 LIMIT 6";
-			$result = $conn->query($sql);
+$sql = "SELECT * FROM product WHERE category_id = " . $row['category_id'] . " AND product_status = 1 LIMIT 6";
+$result = $conn->query($sql);
 
-			$sql = "SELECT * FROM product_review LEFT JOIN user ON product_review.user_id = user.user_id WHERE product_id = ".$row['product_id'];
-			$resultReview = $conn->query($sql);
-		?>
+$sql = "SELECT * FROM product_review LEFT JOIN user ON product_review.user_id = user.user_id WHERE product_id = " . $row['product_id'];
+$resultReview = $conn->query($sql);
+?>
 
 <!-- BEGIN #product -->
 <div id="product" class="section-container p-t-20">
@@ -64,9 +64,42 @@
                     </div>
                     <!-- END product-warranty -->
                     <!-- BEGIN product-info-list -->
+
+                    <style>
+                    .product-info-list li {
+                        position: relative;
+                        padding-left: 1.5em;
+                        /* ปรับขนาดให้สัญลักษณ์วงกลมอยู่บนข้อความบนสุด */
+                    }
+
+                    .product-info-list li::before {
+                        content: "\ ";
+
+                        /* ใส่รหัสของสัญลักษณ์วงกลมจาก Font Awesome */
+                        font-family: "Font Awesome Free";
+                        /* แทนที่ชื่อ Font Awesome ของคุณให้ตรงกับชื่อใน CSS */
+                        position: absolute;
+                        top: 0.4em;
+                        /* ปรับตำแหน่งให้สัญลักษณ์วงกลมอยู่บนข้อความบนสุด */
+                        left: 0.5em;
+                        /* ปรับสีของสัญลักษณ์วงกลม (สีของเส้น) ใส่สีที่คุณต้องการ */
+                        background-color: #52b5ff;
+                        /* ปรับสีพื้นหลังของสัญลักษณ์วงกลม ใส่สีที่คุณต้องการ */
+                        border-radius: 50%;
+                        /* กำหนดให้มีรูปร่างเป็นวงกลม */
+                        width: 1em;
+                        /* กำหนดขนาดกว้างของสัญลักษณ์วงกลม */
+                        height: 1em;
+                        /* กำหนดขนาดสูงของสัญลักษณ์วงกลม */
+                        text-align: center;
+                        line-height: 1em;
+                    }
+                    </style>
                     <ul class="product-info-list">
-                        <li><i class="fa fa-circle"></i> <?php echo $row['product_detail']; ?></li>
+                        <li><?php echo $row['product_detail']; ?></li>
                     </ul>
+
+
                     <!-- END product-info-list -->
                     <!-- BEGIN product-purchase-container -->
                     <div class="product-purchase-container">
@@ -75,9 +108,9 @@
                         <div class="product-price">
                             <div class="price"><?php echo $row['product_price']; ?> ฿</div>
                         </div>
-                        <?php if($row['product_qty'] <= 0) { ?>
+                        <?php if ($row['product_qty'] <= 0) { ?>
                         <button class="btn btn-inverse btn-theme btn-lg width-200" disabled>สินค้าหมด</button>
-                        <?php } elseif(!isset($_SESSION['user_id'])) { ?>
+                        <?php } elseif (!isset($_SESSION['user_id'])) { ?>
                         <button class="btn btn-inverse btn-theme btn-lg width-200"
                             onclick="redirectToLogin()">เพิ่มลงในตะกร้า</button>
                         <?php } else { ?>
@@ -134,12 +167,12 @@
                     <div class="tab-pane active show fade" id="product-reviews">
                         <!-- BEGIN row -->
                         <div class="row row-space-30">
-                            <?php foreach ($resultReview as $key => $review){ ?>
+                            <?php foreach ($resultReview as $key => $review) { ?>
                             <!-- BEGIN col-7 -->
                             <div class="col-md-7 mb-4 mb-lg-0">
                                 <!-- BEGIN review -->
                                 <div class="review"
-                                    style=" padding: 1rem; border-bottom: <?php echo ($key+1==$resultReview->num_rows)?"0": "1"; ?>px solid #dee2e6;">
+                                    style=" padding: 1rem; border-bottom: <?php echo ($key + 1 == $resultReview->num_rows) ? "0" : "1"; ?>px solid #dee2e6;">
                                     <div class="review-info">
                                         <div class="review-icon"><img src="dist/img/logo/icon.png" alt="" /></div>
                                         <div class="review-rate">
@@ -161,7 +194,7 @@
                             <!-- BEGIN col-5 -->
                             <div class="col-md-5">
                                 <!-- BEGIN review-form -->
-                                <?php if(isset($_POST['order_id'])){ ?>
+                                <?php if (isset($_POST['order_id'])) { ?>
                                 <div class="review-form">
                                     <form action="process_review.php" name="review_form" method="POST"
                                         data-parsley-validate="true">
@@ -219,22 +252,14 @@
             border-color: #999;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
         }
-
-        .fa-circle {
-            position: relative;
-        }
-
-        .fa-circle:before {
-            position: absolute;
-            top: -115px;
-        }
         </style>
+
         <!-- END product -->
-        <?php if($result->num_rows > 0){ ?>
+        <?php if ($result->num_rows > 0) { ?>
         <!-- BEGIN similar-product -->
         <h4 class="m-b-15 m-t-30">สินค้าที่คุณอาจจะสนใจ</h4>
         <div class="row row-space-10">
-            <?php foreach ($result as $item){ ?>
+            <?php foreach ($result as $item) { ?>
             <div class="col-lg-3 col-md-4">
                 <!-- BEGIN item -->
                 <div class="item item-thumbnail">
@@ -250,7 +275,8 @@
                 </div>
                 <!-- END item -->
             </div>
-            <?php } } ?>
+            <?php }
+            } ?>
         </div>
         <!-- END row -->
     </div>
