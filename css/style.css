@@ -13,10 +13,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #4070f4;
+  background-color: #b2b2be;
   column-gap: 30px;
 }
-.form {
+.form { 
   position: absolute;
   max-width: 430px;
   width: 100%;
@@ -113,7 +113,7 @@ form {
   background-color: #d4d4d4;
 }
 .line::before {
-  content: "Or";
+  content: "เข้าสู่ระบบด้วย";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -167,4 +167,18 @@ a.google span {
   .form {
     padding: 20px 10px;
   }
+}
+.form-link {
+  display: flex;
+  justify-content: space-between; /* จัดลิงก์ให้อยู่ห่างกันทั้งสองข้าง */
+}
+
+.link {
+  color: blue; /* สีของลิงก์ "สมัครสมาชิก" */
+  text-decoration: underline; /* เส้นใต้ข้อความลิงก์ "สมัครสมาชิก" */
+}
+
+.forgot-pass {
+  color: red; /* สีของลิงก์ "ลืมรหัสผ่าน" */
+  text-decoration: underline; /* เส้นใต้ข้อความลิงก์ "ลืมรหัสผ่าน" */
 }
