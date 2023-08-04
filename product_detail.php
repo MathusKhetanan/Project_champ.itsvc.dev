@@ -271,7 +271,7 @@ $resultReview = $conn->query($sql);
                             onError="this.src='https://thaigifts.or.th/wp-content/uploads/2017/03/no-image.jpg'" />
                         <div class="item-info">
                             <h4 class="item-title"><?php echo $item['product_name']; ?></h4>
-                            <p class="item-desc"><?php echo $item['product_detail']; ?></p>
+                            <p class="item-desc"> <?php echo substr($item['product_detail'], 0, 100); ?></p> 
                             <div class="item-price"><?php echo $item['product_price']; ?> ฿</div>
                         </div>
                     </a>

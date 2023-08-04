@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="https://media.discordapp.net/attachments/1128198864629940244/1128967842545545287/logo.png">
@@ -12,7 +13,39 @@
     <!-- Boxicons CSS -->
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
 <body>
+    <style>
+    .form-link {
+        display: flex;
+        justify-content: space-between;
+        /* จัดลิงก์ให้อยู่ห่างกันทั้งสองข้าง */
+    }
+
+    .link {
+        color: blue;
+        /* สีของลิงก์ "สมัครสมาชิก" */
+        text-decoration: underline;
+        /* เส้นใต้ข้อความลิงก์ "สมัครสมาชิก" */
+    }
+
+    .forgot-pass {
+        color: red;
+        /* สีของลิงก์ "ลืมรหัสผ่าน" */
+        text-decoration: underline;
+        /* เส้นใต้ข้อความลิงก์ "ลืมรหัสผ่าน" */
+    }
+
+    .container {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #b2b2be;
+        column-gap: 30px;
+    }
+    </style>
     <!-- login -->
     <section class="container forms">
         <div class="form login">
@@ -34,7 +67,7 @@
                 </form>
                 <div class="form-link">
                     <span><a href="#" class="link signup-link">สมัครสมาชิก</a></span>
-                    <a href="#" class="forgot-pass">ลืมรหัสผ่าน</a>
+
                 </div>
             </div>
             <div class="line"></div>
@@ -71,7 +104,7 @@
                     </div>
                     <div class="field button-field">
                         <button>สมัครสมาชิก</button>
-                    </div>  
+                    </div>
                 </form>
                 <div class="form-link">
                     <span><a href="#" class="link login-link">เข้าสู่ระบบ</a></span>
@@ -85,7 +118,7 @@
                     <span>Login with Google</span>
                 </a>
             </div>
-        </div>    
+        </div>
     </section>
     <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

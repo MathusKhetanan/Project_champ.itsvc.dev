@@ -1,6 +1,7 @@
 /* Google Fonts - Poppins */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 
+
 * {
   margin: 0;
   padding: 0;
@@ -33,6 +34,10 @@
   pointer-events: auto;
 }
 .forms.show-signup .form.login {
+  opacity: 0;
+  pointer-events: none;
+}
+.forms.show-signup .form.Forgot_Password {
   opacity: 0;
   pointer-events: none;
 }
@@ -167,18 +172,4 @@ a.google span {
   .form {
     padding: 20px 10px;
   }
-}
-.form-link {
-  display: flex;
-  justify-content: space-between; /* จัดลิงก์ให้อยู่ห่างกันทั้งสองข้าง */
-}
-
-.link {
-  color: blue; /* สีของลิงก์ "สมัครสมาชิก" */
-  text-decoration: underline; /* เส้นใต้ข้อความลิงก์ "สมัครสมาชิก" */
-}
-
-.forgot-pass {
-  color: red; /* สีของลิงก์ "ลืมรหัสผ่าน" */
-  text-decoration: underline; /* เส้นใต้ข้อความลิงก์ "ลืมรหัสผ่าน" */
 }

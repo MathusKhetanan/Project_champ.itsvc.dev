@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['seller_payment'] = $row['seller_payment'];
 
                 header("Location: admin/index.php");
-                exit();
+                
             } else {
                 echo "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
                  header("Location: login.php"); 
