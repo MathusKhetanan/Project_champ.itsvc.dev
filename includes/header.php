@@ -452,11 +452,7 @@ p {
                             </div>
                         </div>
                     </li>
-                    <li class="dropdown dropdown-hover dropdown-cart p-0">
-                        <a href="wishlist.php">
-                            <i class="fa fa-heart" style="font-size:19px;"></i></i>
-                        </a>
-                    </li>
+                   
                     <li class="dropdown dropdown-hover dropdown-cart">
                         <a href="#" class="header-cart" data-toggle="dropdown">
                             <i class="fa fa-shopping-bag"></i>
@@ -535,14 +531,3 @@ p {
     </div>
 </div>
 </div>
-<script src="dist/js/e-commerce/app.min.js"></script>
-<!-- ================== BEGIN PAGE LEVEL JS ================== -->
-<script type="text/javascript" src="https://cdn.omise.co/omise.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/smartwizard/4.3.1/js/jquery.smartWizard.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/css/jquery.dataTables.min.css"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/3.2.2/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-responsive/2.2.3/dataTables.responsive.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.5.0/responsive.bootstrap4.min.js">
-</script>
-<script src="dist/js/demo/table-manage-default.demo.js"></script>

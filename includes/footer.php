@@ -16,69 +16,76 @@
 </div>
 <!-- END #page-container -->
 <!-- ================== BEGIN BASE JS ================== -->
-
+<script src="dist/js/e-commerce/app.min.js"></script>
+<!-- ================== END BASE JS ================== -->
+<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+<script type="text/javascript" src="https://cdn.omise.co/omise.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/smartwizard/4.3.1/js/jquery.smartWizard.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/css/jquery.dataTables.min.css"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/3.2.2/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-responsive/2.2.3/dataTables.responsive.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.5.0/responsive.bootstrap4.min.js">
+</script>
+<script src="dist/js/demo/table-manage-default.demo.js"></script>
 <script>
-    Omise.setPublicKey("pkey_test_5r0gn5997jah59d6ns1");
+Omise.setPublicKey("pkey_test_5r0gn5997jah59d6ns1");
 
-    let cartObject = JSON.parse(localStorage.getItem('items')) || [];
-    var cartGroupSeller = [];
-    const payOmise = () => {
-        var form = document.querySelector('form[action="process_checkout.php"]');
-        tokenParameters = {
-            "expiration_month": parseInt($('input[name="mm"]').val()),
-            "expiration_year": parseInt($('input[name="yy"]').val()),
-            "name": $('input[name="cardHolder"]').val(),
-            "number": $('input[name="cardNumber"]').val(),
-            "security_code": parseInt($('input[name="number"]').val()),
-        };
-        Omise.createToken("card", tokenParameters, function(statusCode, response) {
-            if (statusCode === 200) {
-                const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
-                groupSeller(newCartObject)
-                console.log(newCartObject.reduce((a, b) => a + b.price * b.qty, 0))
-                form.items.value = JSON.stringify(cartGroupSeller);
-                form.amount.value = newCartObject.reduce((a, b) => a + b.price * b.qty, 0) * 100;
-                form.omiseToken.value = response.id;
-                form.submit();
-            } else {
-                alert("Error ", response.message);
-            }
-        });
-    }
-    cartObject = [];
-    // Global array to store grouped items
-
-    const groupSeller = (newCartObject) => {
-        cartGroupSeller = [];
-        newCartObject.map((item) => {
-            let checkItem = cartGroupSeller.find((x) => x.key == item.seller)
-            if (checkItem) {
-                checkItem.order = [...checkItem.order, item]
-                cartGroupSeller.map((x) => (x.seller === item.seller ? checkItem : x));
-            } else {
-                const newItem = {
-                    key: item.seller,
-                    shop: item.shop,
-                    order: [item]
-                };
-                cartGroupSeller = [...cartGroupSeller, newItem];
-            }
-        });
+let cartObject = JSON.parse(localStorage.getItem('items')) || [];
+var cartGroupSeller = [];
+const payOmise = () => {
+    var form = document.querySelector('form[action="process_checkout.php"]');
+    tokenParameters = {
+        "expiration_month": parseInt($('input[name="mm"]').val()),
+        "expiration_year": parseInt($('input[name="yy"]').val()),
+        "name": $('input[name="cardHolder"]').val(),
+        "number": $('input[name="cardNumber"]').val(),
+        "security_code": parseInt($('input[name="number"]').val()),
     };
-
-    const renderCountCart = () => {
-        const cartObject = JSON.parse(localStorage.getItem('items')) || [];
-        $(".dropdown-cart .header-cart span.total").html(cartObject.reduce((a, b) => a + b.qty, 0));
-        $(".dropdown-cart .cart-header .cart-title").html(`ตะกร้าสินค้า (${cartObject.reduce((a, b)=> a + b.qty, 0)})`);
-        $(".dropdown-cart .cart-body .cart-item").html("");
-        if (cartObject.length <= 0) {
-            $(".dropdown-cart .cart-body .cart-item").append(`<h5 class="text-center">ตะกร้าสินค้าว่าง</h5>`);
+    Omise.createToken("card", tokenParameters, function(statusCode, response) {
+        if (statusCode === 200) {
+            const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
+            groupSeller(newCartObject)
+            console.log(newCartObject.reduce((a, b) => a + b.price * b.qty, 0))
+            form.items.value = JSON.stringify(cartGroupSeller);
+            form.amount.value = newCartObject.reduce((a, b) => a + b.price * b.qty, 0) * 100;
+            form.omiseToken.value = response.id;
+            form.submit();
         } else {
-            const cartObjectLimit = cartObject.slice(0, 5)
-            cartObjectLimit.map((item) => {
-                $(".dropdown-cart .cart-body .cart-item").append(`
+            alert("Error ", response.message);
+        }
+    });
+}
+const groupSeller = (newCartObject) => {
+    cartGroupSeller = [];
+    newCartObject.map((item) => {
+        let checkItem = cartGroupSeller.find((x) => x.key == item.seller)
+        if (checkItem) {
+            checkItem.order = [...checkItem.order, item]
+            cartGroupSeller.map((x) => x.seller === item.seller ? checkItem : x);
+        } else {
+            const newItem = {
+                key: item.seller,
+                shop: item.shop,
+                order: [item]
+            }
+            cartGroupSeller = [...cartGroupSeller, newItem];
+        }
+    })
+}
+const renderCountCart = () => {
+    const cartObject = JSON.parse(localStorage.getItem('items')) || [];
+    $(".dropdown-cart .header-cart span.total").html(cartObject.reduce((a, b) => a + b.qty, 0));
+    $(".dropdown-cart .cart-header .cart-title").html(`ตะกร้าสินค้า (${cartObject.reduce((a, b)=> a + b.qty, 0)})`);
+    $(".dropdown-cart .cart-body .cart-item").html("");
+    if (cartObject.length <= 0) {
+        $(".dropdown-cart .cart-body .cart-item").append(`<h5 class="text-center">ตะกร้าสินค้าว่าง</h5>`);
+    } else {
+        const cartObjectLimit = cartObject.slice(0, 5)
+        cartObjectLimit.map((item) => {
+            $(".dropdown-cart .cart-body .cart-item").append(`
 						<li>
-							<div class="cart-item-image"><img src="${item.img}" onError="this.src='https://thaigifts.or.th/wp-content/uploads/2017/03/no-image.jpg'" /></div>
+							<div class="cart-item-image"><img src="${item.img}" onError="#"/></div>
 							<div class="cart-item-info">
 								<h4>${item.name}</h4>
 								<p class="price">${item.price} ฿ <span class="pull-right">x ${item.qty}</span></p>
@@ -89,26 +96,26 @@
 							</div>
 						</li>
 					`);
-            })
-        }
+        })
     }
+}
 
-    // สินค้า
+// สินค้า
 
-    const renderCart = () => {
-        const cartObject = JSON.parse(localStorage.getItem('items')) || [];
-        groupSeller(cartObject)
-        $(".table-cart").html("")
-        $(`#cart-item-*`).html("")
-        if (cartObject.length <= 0) {
-            $(".table-cart").append(
-                `<tr> <th scope="row" colspan="5" class="text-center">ตะกร้าของคุณว่าง กรุณาสั่งซื้อสินค้า</th> </tr>`
-            );
-            $("button.sw-btn-next").hide();
-        } else {
-            $("button.sw-btn-next").show();
-            cartGroupSeller.map((seller) => {
-                $(".table-cart").append(`
+const renderCart = () => {
+    const cartObject = JSON.parse(localStorage.getItem('items')) || [];
+    groupSeller(cartObject)
+    $(".table-cart").html("")
+    $(`#cart-item-*`).html("")
+    if (cartObject.length <= 0) {
+        $(".table-cart").append(
+            `<tr> <th scope="row" colspan="5" class="text-center">ตะกร้าของคุณว่าง กรุณาสั่งซื้อสินค้า</th> </tr>`
+        );
+        $("button.sw-btn-next").hide();
+    } else {
+        $("button.sw-btn-next").show();
+        cartGroupSeller.map((seller) => {
+            $(".table-cart").append(`
 						<thead id="cart-head">
 							<tr>
                             <th>รูปสินค้า&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ชื่อสินค้า</th>
@@ -118,13 +125,13 @@
 							</tr>
 						</thead>
 					`);
-                $(".table-cart").append(`<tbody id="cart-item-${seller.key}">`)
-                seller.order.map((item) => {
-                    $(`#cart-item-${seller.key}`).append(`
+            $(".table-cart").append(`<tbody id="cart-item-${seller.key}">`)
+            seller.order.map((item) => {
+                $(`#cart-item-${seller.key}`).append(`
 							<tr>
 								<td class="cart-product">
 									<div class="product-img" style="width: 5rem;">
-										<img src="${item.img}" onError="this.src='https://thaigifts.or.th/wp-content/uploads/2017/03/no-image.jpg'" />
+										<img src="${item.img}" onError="this.src='#'" />
 									</div>
 									<div class="product-info">
 										<div class="title">${item.name}</div>
@@ -144,10 +151,10 @@
 									${item.price * item.qty}฿
 								</td>
 							</tr>`);
-                })
-                $(".table-cart").append(`</tbody>`)
             })
-            $(".table-cart").append(`
+            $(".table-cart").append(`</tbody>`)
+        })
+        $(".table-cart").append(`
 					<tbody id="cart-item">
 						<tr>
 							<td class="cart-summary" colspan="4">
@@ -161,49 +168,49 @@
 						</tr>
 					</tbody>
 				`)
-        }
     }
-    const addCart = (seller, shop, id, name, price, img) => {
-        const checkItem = cartObject.find((x) => x.id === id);
-        if (checkItem) {
-            checkItem.qty = parseInt(checkItem.qty) + 1;
-            cartObject.map((x) => x.id === id ? checkItem : x);
-        } else {
-            cartObject = [...cartObject, {
-                seller,
-                shop,
-                id,
-                name,
-                price,
-                qty: 1,
-                img
-            }];
-        }
-        localStorage.setItem("items", JSON.stringify(cartObject));
-        renderCountCart();
+}
+const addCart = (seller, shop, id, name, price, img) => {
+    const checkItem = cartObject.find((x) => x.id === id);
+    if (checkItem) {
+        checkItem.qty = parseInt(checkItem.qty) + 1;
+        cartObject.map((x) => x.id === id ? checkItem : x);
+    } else {
+        cartObject = [...cartObject, {
+            seller,
+            shop,
+            id,
+            name,
+            price,
+            qty: 1,
+            img
+        }];
     }
-    const removeItemMiniCart = (id) => {
-        cartObject = cartObject.filter((x) => x.id !== id)
-        localStorage.setItem("items", JSON.stringify(cartObject));
-        renderCountCart();
-    }
-    const removeItemCart = (seller, id) => {
-        cartObject = cartObject.filter((x) => x.id !== id)
-        localStorage.setItem("items", JSON.stringify(cartObject));
-        const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
-        groupSeller(newCartObject)
-        renderCart();
-        renderCountCart();
-    }
+    localStorage.setItem("items", JSON.stringify(cartObject));
+    renderCountCart();
+}
+const removeItemMiniCart = (id) => {
+    cartObject = cartObject.filter((x) => x.id !== id)
+    localStorage.setItem("items", JSON.stringify(cartObject));
+    renderCountCart();
+}
+const removeItemCart = (seller, id) => {
+    cartObject = cartObject.filter((x) => x.id !== id)
+    localStorage.setItem("items", JSON.stringify(cartObject));
+    const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
+    groupSeller(newCartObject)
     renderCart();
     renderCountCart();
+}
+renderCart();
+renderCountCart();
 </script>
 <script src="dist/js/demo/form-wizards-validation.checkout.js"></script>
-<script src="dist/plugins/select2/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
 <script>
-    $(".multiple-select2").select2({
-        placeholder: "กรุณาเลือกสัตว์เลี้ยงของคุณ (สามารถเลือกได้หลายประเภท)"
-    });
+$(".multiple-select2").select2({
+    placeholder: "กรุณาเลือกสัตว์เลี้ยงของคุณ (สามารถเลือกได้หลายประเภท)"
+});
 </script>
 <!-- ================== END PAGE LEVEL JS ================== -->
 </body>
@@ -216,19 +223,25 @@
                 <aside class="col-md-4" style="margin-top: -29px;">
                     <article class="mr-3">
                         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://cdn.discordapp.com/attachments/1128198864629940244/1128967842545545287/logo.png" class="logo-footer" style="max-width: 100px; height: auto;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img
+                            src="https://cdn.discordapp.com/attachments/1128198864629940244/1128967842545545287/logo.png"
+                            class="logo-footer" style="max-width: 100px; height: auto;">
                         <p class="mt-3 description" style="transform: translateX(109px); font-size: 16px;">
                             บริษัทขายเครื่องกรองน้ำ A & P
                         </p>
                         <div>
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
                             &nbsp; &nbsp; &nbsp;
-                            &nbsp; <a class="btn btn-icon btn-light" title="Facebook" target="_blank" href="#" data-abc="true"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-icon btn-light" title="Instagram" target="_blank" href="#" data-abc="true"><i class="fab fa-instagram"></i></a>
-                            <a class="btn btn-icon btn-light" title="Youtube" target="_blank" href="#" data-abc="true"><i class="fab fa-youtube"></i></a>
-                            <a class="btn btn-icon btn-light" title="Twitter" target="_blank" href="#" data-abc="true"><i class="fab fa-twitter"></i></a>
+                            &nbsp; <a class="btn btn-icon btn-light" title="Facebook" target="_blank" href="#"
+                                data-abc="true"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-icon btn-light" title="Instagram" target="_blank" href="#"
+                                data-abc="true"><i class="fab fa-instagram"></i></a>
+                            <a class="btn btn-icon btn-light" title="Youtube" target="_blank" href="#"
+                                data-abc="true"><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-icon btn-light" title="Twitter" target="_blank" href="#"
+                                data-abc="true"><i class="fab fa-twitter"></i></a>
                         </div>
-                    </article>
+                    </article>  
                 </aside>
                 <aside class="col-sm-3 col-md-2">
                     <h5 class="title">สินค้า</h5>
@@ -261,10 +274,14 @@
                 <aside class="col-sm-2 col-md-2">
                     <h5 class="title">ดาวน์โหลดแอปพลิเคชั่น</h5>
                     <a href="#" class="d-block mb-2" data-abc="true">
-                        <img class="img-responsive" src="https://media.discordapp.net/attachments/1120961499196821596/1127982211526819970/2.png" height="40" width="140">
+                        <img class="img-responsive"
+                            src="https://media.discordapp.net/attachments/1120961499196821596/1127982211526819970/2.png"
+                            height="40" width="140">
                     </a>
                     <a href="#" class="d-block mb-2" data-abc="true">
-                        <img class="img-responsive" src="https://media.discordapp.net/attachments/1120961499196821596/1127982211837214832/1.png" height="40" width="140">
+                        <img class="img-responsive"
+                            src="https://media.discordapp.net/attachments/1120961499196821596/1127982211837214832/1.png"
+                            height="40" width="140">
                     </a>
                 </aside>
             </div>
@@ -275,14 +292,16 @@
     </div>
 </div>
 <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'>
-
 </script>
-
+<script type='text/javascript' src='#'></script>
+<script type='text/javascript' src='#'></script>
+<script type='text/javascript' src='#'></script>
+<script type='text/javascript' src='#'></script>
 <script type='text/javascript'>
-    var myLink = document.querySelector('a[href="#"]');
-    myLink.addEventListener('click', function(e) {
-        e.preventDefault();
-    });
+var myLink = document.querySelector('a[href="#"]');
+myLink.addEventListener('click', function(e) {
+    e.preventDefault();
+});
 </script>
 </body>
 
