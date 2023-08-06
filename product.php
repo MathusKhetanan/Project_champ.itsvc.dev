@@ -137,6 +137,7 @@ $resultCategories = $conn->query($sql);
                                     </a>
                                 </div>
                             </div>
+                            
                             <!-- END item -->
                         <?php } ?>
                     </div>
