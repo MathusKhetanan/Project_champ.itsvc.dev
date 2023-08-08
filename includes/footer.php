@@ -144,19 +144,19 @@
                 $(".table-cart").append(`</tbody>`)
             })
             $(".table-cart").append(`
-					<tbody id="cart-item">
-						<tr>
-							<td class="cart-summary" colspan="4">
-								<div class="summary-container">
-									<div class="summary-row total" style="border-top: 0px; margin-top: 0;">
-										<div class="field">รวมทั้งหมด</div>
-										<div class="value">${cartObject.reduce((a, b)=> a + b.price * b.qty, 0)+"฿"}</div>
-									</div>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				`)
+  <tbody id="cart-item">
+    <tr>
+      <td class="cart-summary" colspan="4">
+        <div class="summary-container">
+          <div class="summary-row total" style="border-top: 0px; margin-top: 0;">
+            <div class="field">รวมทั้งหมด</div>
+            <div class="value">${cartObject.reduce((a, b) => a + b.price * b.qty, 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ฿</div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+`);
         }
     }
     const addCart = (seller, shop, id, name, price, img) => {
@@ -205,8 +205,8 @@
 
 </html>
 
-    </style>
-    <div class="bg-white shadow-sm"><br>
+</style>
+<div class="bg-white shadow-sm"><br>
     <div class="container-fluid">
         <section class="footer-top padding-y">
             <div class="row">
@@ -230,10 +230,10 @@
                                 <p class="mt-3" style="font-size: 16px; margin-top: 10px;">
                                     104/641 หมู่3 ถนน พ่อขุนทะเล ตำบล มะขามเตี้ย อำเภอเมือง
                                 </p>
-            </div>
-        </div>
-    </article>
-</aside>
+                            </div>
+                        </div>
+                    </article>
+                </aside>
 
                 <aside class="col-sm-3 col-md-2">
                     <h5 class="title">สินค้า</h5>
@@ -273,7 +273,7 @@
             </output>
         </section>
         <br>
-        <br>
+
     </div>
 </div>
 <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'>

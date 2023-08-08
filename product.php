@@ -122,7 +122,6 @@ $resultCategories = $conn->query($sql);
                     <!-- BEGIN item-row -->
                     <div class="row row-space-10">
                         <?php foreach ($result as $key => $item) { ?>
-
                             <!-- BEGIN col-2 -->
                             <div class="col-lg-4 col-md-4">
                                 <!-- BEGIN item -->
@@ -132,7 +131,7 @@ $resultCategories = $conn->query($sql);
                                         <div class="item-info">
                                             <h4 class="item-title"><?php echo $item['product_name']; ?></h4>
                                             <p class="item-desc"> <?php echo substr($item['product_detail'], 0, 100); ?></p> 
-                                            <div class="item-price"><?php echo $item['product_price']; ?> ฿</div>
+                                            <div class="item-price"><?php echo number_format($item['product_price'], 2, '.', ','); ?> ฿</div>
                                         </div>
                                     </a>
                                 </div>

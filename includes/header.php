@@ -497,7 +497,8 @@ p {
                             <a class="dropdown-item" href="admin/logout.php">ออกจากระบบ</a>
                         </div>
                     </li>
-                    <?php } elseif (isset($_SESSION['seller_fullname'])) { // Check if it is a seller 
+                
+                <?php } elseif (isset($_SESSION['seller_fullname'])) { // Check if it is a seller 
                     ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -513,6 +514,7 @@ p {
                             <a class="dropdown-item" href="admin/logout.php">ออกจากระบบ</a>
                         </div>
                     </li>
+                    
                     <?php } else { ?>
                     <li class="divider"></li>
                     <li>
