@@ -245,7 +245,7 @@ $resultReview = $conn->query($sql);
             <h4 class="m-b-15 m-t-30">สินค้าที่คุณอาจจะสนใจ</h4>
             <div class="row row-space-10">
                 <?php foreach ($result as $item) { ?>
-                    <div class="col-lg-3 col-md-4">
+                    <div class="col-lg-2 col-md-4">
                         <!-- BEGIN item -->
                         <div class="item item-thumbnail">
                             <a href="product_detail.php?id=<?php echo $item['product_id']; ?>" class="item-link">
