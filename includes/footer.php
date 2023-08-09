@@ -20,33 +20,24 @@
 </script>
 <script src="dist/js/demo/table-manage-default.demo.js"></script>
 <script>
-    Omise.setPublicKey("pkey_test_5r0gn5997jah59d6ns1");
+   const payOmise = () => {
+    const cartObject = JSON.parse(localStorage.getItem('items')) || [];
+    
+    // ส่งข้อมูลที่จำเป็นสำหรับการสั่งซื้อไปยัง process_checkout.php
+    fetch('process_checkout.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cartObject),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // ทำการเปลี่ยนหน้าไปยัง process_checkout.php พร้อมกับส่งค่าตัวแปร cartObject ไปด้วย
+        window.location.href = 'process_checkout.php?cart=' + JSON.stringify(cartObject);
+    })
+}
 
-    let cartObject = JSON.parse(localStorage.getItem('items')) || [];
-    var cartGroupSeller = [];
-    const payOmise = () => {
-        var form = document.querySelector('form[action="process_checkout.php"]');
-        tokenParameters = {
-            "expiration_month": parseInt($('input[name="mm"]').val()),
-            "expiration_year": parseInt($('input[name="yy"]').val()),
-            "name": $('input[name="cardHolder"]').val(),
-            "number": $('input[name="cardNumber"]').val(),
-            "security_code": parseInt($('input[name="number"]').val()),
-        };
-        Omise.createToken("card", tokenParameters, function(statusCode, response) {
-            if (statusCode === 200) {
-                const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
-                groupSeller(newCartObject)
-                console.log(newCartObject.reduce((a, b) => a + b.price * b.qty, 0))
-                form.items.value = JSON.stringify(cartGroupSeller);
-                form.amount.value = newCartObject.reduce((a, b) => a + b.price * b.qty, 0) * 100;
-                form.omiseToken.value = response.id;
-                form.submit();
-            } else {
-                alert("Error ", response.message);
-            }
-        });
-    }
     const groupSeller = (newCartObject) => {
         cartGroupSeller = [];
         newCartObject.map((item) => {
