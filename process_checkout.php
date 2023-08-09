@@ -1,27 +1,19 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // รับข้อมูลที่ส่งมาจากเครื่อง client
-    $cartItems = json_decode(file_get_contents('php://input'), true);
+// process_checkout.php
 
-    // ทำสิ่งที่คุณต้องการกับข้อมูลที่ได้รับจากตะกร้าสินค้า เช่น บันทึกข้อมูลลงในฐานข้อมูล
-    // สร้างการสั่งซื้อ และอื่น ๆ
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // รับข้อมูลที่ถูกส่งมาจากฟอร์ม
+    $itemsJson = $_POST['items'];
+    $amount = $_POST['amount'];
+    $omiseToken = $_POST['omiseToken'];
 
-    // ตรวจสอบการดำเนินการชำระเงิน และส่งข้อความไปยัง JavaScript
-    $paymentStatus = true; // เปลี่ยนเป็น false หากการชำระเงินไม่สำเร็จ
-    if ($paymentStatus) {
-        $response = [
-            'status' => 'success',
-            'message' => 'ชำระเงินสำเร็จ',
-        ];
-    } else {
-        $response = [
-            'status' => 'error',
-            'message' => 'การชำระเงินไม่สำเร็จ',
-        ];
-    }
+    // ทำการประมวลผลการชำระเงินและบันทึกข้อมูลลงฐานข้อมูล
+    // ...
 
-    // ส่งผลลัพธ์กลับเป็น JSON
-    header('Content-Type: application/json');
-    echo json_encode($response);
+    // ส่งการตอบกลับเพื่อแสดงสถานะการทำงานหรือข้อผิดพลาด
+    echo "Payment processed successfully"; // หรืออื่น ๆ ตามที่คุณต้องการ
+
+} else {
+    echo "Invalid request method";
 }
 ?>

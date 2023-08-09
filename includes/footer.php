@@ -20,33 +20,30 @@
 </script>
 <script src="dist/js/demo/table-manage-default.demo.js"></script>
 <script>
-    Omise.setPublicKey("pkey_test_5r0gn5997jah59d6ns1");
-
-    let cartObject = JSON.parse(localStorage.getItem('items')) || [];
-    var cartGroupSeller = [];
-    const payOmise = () => {
+    const payOmise  = () => {
         var form = document.querySelector('form[action="process_checkout.php"]');
-        tokenParameters = {
-            "expiration_month": parseInt($('input[name="mm"]').val()),
-            "expiration_year": parseInt($('input[name="yy"]').val()),
-            "name": $('input[name="cardHolder"]').val(),
-            "number": $('input[name="cardNumber"]').val(),
-            "security_code": parseInt($('input[name="number"]').val()),
-        };
-        Omise.createToken("card", tokenParameters, function(statusCode, response) {
-            if (statusCode === 200) {
-                const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
-                groupSeller(newCartObject)
-                console.log(newCartObject.reduce((a, b) => a + b.price * b.qty, 0))
-                form.items.value = JSON.stringify(cartGroupSeller);
-                form.amount.value = newCartObject.reduce((a, b) => a + b.price * b.qty, 0) * 100;
-                form.omiseToken.value = response.id;
-                form.submit();
-            } else {
-                alert("Error ", response.message);
-            }
-        });
+        var formData = new FormData(form);
+
+        // ส่งข้อมูลไปยังไฟล์ process_checkout.php ด้วย Fetch API
+        fetch('process_checkout.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data); // แสดงผลข้อมูลที่ได้รับจากไฟล์ process_checkout.php
+                // ทำการดำเนินการตามที่คุณต้องการ เช่น แสดงข้อความบนหน้าเว็บ
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // แสดงข้อความหรือกระบวนการแก้ไขปัญหาที่เกิดขึ้น
+            });
     }
+
+
+
+
+
     const groupSeller = (newCartObject) => {
         cartGroupSeller = [];
         newCartObject.map((item) => {
