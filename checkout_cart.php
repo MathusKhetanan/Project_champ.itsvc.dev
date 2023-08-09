@@ -187,7 +187,7 @@ $result = $conn->query($sql);
                                         <div class="form-group row">
                                             <label class="col-md-4 col-form-label text-lg-right">ข้อมูลธนาคารเลขบัญขี</label>
                                             <div class="col-md-4">
-                                                <textarea name="text" class="form-control" rows="3">ชื่อธนาคาร: ธนาคารกรุงไทย ชื่อเจ้าของบัญชีธนาคาร: นายอดิศักดิ์ อิ่มสุขศิลป์ เลขที่บัญชี: 827-0-35966-1</textarea>
+                                                <textarea name="text" class="form-control" rows="3" readonly>ชื่อธนาคาร: ธนาคารกรุงไทย                                         ชื่อเจ้าของบัญชีธนาคาร: นายอดิศักดิ์ อิ่มสุขศิลป์                  เลขที่บัญชี: 827-0-35966-1</textarea>
                                             </div>
                                         </div>
                                     </form>
