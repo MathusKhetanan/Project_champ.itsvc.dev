@@ -51,7 +51,7 @@ $result = $conn->query($sql);
               <td class="f-s-600 text-inverse"><?php echo $key + 1; ?></td>
               <td><?php echo $row['product_name']; ?></td>
               <td><?php echo $row['user_fullname']; ?></td> <!-- Assuming the column name is 'user_fullname' in 'orderss' table -->
-              <td><?php echo $row['user_address']; ?></td> <!-- Assuming the column name is 'user_address' in 'orderss' table -->
+              <td><?php echo $row['user_fullname']; ?></td> <!-- Assuming the column name is 'user_address' in 'orderss' table -->
               <td><?php echo $row['user_tel']; ?></td> <!-- Assuming the column name is 'user_tel' in 'orderss' table -->
               <td><?php echo $row['order_bank']; ?></td>
               <td><?php echo $row['order_amount']; ?></td>
