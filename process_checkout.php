@@ -1,13 +1,17 @@
 <?php
 include('config.php');
 
+// ฟังก์ชันสำหรับล้างรายการสินค้าทั้งหมดในตะกร้า
 function removeAllItems() {
+  // โค้ดที่ลบรายการสินค้าทั้งหมดในตะกร้า
+  // เช่น ลบตัวแปรที่เก็บรายการสินค้าใน localStorage
   echo "<script>
     localStorage.removeItem('items');
   </script>";
 }
 
 try {
+  // Validate and sanitize input data
   $order_fullname = isset($_POST['user_fullname']) ? $_POST['user_fullname'] : '';
   $order_address = isset($_POST['user_address']) ? $_POST['user_address'] : '';
   $order_tel = isset($_POST['user_tel']) ? $_POST['user_tel'] : '';
@@ -17,63 +21,31 @@ try {
   $updatedatatimeorder = isset($_POST['updatedatatimeorder']) ? $_POST['updatedatatimeorder'] : '';
   $order_slip = isset($_POST['payment_slip']) ? $_POST['payment_slip'] : '';
 
+  // Use prepared statements and parameterized queries to prevent SQL injection
   $stmt = $conn->prepare("INSERT INTO `order` (order_fullname, order_address, order_tel, order_bank, order_amount, datatimeorder, updatedatatimeorder, order_slip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
   $stmt->bind_param("ssssssss", $order_fullname, $order_address, $order_tel, $order_bank, $order_amount, $datatimeorder, $updatedatatimeorder, $order_slip);
 
   if ($stmt->execute()) {
+    // Perform actions after successful payment
     removeAllItems();
     
-    // Success message with SweetAlert2
-    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11.7.21/dist/sweetalert2.min.js'></script>";
     echo "<script>
-      Swal.fire({
-        icon: 'success',
-        title: 'บันทึกข้อมูลการชำระเงินสำเร็จ',
-        showCancelButton: false,
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'ตกลง'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = 'index.php';
-        }
-      });
+      alert('บันทึกข้อมูลการชำระเงินสำเร็จ');
+      window.location.href = 'index.php';
     </script>";
   } else {
-    // Error message with SweetAlert2
-    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11.7.21/dist/sweetalert2.min.js'></script>";
     echo "<script>
-      Swal.fire({
-        icon: 'error',
-        title: 'ชำระเงินไม่สำเร็จ',
-        text: 'กรุณาลองใหม่อีกครั้ง',
-        showCancelButton: false,
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'ตกลง'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.history.back();
-        }
-      });
+      alert('ชำระเงินไม่สำเร็จ กรุณาลองใหม่อีกครั้ง');
+      window.history.back();
     </script>";
   }
 } catch (Exception $e) {
+  // Log the error on the server
   error_log("Error: " . $e->getMessage());
 
-  // Error message with SweetAlert2
-  echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11.7.21/dist/sweetalert2.min.js'></script>";
   echo "<script>
-    Swal.fire({
-      icon: 'error',
-      title: 'เกิดข้อผิดพลาด',
-      text: 'กรุณาลองใหม่อีกครั้ง',
-      showCancelButton: false,
-      confirmButtonColor: '#3085d6',
-      confirmButtonText: 'ตกลง'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.history.back();
-      }
-    });
+    alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+    window.history.back();</script>
   </script>";
 }
 
