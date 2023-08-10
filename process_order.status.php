@@ -20,7 +20,7 @@
       }
       $sql = "UPDATE orders SET order_status = 'successful' WHERE order_id = $order_id";
       if($conn->query($sql)){
-        echo "<script>
+        echo " <script>
           alert('ปรับสถานะออเดอร์สำเร็จ');
           window.location.href = 'order.php';
         </script>";

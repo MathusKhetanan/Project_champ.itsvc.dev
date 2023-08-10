@@ -91,11 +91,12 @@ $resultBrands = $conn->query($sql);
                     <!-- BEGIN item -->
                     <div class="item item-thumbnail">
                         <a href="product_detail.php?id=<?php echo $item['product_id']; ?>" class="item-link">
-                            <img src="<?php echo $item['product_image']; ?>"/>
+                            <img src="<?php echo $item['product_image']; ?>" />
                             <div class="item-info">
                                 <h4 class="item-title"><?php echo $item['product_name']; ?></h4>
                                 <p class="item-desc"> <?php echo substr($item['product_detail'], 0, 100); ?></p>
-                                <div class="item-price"><?php echo number_format($item['product_price'], 2, '.', ','); ?> ฿</div>
+                                <div class="item-price"><?php echo number_format($item['product_price'], 2, '.', ','); ?> ฿
+                                </div>
 
                             </div>
                         </a>
@@ -132,11 +133,12 @@ foreach ($resultBrands as $row) {
                             <!-- BEGIN item -->
                             <div class="item item-thumbnail">
                                 <a href="product_detail.php?id=<?php echo $item['product_id']; ?>" class="item-link">
-                                    <img src="<?php echo $item['product_image']; ?>"/>
+                                    <img src="<?php echo $item['product_image']; ?>" />
                                     <div class="item-info">
                                         <h4 class="item-title"><?php echo $item['product_name']; ?></h4>
                                         <p class="item-desc"> <?php echo substr($item['product_detail'], 0, 100); ?></p>
-                                        <div class="item-price"><?php echo number_format($item['product_price'], 2, '.', ','); ?> ฿</div>
+                                        <div class="item-price"><?php echo number_format($item['product_price'], 2, '.', ','); ?> ฿
+                                        </div>
                                     </div>
                                 </a>
                             </div>

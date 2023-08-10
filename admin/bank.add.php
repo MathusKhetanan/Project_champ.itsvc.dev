@@ -37,18 +37,16 @@ $resultCategory = $conn->query($sql);
                     <div class="col-4">
                         <div class="form-group">
                             <label for="product_id">รหัสสินค้า</label>
-                            <input type="text" class="form-control" id="product_id" name="product_id"
-                                placeholder="รหัสสินค้า" readonly>
+                            <input type="text" class="form-control" id="product_id" name="product_id" placeholder="รหัสสินค้า" readonly>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="category_id">ประเภทสินค้า</label>
-                            <select class="default-select2 form-control" id="category_id" name="category_id"
-                                data-parsley-required="true">
+                            <select class="default-select2 form-control" id="category_id" name="category_id" data-parsley-required="true">
                                 <?php foreach ($resultCategory as $r) { ?>
-                                <option value="<?php echo $r['category_id']; ?>"><?php echo $r['category_name']; ?>
-                                </option>
+                                    <option value="<?php echo $r['category_id']; ?>"><?php echo $r['category_name']; ?>
+                                    </option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -56,10 +54,9 @@ $resultCategory = $conn->query($sql);
                     <div class="col-4">
                         <div class="form-group">
                             <label for="brand_id">แบรนด์</label>
-                            <select class="default-select2 form-control" id="brand_id" name="brand_id"
-                                data-parsley-required="true">
+                            <select class="default-select2 form-control" id="brand_id" name="brand_id" data-parsley-required="true">
                                 <?php foreach ($resultBrand as $r) { ?>
-                                <option value="<?php echo $r['brand_id']; ?>"><?php echo $r['brand_name']; ?></option>
+                                    <option value="<?php echo $r['brand_id']; ?>"><?php echo $r['brand_name']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -67,45 +64,37 @@ $resultCategory = $conn->query($sql);
                     <div class="col-4">
                         <div class="form-group">
                             <label for="product_name">ชื่อสินค้า</label>
-                            <input type="text" class="form-control" id="product_name" name="product_name"
-                                placeholder="ชื่อสินค้า" data-parsley-required="true">
+                            <input type="text" class="form-control" id="product_name" name="product_name" placeholder="ชื่อสินค้า" data-parsley-required="true">
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="product_price">ราคา</label>
-                            <input type="text" class="form-control" id="product_price" name="product_price"
-                                placeholder="ราคา" data-parsley-required="true" data-parsley-type="number"
-                                data-parsley-min="0">
+                            <input type="text" class="form-control" id="product_price" name="product_price" placeholder="ราคา" data-parsley-required="true" data-parsley-type="number" data-parsley-min="0">
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="product_qty">จำนวน</label>
-                            <input type="text" class="form-control" id="product_qty" name="product_qty"
-                                placeholder="จำนวน" data-parsley-required="true" data-parsley-type="digits">
+                            <input type="text" class="form-control" id="product_qty" name="product_qty" placeholder="จำนวน" data-parsley-required="true" data-parsley-type="digits">
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="product_use">ระยะเวลาการใช้ (หน่วยเป็นวัน)</label>
-                            <input type="text" class="form-control" id="product_use" name="product_use"
-                                placeholder="ระยะเวลาการใช้ (หน่วยเป็นวัน)" data-parsley-required="true"
-                                data-parsley-type="digits">
+                            <input type="text" class="form-control" id="product_use" name="product_use" placeholder="ระยะเวลาการใช้ (หน่วยเป็นวัน)" data-parsley-required="true" data-parsley-type="digits">
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="product_detail">รายละเอียดสินค้า</label>
-                            <textarea class="form-control" id="product_detail" name="product_detail"
-                                placeholder="รายละเอียดสินค้า" data-parsley-required="true"></textarea>
+                            <textarea class="form-control" id="product_detail" name="product_detail" placeholder="รายละเอียดสินค้า" data-parsley-required="true"></textarea>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="product_image">รูปภาพ</label>
-                            <input type="file" class="form-control" id="product_image" name="product_image"
-                                accept="image/*">
+                            <input type="file" class="form-control" id="product_image" name="product_image" accept="image/*">
                         </div>
                     </div>
                 </div>
@@ -124,7 +113,7 @@ $resultCategory = $conn->query($sql);
 <?php include('includes/footer.php'); ?>
 
 <script>
-$(document).ready(function() {
-    $(".default-select2").select2();
-});
+    $(document).ready(function() {
+        $(".default-select2").select2();
+    });
 </script>

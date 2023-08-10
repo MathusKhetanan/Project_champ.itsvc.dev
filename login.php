@@ -16,35 +16,35 @@
 
 <body>
     <style>
-    .form-link {
-        display: flex;
-        justify-content: space-between;
-        /* จัดลิงก์ให้อยู่ห่างกันทั้งสองข้าง */
-    }
+        .form-link {
+            display: flex;
+            justify-content: space-between;
+            /* จัดลิงก์ให้อยู่ห่างกันทั้งสองข้าง */
+        }
 
-    .link {
-        color: blue;
-        /* สีของลิงก์ "สมัครสมาชิก" */
-        text-decoration: underline;
-        /* เส้นใต้ข้อความลิงก์ "สมัครสมาชิก" */
-    }
+        .link {
+            color: blue;
+            /* สีของลิงก์ "สมัครสมาชิก" */
+            text-decoration: underline;
+            /* เส้นใต้ข้อความลิงก์ "สมัครสมาชิก" */
+        }
 
-    .forgot-pass {
-        color: red;
-        /* สีของลิงก์ "ลืมรหัสผ่าน" */
-        text-decoration: underline;
-        /* เส้นใต้ข้อความลิงก์ "ลืมรหัสผ่าน" */
-    }
+        .forgot-pass {
+            color: red;
+            /* สีของลิงก์ "ลืมรหัสผ่าน" */
+            text-decoration: underline;
+            /* เส้นใต้ข้อความลิงก์ "ลืมรหัสผ่าน" */
+        }
 
-    .container {
-        height: 100vh;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #b2b2be;
-        column-gap: 30px;
-    }
+        .container {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #b2b2be;
+            column-gap: 30px;
+        }
     </style>
     <!-- login -->
     <section class="container forms">
@@ -53,12 +53,10 @@
                 <header>เข้าสู่ระบบ</header>
                 <form action="process_login.php" method="POST" class="margin-bottom-0" data-parsley-validate="true">
                     <div class="field input-field">
-                        <input type="text" class="form-control form-control-lg" name="user_username"
-                            placeholder="ชื่อผู้ใช้" data-parsley-required="true" value="" />
+                        <input type="text" class="form-control form-control-lg" name="user_username" placeholder="ชื่อผู้ใช้" data-parsley-required="true" value="" />
                     </div>
                     <div class="field input-field">
-                        <input type="password" class="form-control form-control-lg password" name="user_password"
-                            placeholder="รหัสผ่าน" data-parsley-required="true" value="" />
+                        <input type="password" class="form-control form-control-lg password" name="user_password" placeholder="รหัสผ่าน" data-parsley-required="true" value="" />
                         <i class='bx bx-hide eye-icon'></i>
                     </div>
                     <div class="field button-field">
@@ -73,8 +71,7 @@
             <div class="line"></div>
             <div class="media-options">
                 <a href="#" class="field google">
-                    <img src="https://media.discordapp.net/attachments/1120961499196821596/1133309194368467104/-removebg-preview.png"
-                        alt="" class="google-img">
+                    <img src="https://media.discordapp.net/attachments/1120961499196821596/1133309194368467104/-removebg-preview.png" alt="" class="google-img">
                     <span>Login with Google</span>
                 </a>
             </div>
@@ -85,21 +82,17 @@
                 <header>สมัครสมาชิก</header>
                 <form action="process_register.php" method="POST" class="margin-bottom-0" data-parsley-validate="true">
                     <div class="field input-field">
-                        <input type="text" class="form-control form-control-lg" name="user_fullname"
-                            placeholder="ชื่อ-สกุล" data-parsley-required="true" />
+                        <input type="text" class="form-control form-control-lg" name="user_fullname" placeholder="ชื่อ-สกุล" data-parsley-required="true" />
                     </div>
                     <div class="field input-field">
-                        <input type="email" class="form-control form-control-lg" name="user_email" placeholder="อีเมล"
-                            data-parsley-required="true" data-parsley-type="email" />
+                        <input type="email" class="form-control form-control-lg" name="user_email" placeholder="อีเมล" data-parsley-required="true" data-parsley-type="email" />
                     </div>
 
                     <div class="field input-field">
-                        <input type="text" class="form-control form-control-lg" name="user_username"
-                            placeholder="ชื่อผู้ใช้" data-parsley-required="true" />
+                        <input type="text" class="form-control form-control-lg" name="user_username" placeholder="ชื่อผู้ใช้" data-parsley-required="true" />
                     </div>
                     <div class="field input-field">
-                        <input type="password" class="form-control form-control-lg password" name="user_password"
-                            placeholder="รหัสผ่าน" data-parsley-required="true" value="" />
+                        <input type="password" class="form-control form-control-lg password" name="user_password" placeholder="รหัสผ่าน" data-parsley-required="true" value="" />
                         <i class='bx bx-hide eye-icon'></i>
                     </div>
                     <div class="field button-field">
@@ -113,8 +106,7 @@
             <div class="line"></div>
             <div class="media-options">
                 <a href="#" class="field google">
-                    <img src="https://media.discordapp.net/attachments/1120961499196821596/1133309194368467104/-removebg-preview.png"
-                        alt="" class="google-img">
+                    <img src="https://media.discordapp.net/attachments/1120961499196821596/1133309194368467104/-removebg-preview.png" alt="" class="google-img">
                     <span>Login with Google</span>
                 </a>
             </div>

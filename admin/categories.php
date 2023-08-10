@@ -1,10 +1,10 @@
-<?php 
-  include('../config.php');
-  include('includes/authentication.php'); 
-  include('includes/header.php'); 
+<?php
+include('../config.php');
+include('includes/authentication.php');
+include('includes/header.php');
 
-  $sql = "SELECT * FROM categories";
-  $result = $conn->query($sql);
+$sql = "SELECT * FROM categories";
+$result = $conn->query($sql);
 ?>
 
 <!-- begin #content -->
@@ -17,7 +17,7 @@
   <!-- end breadcrumb -->
   <!-- begin page-header -->
   <h1 class="page-header">
-    จัดการประเภทสินค้า 
+    จัดการประเภทสินค้า
     <!-- <small>header small text goes here...</small> -->
   </h1>
   <!-- end page-header -->
@@ -40,15 +40,15 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($result as $key => $row){ ?>
-          <tr>
-            <td width="1%" class="f-s-600 text-inverse"><?php echo $key+1; ?></td>
-            <td><?php echo $row['category_name']; ?></td>
-            <td class="text-center">
-              <a class="btn btn-warning" href="category.edit.php?id=<?php echo $row['category_id']; ?>">แก้ไข</a>
-              <a class="btn btn-danger" onclick="if(confirm('คุณต้องการลบข้อมูลประเภทสินค้านี้หรือไม่?')){ location.href = 'process_category.delete.php?id=<?php echo $row['category_id']; ?>&action=delete' };">ลบ</a>
-            </td>
-          </tr>
+          <?php foreach ($result as $key => $row) { ?>
+            <tr>
+              <td width="1%" class="f-s-600 text-inverse"><?php echo $key + 1; ?></td>
+              <td><?php echo $row['category_name']; ?></td>
+              <td class="text-center">
+                <a class="btn btn-warning" href="category.edit.php?id=<?php echo $row['category_id']; ?>">แก้ไข</a>
+                <a class="btn btn-danger" onclick="if(confirm('คุณต้องการลบข้อมูลประเภทสินค้านี้หรือไม่?')){ location.href = 'process_category.delete.php?id=<?php echo $row['category_id']; ?>&action=delete' };">ลบ</a>
+              </td>
+            </tr>
           <?php } ?>
         </tbody>
       </table>

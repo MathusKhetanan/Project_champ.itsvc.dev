@@ -47,4 +47,3 @@
     'wait_confirm' => 'yellow',
     'canceled' => 'gray'
   );
-?>

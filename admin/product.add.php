@@ -1,13 +1,13 @@
-<?php 
-  include('../config.php');
-  include('includes/authentication.php'); 
-  include('includes/header.php'); 
+<?php
+include('../config.php');
+include('includes/authentication.php');
+include('includes/header.php');
 
-  $sql = "SELECT * FROM brands";
-  $resultBrand = $conn->query($sql);
+$sql = "SELECT * FROM brands";
+$resultBrand = $conn->query($sql);
 
-  $sql = "SELECT * FROM categories";
-  $resultCategory = $conn->query($sql);
+$sql = "SELECT * FROM categories";
+$resultCategory = $conn->query($sql);
 ?>
 
 <!-- begin #content -->
@@ -21,7 +21,7 @@
   <!-- end breadcrumb -->
   <!-- begin page-header -->
   <h1 class="page-header">
-    เพิ่มข้อมูลสินค้า 
+    เพิ่มข้อมูลสินค้า
     <!-- <small>header small text goes here...</small> -->
   </h1>
   <!-- end page-header -->
@@ -44,8 +44,8 @@
             <div class="form-group">
               <label for="category_id">ประเภทสินค้า</label>
               <select class="default-select2 form-control" id="category_id" name="category_id" data-parsley-required="true">
-                <?php foreach ($resultCategory as $r){ ?>
-                <option value="<?php echo $r['category_id']; ?>"><?php echo $r['category_name']; ?></option>
+                <?php foreach ($resultCategory as $r) { ?>
+                  <option value="<?php echo $r['category_id']; ?>"><?php echo $r['category_name']; ?></option>
                 <?php } ?>
               </select>
             </div>
@@ -54,8 +54,8 @@
             <div class="form-group">
               <label for="brand_id">แบรนด์</label>
               <select class="default-select2 form-control" id="brand_id" name="brand_id" data-parsley-required="true">
-                <?php foreach ($resultBrand as $r){ ?>
-                <option value="<?php echo $r['brand_id']; ?>"><?php echo $r['brand_name']; ?></option>
+                <?php foreach ($resultBrand as $r) { ?>
+                  <option value="<?php echo $r['brand_id']; ?>"><?php echo $r['brand_name']; ?></option>
                 <?php } ?>
               </select>
             </div>

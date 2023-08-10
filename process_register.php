@@ -67,4 +67,3 @@ if($result){
 // Close the prepared statement and database connection
 mysqli_stmt_close($stmt);
 mysqli_close($conn);
-?>

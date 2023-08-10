@@ -1,40 +1,39 @@
-<?php 
-  include('../config.php');
+<?php
+include('../config.php');
 
-  if(!empty($_GET) && isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] === "update"){
-    $withdraw_id = $conn->real_escape_string($_GET['id']);
-    $sql = "UPDATE withdraw SET withdraw_status = 'successful' WHERE SUBSTRING(MD5(withdraw_id), 1, 8) = '$withdraw_id'";
-    if($conn->query($sql)){
-      echo "<script>
+if (!empty($_GET) && isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] === "update") {
+  $withdraw_id = $conn->real_escape_string($_GET['id']);
+  $sql = "UPDATE withdraw SET withdraw_status = 'successful' WHERE SUBSTRING(MD5(withdraw_id), 1, 8) = '$withdraw_id'";
+  if ($conn->query($sql)) {
+    echo "<script>
         alert('ยืนยันการได้รับเงินสำเร็จ');
         window.location.href = 'withdraw.php';
       </script>";
-    }else{
-      echo "<script>
+  } else {
+    echo "<script>
         alert('ยืนยันการได้รับเงินไม่สำเร็จ');
         window.location.href = 'withdraw.php';
       </script>";
-    }
-    exit();
   }
-  
-  if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $seller_id = $_SESSION['seller_id'];
-    $withdraw_money = $conn->real_escape_string($_POST['withdraw_money']);
-    $withdraw_fee = (intval($withdraw_money)*3)/100;
-    $withdraw_money = $withdraw_money - $withdraw_fee;
-    $sql = "INSERT INTO withdraw(seller_id, withdraw_money, withdraw_fee) VALUE($seller_id, $withdraw_money, $withdraw_fee)";
-    if($conn->query($sql)){
-      echo "<script>
+  exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $seller_id = $_SESSION['seller_id'];
+  $withdraw_money = $conn->real_escape_string($_POST['withdraw_money']);
+  $withdraw_fee = (intval($withdraw_money) * 3) / 100;
+  $withdraw_money = $withdraw_money - $withdraw_fee;
+  $sql = "INSERT INTO withdraw(seller_id, withdraw_money, withdraw_fee) VALUE($seller_id, $withdraw_money, $withdraw_fee)";
+  if ($conn->query($sql)) {
+    echo "<script>
         alert('บันทึกข้อมูลการถอนเงินสำเร็จ');
         window.location.href = 'withdraw.php';
       </script>";
-    }else{
-      echo "<script>
+  } else {
+    echo "<script>
         alert('บันทึกข้อมูลการถอนเงินไม่สำเร็จ');
         window.location.href = 'withdraw.php';
       </script>";
-    }
-    exit();
   }
-?>
+  exit();
+}

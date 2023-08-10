@@ -6,7 +6,7 @@ try {
   $seller_email = $conn->real_escape_string($_POST['seller_email']);
   $seller_username = $conn->real_escape_string($_POST['seller_username']);
   $seller_password = $conn->real_escape_string($_POST['seller_password']);
-  $token = md5(rand().time());
+  $token = md5(rand() . time());
 
   // INSERT YOUR CODE HERE - Replace this line with your own password hashing logic
   $hashed_password = password_hash($seller_password, PASSWORD_DEFAULT);
@@ -14,7 +14,7 @@ try {
   // INSERT YOUR CODE HERE - Replace this line with your own SQL query to insert data into the database
   $sql = "INSERT INTO seller (seller_fullname, seller_email, seller_username, seller_password, token) VALUES ('$seller_fullname', '$seller_email', '$seller_username', '$hashed_password', '$token')";
 
-  if($conn->query($sql)){
+  if ($conn->query($sql)) {
     echo "<script>
       alert('บันทึกข้อมูลการสมัครสำเร็จ กรุณายืนยันอีเมลเพื่อยืนยันตัวตนอีกครั้ง');
       window.location.href = 'login.php';
@@ -31,4 +31,3 @@ try {
     window.history.back();
   </script>";
 }
-?>

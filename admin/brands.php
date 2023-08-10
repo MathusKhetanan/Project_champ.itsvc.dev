@@ -1,10 +1,10 @@
-<?php 
-  include('../config.php');
-  include('includes/authentication.php'); 
-  include('includes/header.php'); 
+<?php
+include('../config.php');
+include('includes/authentication.php');
+include('includes/header.php');
 
-  $sql = "SELECT * FROM brands";
-  $result = $conn->query($sql);
+$sql = "SELECT * FROM brands";
+$result = $conn->query($sql);
 ?>
 
 <!-- begin #content -->
@@ -17,7 +17,7 @@
   <!-- end breadcrumb -->
   <!-- begin page-header -->
   <h1 class="page-header">
-    จัดการแบรนด์ 
+    จัดการแบรนด์
     <!-- <small>header small text goes here...</small> -->
   </h1>
   <!-- end page-header -->
@@ -41,16 +41,16 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($result as $key => $row){ ?>
-          <tr>
-            <td width="1%" class="f-s-600 text-inverse"><?php echo $key+1; ?></td>
-            <td width="1%" class="with-img"><img src="../<?php echo $row['brand_image']; ?>" class="img-rounded height-30" onError="this.src='https://thaigifts.or.th/wp-content/uploads/2017/03/no-image.jpg"/></td>
-            <td><?php echo $row['brand_name']; ?></td>
-            <td class="text-center">
-              <a class="btn btn-warning" href="brand.edit.php?id=<?php echo $row['brand_id']; ?>">แก้ไข</a>
-              <a class="btn btn-danger" onclick="if(confirm('คุณต้องการลบข้อมูลแบรนด์นี้หรือไม่?')){ location.href = 'process_brand.delete.php?id=<?php echo $row['brand_id']; ?>&action=delete' };">ลบ</a>
-            </td>
-          </tr>
+          <?php foreach ($result as $key => $row) { ?>
+            <tr>
+              <td width="1%" class="f-s-600 text-inverse"><?php echo $key + 1; ?></td>
+              <td width="1%" class="with-img"><img src="../<?php echo $row['brand_image']; ?>" class="img-rounded height-30" onError="this.src='https://thaigifts.or.th/wp-content/uploads/2017/03/no-image.jpg" /></td>
+              <td><?php echo $row['brand_name']; ?></td>
+              <td class="text-center">
+                <a class="btn btn-warning" href="brand.edit.php?id=<?php echo $row['brand_id']; ?>">แก้ไข</a>
+                <a class="btn btn-danger" onclick="if(confirm('คุณต้องการลบข้อมูลแบรนด์นี้หรือไม่?')){ location.href = 'process_brand.delete.php?id=<?php echo $row['brand_id']; ?>&action=delete' };">ลบ</a>
+              </td>
+            </tr>
           <?php } ?>
         </tbody>
       </table>

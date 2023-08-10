@@ -1,7 +1,7 @@
-<?php 
-  include('../config.php');
-  include('includes/authentication.php'); 
-  include('includes/header.php'); 
+<?php
+include('../config.php');
+include('includes/authentication.php');
+include('includes/header.php');
 ?>
 
 <!-- begin #content -->
@@ -15,7 +15,7 @@
   <!-- end breadcrumb -->
   <!-- begin page-header -->
   <h1 class="page-header">
-    แก้ไขข้อมูลส่วนตัว 
+    แก้ไขข้อมูลส่วนตัว
     <!-- <small>header small text goes here...</small> -->
   </h1>
   <!-- end page-header -->
@@ -87,17 +87,17 @@
             </div>
           </div>
           <div class="col-4">
-  <div class="form-group">
-    <label for="seller_bank_name">ชื่อธนาคาร</label>
-    <input type="text" class="form-control" id="seller_bank_name" name="seller_bank_name" placeholder="ชื่อธนาคาร" data-parsley-required="true" value="<?php echo isset($_SESSION['seller_bank_name']) ? $_SESSION['seller_bank_name'] : ''; ?>">
-  </div>
-</div>
-<div class="col-4">
-  <div class="form-group">
-    <label for="seller_account_number">เลขที่บัญชี</label>
-    <input type="text" class="form-control" id="seller_account_number" name="seller_account_number" placeholder="เลขที่บัญชี" data-parsley-required="true" value="<?php echo isset($_SESSION['seller_account_number']) ? $_SESSION['seller_account_number'] : ''; ?>">
-  </div>
-</div>
+            <div class="form-group">
+              <label for="seller_bank_name">ชื่อธนาคาร</label>
+              <input type="text" class="form-control" id="seller_bank_name" name="seller_bank_name" placeholder="ชื่อธนาคาร" data-parsley-required="true" value="<?php echo isset($_SESSION['seller_bank_name']) ? $_SESSION['seller_bank_name'] : ''; ?>">
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label for="seller_account_number">เลขที่บัญชี</label>
+              <input type="text" class="form-control" id="seller_account_number" name="seller_account_number" placeholder="เลขที่บัญชี" data-parsley-required="true" value="<?php echo isset($_SESSION['seller_account_number']) ? $_SESSION['seller_account_number'] : ''; ?>">
+            </div>
+          </div>
           <div class="col-4">
             <div class="form-group">
               <label for="seller_password">รหัสผ่าน (หากไม่เปลี่ยน โปรดปล่อยว่าง)</label>

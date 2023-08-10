@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_address'] = $row['user_address'];
             $_SESSION['user_tel'] = $row['user_tel'];
             $_SESSION['user_pet'] = $row['user_pet'];
-
             // Clear POST variables to prevent misuse
             unset($_POST['user_username']);
             unset($_POST['user_password']);

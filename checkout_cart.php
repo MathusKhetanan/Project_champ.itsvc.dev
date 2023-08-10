@@ -5,7 +5,7 @@ include('includes/header.php');
 $sql = "SELECT * FROM tbl_bank";
 $result = $conn->query($sql);
 ?>
-    
+
 <style>
     .sw-main.sw-theme-default .step-anchor {
         background: #343a40;
@@ -216,7 +216,7 @@ $result = $conn->query($sql);
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- End checkout-body -->
                             </fieldset>
 

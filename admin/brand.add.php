@@ -25,22 +25,19 @@ include('includes/header.php');
                     <div class="col-4">
                         <div class="form-group">
                             <label for="brand_id">รหัสแบรนด์</label>
-                            <input type="text" class="form-control" id="brand_id" name="brand_id"
-                                placeholder="รหัสแบรนด์" readonly>
+                            <input type="text" class="form-control" id="brand_id" name="brand_id" placeholder="รหัสแบรนด์" readonly>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="brand_name">ชื่อแบรนด์</label>
-                            <input type="text" class="form-control" id="brand_name" name="brand_name"
-                                placeholder="ชื่อแบรนด์" data-parsley-required="true">
+                            <input type="text" class="form-control" id="brand_name" name="brand_name" placeholder="ชื่อแบรนด์" data-parsley-required="true">
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="brand_image">รูปภาพ</label>
-                            <input type="file" class="form-control" id="brand_image" name="brand_image"
-                                accept="image/*">
+                            <input type="file" class="form-control" id="brand_image" name="brand_image" accept="image/*">
                         </div>
                     </div>
                 </div>
@@ -58,7 +55,7 @@ include('includes/header.php');
 <?php include('includes/footer.php'); ?>
 
 <script>
-$(document).ready(function() {
-    $(".default-select2").select2();
-});
+    $(document).ready(function() {
+        $(".default-select2").select2();
+    });
 </script>

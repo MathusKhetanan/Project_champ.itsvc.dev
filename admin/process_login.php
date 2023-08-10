@@ -43,4 +43,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   header("Location: login.php?error_message=" . urlencode($error_message));
   exit();
 }
-?>

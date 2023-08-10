@@ -1,10 +1,10 @@
-		<?php 
-			include('config.php'); 
-			include('includes/authentication.php'); 
-			include('includes/header.php'); 
+		<?php
+		include('config.php');
+		include('includes/authentication.php');
+		include('includes/header.php');
 
-			$sql = "SELECT * FROM categories";
-			$result = $conn->query($sql);
+		$sql = "SELECT * FROM categories";
+		$result = $conn->query($sql);
 		?>
 		<style>
 .form-control {
@@ -85,9 +85,9 @@
 		                                                <select class="multiple-select2 form-control" id="user_pet"
 		                                                    name="user_pet[]" multiple data-parsley-group="step-3"
 		                                                    data-parsley-required="true">
-		                                                    <?php foreach ($result as $list){ ?>
+		                                                    <?php foreach ($result as $list) { ?>
 		                                                    <option value="<?php echo $list['category_name']; ?>"
-		                                                        <?php echo (str_contains($_SESSION['user_pet'], $list['category_name']))?"selected" :""; ?>>
+		                                                        <?php echo (str_contains($_SESSION['user_pet'], $list['category_name'])) ? "selected" : ""; ?>>
 		                                                        <?php echo $list['category_name']; ?></option>
 		                                                    <?php } ?>
 		                                                </select>
