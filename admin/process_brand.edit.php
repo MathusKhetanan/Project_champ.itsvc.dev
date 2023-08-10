@@ -1,6 +1,6 @@
 <?php
 include('../config.php');
-
+include('includes/header.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $brand_id = $conn->real_escape_string($_POST['brand_id']);
   $brand_name = $conn->real_escape_string($_POST['brand_name']);
@@ -13,21 +13,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $sql = "UPDATE brands SET brand_name = '$brand_name', brand_image = '$pathImage' WHERE brand_id = " . $brand_id;
     } else {
       echo "<script>
-          alert('อัพโหลดรูปภาพแบรนด์ไม่สำเร็จ');
-          window.history.back();
+          Swal.fire({
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: 'อัพโหลดรูปภาพแบรนด์ไม่สำเร็จ',
+            confirmButtonText: 'ตกลง'
+          }).then(() => {
+            window.history.back();
+          });
         </script>";
       exit();
     }
   }
   if ($conn->query($sql)) {
     echo "<script>
-        alert('แก้ไขข้อมูลแบรนด์สำเร็จ');
-        window.location.href = 'brands.php';
+        Swal.fire({
+          icon: 'success',
+          title: 'สำเร็จ!',
+          text: 'แก้ไขข้อมูลแบรนด์สำเร็จ',
+          confirmButtonText: 'ตกลง'
+        }).then(() => {
+          window.location.href = 'brands.php';
+        });
       </script>";
   } else {
     echo "<script>
-        alert('แก้ไขข้อมูลแบรนด์ไม่สำเร็จ');
-        window.history.back();
+        Swal.fire({
+          icon: 'error',
+          title: 'เกิดข้อผิดพลาด',
+          text: 'แก้ไขข้อมูลแบรนด์ไม่สำเร็จ',
+          confirmButtonText: 'ตกลง'
+        }).then(() => {
+          window.history.back();
+        });
       </script>";
   }
 }
+?>
+<?php include('includes/footer.php'); ?>

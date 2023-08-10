@@ -46,10 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['seller_username'] = $row['seller_username'];
                 $_SESSION['seller_fullname'] = $row['seller_fullname'];
                 $_SESSION['seller_email'] = $row['seller_email'];
-                $_SESSION['seller_payment_name'] = $row['seller_payment_name'];
+                $_SESSION['seller_bank_name	'] = $row['seller_bank_name'];
                 $_SESSION['seller_address'] = $row['seller_address'];
                 $_SESSION['seller_tel'] = $row['seller_tel'];
-                $_SESSION['seller_payment'] = $row['seller_payment'];
+                $_SESSION['seller_account_number'] = $row['seller_account_number'];
 
                 header("Location: admin/index.php");
                 

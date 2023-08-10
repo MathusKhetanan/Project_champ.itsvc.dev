@@ -19,6 +19,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.5.0/responsive.bootstrap4.min.js">
 </script>
 <script src="dist/js/demo/table-manage-default.demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.21/dist/sweetalert2.all.min.js"></script>
 <script>
     Omise.setPublicKey("pkey_test_5r0gn5997jah59d6ns1");
 

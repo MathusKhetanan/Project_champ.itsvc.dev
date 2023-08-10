@@ -55,7 +55,7 @@ $result = $conn->query($sql);
 
               <td class="text-center">
                 <a class="btn btn-warning" href="product.edit.php?id=<?php echo $row['id']; ?>">แก้ไข</a>
-                <a class="btn btn-danger" onclick="if (confirm('คุณต้องการลบข้อมูลสินค้านี้หรือไม่?')) { location.href = 'process_product.delete.php?id=<?php echo $row['id']; ?>&action=delete' };">ลบ</a>
+                <a class="btn btn-danger" onclick="confirmDelete('<?php echo $row['id']; ?>')">ลบ</a>
               </td>
             </tr>
           <?php } ?>
@@ -67,5 +67,24 @@ $result = $conn->query($sql);
 
 </div>
 <!-- end #content -->
+
+<script>
+  function confirmDelete(id) {
+    Swal.fire({
+      title: "ยืนยันการลบข้อมูล",
+      text: "คุณต้องการลบข้อมูลบัญชีธนาคารนี้หรือไม่?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        location.href = `process_product.delete.php?id=${id}&action=delete`;
+      }
+    });
+  }
+</script>
 
 <?php include('includes/footer.php'); ?>

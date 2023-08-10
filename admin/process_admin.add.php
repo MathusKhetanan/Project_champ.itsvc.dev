@@ -1,6 +1,6 @@
 <?php
 include('../config.php');
-
+include('includes/header.php');
 // Function to hash the password using SHA-512
 function hashPassword($password) {
     return hash('sha512', $password);
@@ -17,17 +17,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Using a prepared statement to insert the data
     $stmt = $conn->prepare("INSERT INTO seller (seller_username,seller_password, seller_status) VALUES (?,?,?)");
     $seller_status = 1; // Set seller_status to 1
-    $stmt->bind_param("ssi", $seller_username,$hashed_password, $seller_status);
+    $stmt->bind_param("ssi", $seller_username, $hashed_password, $seller_status);
 
     if ($stmt->execute()) {
         echo "<script>
-            alert('เพิ่มข้อมูลร้านค้าสำเร็จ');
-            window.location.href = 'admin.php';
+            Swal.fire({
+                icon: 'success',
+                title: 'เพิ่มข้อมูลร้านค้าสำเร็จ',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.href = 'admin.php';
+            });
         </script>";
     } else {
         echo "<script>
-            alert('เพิ่มข้อมูลร้านค้าไม่สำเร็จ');
-            window.history.back();
+            Swal.fire({
+                icon: 'error',
+                title: 'เพิ่มข้อมูลร้านค้าไม่สำเร็จ',
+                text: 'กรุณาลองใหม่อีกครั้ง',
+            }).then(() => {
+                window.history.back();
+            });
         </script>";
     }
 }
+?>
+<?php include('includes/footer.php'); ?>

@@ -1,5 +1,6 @@
 <?php
 include('../config.php');
+include('includes/header.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $seller_username = $_POST['seller_username'];
@@ -32,14 +33,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $_SESSION['seller_tel'] = $row['seller_tel'];
       $_SESSION['seller_account_number'] = $row['seller_account_number'];
 
-      // Redirect to index.php
-      header("Location: index.php");
+      // Redirect with success message using SweetAlert
+      echo "<script>
+        Swal.fire({
+          icon: 'success',
+          title: 'เข้าสู่ระบบสำเร็จ',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          window.location.href = 'index.php';
+        });
+      </script>";
       exit();
     }
   }
 
-  // Display error message and redirect back
+  // Display error message and redirect back using SweetAlert
   $error_message = "ชื่อผู้ใช้หรือรหัสผ่านผู้ขายไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
-  header("Location: login.php?error_message=" . urlencode($error_message));
+  echo "<script>
+    Swal.fire({
+      icon: 'error',
+      title: 'เข้าสู่ระบบไม่สำเร็จ',
+      text: '$error_message'
+    }).then(() => {
+      window.location.href = 'login.php';
+    });
+  </script>";
   exit();
 }
+?>
+<?php include('includes/footer.php'); ?>

@@ -99,20 +99,38 @@ $resultCategory = $conn->query($sql);
         </div>
       </div>
       <div class="panel-footer text-right">
-        <a href="product.php" class="btn btn-white btn-sm">ย้อนกลับ</a>
-        <button type="submit" class="btn btn-primary btn-sm m-l-5">เพิ่มข้อมูลสินค้า</button>
-      </div>
-    </div>
-  </form>
-  <!-- end panel -->
+                <a href="product.php" class="btn btn-white btn-sm">ย้อนกลับ</a>
+                <button type="submit" class="btn btn-primary btn-sm m-l-5" onclick="confirmAdd()">เพิ่มข้อมูลสินค้า</button>
+            </div>
+        </div>
+    </form>
+    <!-- end panel -->
 
 </div>
 <!-- end #content -->
 
-<?php include('includes/footer.php'); ?>
-
 <script>
-  $(document).ready(function() {
-    $(".default-select2").select2();
-  });
+    $(document).ready(function() {
+        $(".default-select2").select2();
+    });
+
+    function confirmAdd() {
+        Swal.fire({
+            title: "ยืนยันการเพิ่มข้อมูล",
+            text: "คุณต้องการเพิ่มข้อมูลสินค้าหรือไม่?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ยืนยัน",
+            cancelButtonText: "ยกเลิก",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit the form
+                $("form").submit();
+            }
+        });
+    }
 </script>
+
+<?php include('includes/footer.php'); ?>

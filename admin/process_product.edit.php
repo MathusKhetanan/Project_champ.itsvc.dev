@@ -1,6 +1,6 @@
 <?php
 include('../config.php');
-
+include('includes/header.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $product_id = $conn->real_escape_string($_POST['product_id']);
   $category_id = $conn->real_escape_string($_POST['category_id']);
@@ -19,21 +19,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $sql = "UPDATE product SET category_id = $category_id, brand_id = $brand_id, product_name = '$product_name', product_detail = '$product_detail', product_price = $product_price, product_qty = $product_qty, product_image = '$pathImage', product_use = $product_use WHERE product_id = " . $product_id;
     } else {
       echo "<script>
-          alert('อัพโหลดรูปภาพสินค้าไม่สำเร็จ');
-          window.history.back();
+          Swal.fire({
+            icon: 'error',
+            title: 'อัพโหลดรูปภาพสินค้าไม่สำเร็จ',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            window.history.back();
+          });
         </script>";
       exit();
     }
   }
   if ($conn->query($sql)) {
     echo "<script>
-        alert('แก้ไขข้อมูลสินค้าสำเร็จ');
-        window.location.href = 'product.php';
+        Swal.fire({
+          icon: 'success',
+          title: 'แก้ไขข้อมูลสินค้าสำเร็จ',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          window.location.href = 'product.php';
+        });
       </script>";
   } else {
     echo "<script>
-        alert('แก้ไขข้อมูลสินค้าไม่สำเร็จ');
-        window.history.back();
+        Swal.fire({
+          icon: 'error',
+          title: 'แก้ไขข้อมูลสินค้าไม่สำเร็จ',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          window.history.back();
+        });
       </script>";
   }
 }
+?>
+<?php include('includes/footer.php'); ?>

@@ -1,6 +1,6 @@
 <?php
 include('../config.php');
-
+include('includes/header.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $seller_id = $_SESSION['seller_id'];
   $seller_fullname =  $conn->real_escape_string($_POST['seller_fullname']);
@@ -20,14 +20,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['seller_bank_name'] = $_POST['seller_bank_name'];
     $_SESSION['seller_account_number'] = $_POST['seller_account_number'];
     echo "<script>
-        alert('บันทึกข้อมูลผู้ขายสำเร็จ');
-        window.location.href = 'profile.php';
+        Swal.fire({
+          icon: 'success',
+          title: 'บันทึกข้อมูลผู้ขายสำเร็จ',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          window.location.href = 'profile.php';
+        });
       </script>";
   } else {
     echo "<script>
-        alert('บันทึกข้อมูลขายไม่สำเร็จ');
-        window.history.back();
+        Swal.fire({
+          icon: 'error',
+          title: 'บันทึกข้อมูลขายไม่สำเร็จ',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          window.history.back();
+        });
       </script>";
   }
   exit();
 }
+?>
+<?php include('includes/footer.php'); ?>

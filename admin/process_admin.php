@@ -1,6 +1,6 @@
 <?php 
   include('../config.php');
-
+  include('includes/header.php');
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_username = $conn->real_escape_string($_POST['user_username']);
     $user_password = $conn->real_escape_string($_POST['user_password']);
@@ -14,13 +14,26 @@
 
     if ($stmt->execute()) {
       echo "<script>
-        alert('เพิ่มข้อมูลสมาชิกสำเร็จ');
-        window.location.href = 'user.php';
+        Swal.fire({
+          icon: 'success',
+          title: 'เพิ่มข้อมูลสมาชิกสำเร็จ',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          window.location.href = 'user.php';
+        });
       </script>";
     } else {
       echo "<script>
-        alert('เพิ่มข้อมูลสมาชิกไม่สำเร็จ');
-        window.history.back();
+        Swal.fire({
+          icon: 'error',
+          title: 'เพิ่มข้อมูลสมาชิกไม่สำเร็จ',
+          text: 'กรุณาลองใหม่อีกครั้ง',
+        }).then(() => {
+          window.history.back();
+        });
       </script>";
     }
   }
+?>
+<?php include('includes/footer.php'); ?>

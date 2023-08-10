@@ -1,6 +1,6 @@
 <?php
 include('../config.php');
-
+include('includes/header.php');
 if (!empty($_GET) && isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] === "delete") {
   try {
     $brand_id = $conn->real_escape_string($_GET['id']);
@@ -12,34 +12,62 @@ if (!empty($_GET) && isset($_GET['id']) && isset($_GET['action']) && $_GET['acti
 
       if ($brand_image != "" && file_exists("../" . $brand_image) && !unlink("../" . $brand_image)) {
         echo "<script>
-            alert('ลบรูปแบรนด์ไม่สำเร็จ');
+          Swal.fire({
+            icon: 'error',
+            title: 'ลบรูปแบรนด์ไม่สำเร็จ',
+            text: 'กรุณาลองใหม่อีกครั้ง'
+          }).then(() => {
             window.location.href = 'brands.php';
-          </script>";
+          });
+        </script>";
         exit();
       }
 
       $delete_sql = "DELETE FROM brands WHERE brand_id = " . $brand_id;
       if ($conn->query($delete_sql)) {
         echo "<script>
-            alert('ลบข้อมูลแบรนด์สำเร็จ');
+          Swal.fire({
+            icon: 'success',
+            title: 'ลบข้อมูลแบรนด์สำเร็จ',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
             window.location.href = 'brands.php';
-          </script>";
+          });
+        </script>";
       } else {
         echo "<script>
-            alert('ลบข้อมูลแบรนด์ไม่สำเร็จ: " . $conn->error . "');
+          Swal.fire({
+            icon: 'error',
+            title: 'ลบข้อมูลแบรนด์ไม่สำเร็จ',
+            text: 'กรุณาลองใหม่อีกครั้ง'
+          }).then(() => {
             window.location.href = 'brands.php';
-          </script>";
+          });
+        </script>";
       }
     } else {
       echo "<script>
-          alert('ไม่พบแบรนด์ที่ต้องการลบ');
+        Swal.fire({
+          icon: 'error',
+          title: 'ไม่พบแบรนด์ที่ต้องการลบ',
+          text: 'กรุณาลองใหม่อีกครั้ง'
+        }).then(() => {
           window.location.href = 'brands.php';
-        </script>";
+        });
+      </script>";
     }
   } catch (\Throwable $th) {
     echo "<script>
-        alert('ลบข้อมูลแบรนด์ไม่สำเร็จ: " . $th->getMessage() . "');
+      Swal.fire({
+        icon: 'error',
+        title: 'ลบข้อมูลแบรนด์ไม่สำเร็จ',
+        text: '" . $th->getMessage() . "'
+      }).then(() => {
         window.location.href = 'brands.php';
-      </script>";
+      });
+    </script>";
   }
 }
+?>
+<?php include('includes/footer.php'); ?>

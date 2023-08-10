@@ -1,6 +1,6 @@
 <?php
 include('../config.php');
-
+include('includes/header.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $seller_id = $_SESSION['seller_id'];
   $seller_shop = $conn->real_escape_string($_POST['seller_shop']);
@@ -13,14 +13,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['seller_detail'] = $conn->real_escape_string($_POST['seller_detail']);
     $_SESSION['seller_address'] = $conn->real_escape_string($_POST['seller_address']);
     echo "<script>
-        alert('แก้ไขข้อมูลร้านสำเร็จ');
-        window.location.href = 'profile.php';
+        Swal.fire({
+          icon: 'success',
+          title: 'แก้ไขข้อมูลร้านสำเร็จ',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          window.location.href = 'profile.php';
+        });
       </script>";
   } else {
     echo "<script>
-        alert('แก้ไขข้อมูลร้านไม่สำเร็จ');
-        window.location.href = 'profile.php';
+        Swal.fire({
+          icon: 'error',
+          title: 'แก้ไขข้อมูลร้านไม่สำเร็จ',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          window.location.href = 'profile.php';
+        });
       </script>";
   }
   exit();
 }
+?>
+<?php include('includes/footer.php'); ?>
