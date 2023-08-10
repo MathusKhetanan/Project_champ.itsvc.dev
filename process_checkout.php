@@ -2,28 +2,24 @@
 include('config.php');
 
 try {
-  $product_name = isset($_POST['product_name']) ? $conn->real_escape_string($_POST['product_name']) : '';
-  $user_fullname = isset($_POST['user_fullname']) ? $conn->real_escape_string($_POST['user_fullname']) : '';
-  $user_address = isset($_POST['user_address']) ? $conn->real_escape_string($_POST['user_address']) : '';
-  $user_tel = isset($_POST['user_tel']) ? $conn->real_escape_string($_POST['user_tel']) : '';
-  $order_bank = isset($_POST['order_bank']) ? $conn->real_escape_string($_POST['order_bank']) : '';
-  $order_amount = isset($_POST['order_amount']) ? $conn->real_escape_string($_POST['order_amount']) : '';
-  $datatimeorder = isset($_POST['datatimeorder']) ? $conn->real_escape_string($_POST['datatimeorder']) : '';
-  $updatedatatimeorder = isset($_POST['updatedatatimeorder']) ? $conn->real_escape_string($_POST['updatedatatimeorder']) : '';
-  $payment_slip = isset($_POST['payment_slip']) ? $conn->real_escape_string($_POST['payment_slip']) : '';
+  // Validate and sanitize input data
+  $order_fullname = isset($_POST['user_fullname']) ? $_POST['user_fullname'] : '';
+  $order_address = isset($_POST['user_address']) ? $_POST['user_address'] : '';
+  $order_tel = isset($_POST['user_tel']) ? $_POST['user_tel'] : '';
+  $order_bank = isset($_POST['order_bank']) ? $_POST['order_bank'] : '';
+  $order_amount = isset($_POST['order_amount']) ? $_POST['order_amount'] : '';
+  $datatimeorder = isset($_POST['datatimeorder']) ? $_POST['datatimeorder'] : '';
+  $updatedatatimeorder = isset($_POST['updatedatatimeorder']) ? $_POST['updatedatatimeorder'] : '';
+  $order_slip = isset($_POST['payment_slip']) ? $_POST['payment_slip'] : '';
 
-  $token = md5(rand() . time());
+  // Use prepared statements and parameterized queries to prevent SQL injection
+  $stmt = $conn->prepare("INSERT INTO `order` (order_fullname, order_address, order_tel, order_bank, order_amount, datatimeorder, updatedatatimeorder, order_slip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+  $stmt->bind_param("ssssssss", $order_fullname, $order_address, $order_tel, $order_bank, $order_amount, $datatimeorder, $updatedatatimeorder, $order_slip);
 
-  // INSERT YOUR CODE HERE - Replace this line with your own password hashing logic
-  $hashed_password = password_hash($seller_password, PASSWORD_DEFAULT);
-
-  $sql = "INSERT INTO orders (product_name, user_fullname, user_address, user_tel, order_bank, order_amount, datatimeorder, updatedatatimeorder, payment_slip)
-          VALUES ('$product_name', '$user_fullname', '$user_address', '$user_tel', '$order_bank', '$order_amount', '$datatimeorder', '$updatedatatimeorder', '$payment_slip')";
-
-  if ($conn->query($sql)) {
+  if ($stmt->execute()) {
     echo "<script>
-      alert('บันทึกข้อมูลสำเร็จ กรุณายืนยันอีเมลเพื่อยืนยันตัวตนอีกครั้ง');
-      window.location.href = 'login.php';
+      alert('บันทึกข้อมูลการชําระเงินสําเร็จ');
+      window.location.href = 'index.php';
     </script>";
   } else {
     echo "<script>
@@ -32,10 +28,14 @@ try {
     </script>";
   }
 } catch (Exception $e) {
+  // Log the error on the server
+  error_log("Error: " . $e->getMessage());
+
   echo "<script>
-    alert('เกิดข้อผิดพลาด: ' + " . $e->getMessage() . ");
+    alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
     window.history.back();
   </script>";
 }
 
+$conn->close();
 ?>
