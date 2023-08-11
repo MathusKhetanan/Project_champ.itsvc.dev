@@ -1,13 +1,13 @@
-<?php
-include('../config.php');
-include('includes/authentication.php');
-include('includes/header.php');
+<?php 
+  include('../config.php');
+  include('includes/authentication.php'); 
+  include('includes/header.php'); 
 
-$sql = "SELECT * FROM brands";
-$resultBrand = $conn->query($sql);
+  $sql = "SELECT * FROM brands";
+  $resultBrand = $conn->query($sql);
 
-$sql = "SELECT * FROM categories";
-$resultCategory = $conn->query($sql);
+  $sql = "SELECT * FROM categories";
+  $resultCategory = $conn->query($sql);
 ?>
 
 <!-- begin #content -->
@@ -21,7 +21,7 @@ $resultCategory = $conn->query($sql);
   <!-- end breadcrumb -->
   <!-- begin page-header -->
   <h1 class="page-header">
-    เพิ่มข้อมูลสินค้า
+    เพิ่มข้อมูลสินค้า 
     <!-- <small>header small text goes here...</small> -->
   </h1>
   <!-- end page-header -->
@@ -44,8 +44,8 @@ $resultCategory = $conn->query($sql);
             <div class="form-group">
               <label for="category_id">ประเภทสินค้า</label>
               <select class="default-select2 form-control" id="category_id" name="category_id" data-parsley-required="true">
-                <?php foreach ($resultCategory as $r) { ?>
-                  <option value="<?php echo $r['category_id']; ?>"><?php echo $r['category_name']; ?></option>
+                <?php foreach ($resultCategory as $r){ ?>
+                <option value="<?php echo $r['category_id']; ?>"><?php echo $r['category_name']; ?></option>
                 <?php } ?>
               </select>
             </div>
@@ -54,8 +54,8 @@ $resultCategory = $conn->query($sql);
             <div class="form-group">
               <label for="brand_id">แบรนด์</label>
               <select class="default-select2 form-control" id="brand_id" name="brand_id" data-parsley-required="true">
-                <?php foreach ($resultBrand as $r) { ?>
-                  <option value="<?php echo $r['brand_id']; ?>"><?php echo $r['brand_name']; ?></option>
+                <?php foreach ($resultBrand as $r){ ?>
+                <option value="<?php echo $r['brand_id']; ?>"><?php echo $r['brand_name']; ?></option>
                 <?php } ?>
               </select>
             </div>
@@ -99,38 +99,20 @@ $resultCategory = $conn->query($sql);
         </div>
       </div>
       <div class="panel-footer text-right">
-                <a href="product.php" class="btn btn-white btn-sm">ย้อนกลับ</a>
-                <button type="submit" class="btn btn-primary btn-sm m-l-5" onclick="confirmAdd()">เพิ่มข้อมูลสินค้า</button>
-            </div>
-        </div>
-    </form>
-    <!-- end panel -->
+        <a href="product.php" class="btn btn-white btn-sm">ย้อนกลับ</a>
+        <button type="submit" class="btn btn-primary btn-sm m-l-5">เพิ่มข้อมูลสินค้า</button>
+      </div>
+    </div>
+  </form>
+  <!-- end panel -->
 
 </div>
 <!-- end #content -->
 
-<script>
-    $(document).ready(function() {
-        $(".default-select2").select2();
-    });
-
-    function confirmAdd() {
-        Swal.fire({
-            title: "ยืนยันการเพิ่มข้อมูล",
-            text: "คุณต้องการเพิ่มข้อมูลสินค้าหรือไม่?",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "ยืนยัน",
-            cancelButtonText: "ยกเลิก",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Submit the form
-                $("form").submit();
-            }
-        });
-    }
-</script>
-
 <?php include('includes/footer.php'); ?>
+
+<script>
+  $(document).ready(function() {
+    $(".default-select2").select2();
+  });
+</script>

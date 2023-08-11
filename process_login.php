@@ -1,4 +1,4 @@
-<?php 
+<?php
 include('config.php');
 // login.php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -52,15 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['seller_account_number'] = $row['seller_account_number'];
 
                 header("Location: admin/index.php");
-                
             } else {
                 echo "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
-                 header("Location: login.php"); 
+                header("Location: login.php");
             }
         } else {
             echo "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
-                 header("Location: login.php"); 
+            header("Location: login.php");
         }
     }
 }
-?>

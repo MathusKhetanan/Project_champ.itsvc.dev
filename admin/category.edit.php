@@ -1,11 +1,11 @@
-<?php
-include('../config.php');
-include('includes/header.php');
+<?php 
+  include('../config.php');
+  include('includes/header.php'); 
 
-$category_id = $conn->real_escape_string($_GET['id']);
-$sql = "SELECT * FROM categories WHERE category_id = " . $category_id;
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
+  $category_id = $conn->real_escape_string($_GET['id']);
+  $sql = "SELECT * FROM categories WHERE category_id = ".$category_id;
+  $result = $conn->query($sql);
+  $row = $result->fetch_assoc();
 ?>
 
 <!-- begin #content -->
@@ -19,7 +19,7 @@ $row = $result->fetch_assoc();
   <!-- end breadcrumb -->
   <!-- begin page-header -->
   <h1 class="page-header">
-    แก้ไขข้อมูลประเภทสินค้า
+    แก้ไขข้อมูลประเภทสินค้า 
     <!-- <small>header small text goes here...</small> -->
   </h1>
   <!-- end page-header -->
