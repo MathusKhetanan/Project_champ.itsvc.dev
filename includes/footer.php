@@ -252,7 +252,7 @@
                         <li><a href="#" data-abc="true">เงื่อนไขการรับประกัน</a></li>
                         <li><a href="#" data-abc="true">นโยบายส่วนบุคคล</a></li>
                         <li><a href="#" data-abc="true">วิธีการสั่งซื้อ</a></li>
-                        <li><a href="#" data-abc="true">วิธีการชำระเงิน</a></li>
+                        <li><a href="howtopayment.php" data-abc="true">วิธีการชำระเงิน</a></li>
                     </ul>
                 </aside>
                 <aside class="col-sm-3 col-md-2">
