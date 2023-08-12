@@ -69,7 +69,7 @@ $result = $conn->query($sql);
                     <div class="col-4">
                         <div class="form-group">
                             <label>ชื่อบัญชีผู้ขาย</label>
-                            <input type="text" class="form-control" id="seller_name" name="seller_shop" placeholder="ชื่อบัญชีผู้ขาย" data-parsley-required="true">
+                            <input type="text" class="form-control" id="seller_username" name="seller_username" placeholder="ชื่อบัญชีผู้ขาย" data-parsley-required="true">
                         </div>
                     </div>
                     <div class="col-4">

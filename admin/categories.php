@@ -40,16 +40,31 @@ $result = $conn->query($sql);
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($result as $key => $row) { ?>
-            <tr>
-              <td width="1%" class="f-s-600 text-inverse"><?php echo $key + 1; ?></td>
-              <td><?php echo $row['category_name']; ?></td>
-              <td class="text-center">
-                <a class="btn btn-warning" href="category.edit.php?id=<?php echo $row['category_id']; ?>">แก้ไข</a>
-                <a class="btn btn-danger" onclick="if(confirm('คุณต้องการลบข้อมูลประเภทสินค้านี้หรือไม่?')){ location.href = 'process_category.delete.php?id=<?php echo $row['category_id']; ?>&action=delete' };">ลบ</a>
-              </td>
-            </tr>
-          <?php } ?>
+        <?php foreach ($result as $key => $row) { ?>
+    <tr>
+        <td width="1%" class="f-s-600 text-inverse"><?php echo $key + 1; ?></td>
+        <td><?php echo $row['category_name']; ?></td>
+        <td class="text-center">
+            <a class="btn btn-warning" href="category.edit.php?id=<?php echo $row['category_id']; ?>">แก้ไข</a>
+            <a class="btn btn-danger" onclick="confirmDelete(<?php echo $row['category_id']; ?>)">ลบ</a>
+        </td>
+    </tr>
+<?php } ?><script>
+function confirmDelete(categoryId) {
+    Swal.fire({
+        title: 'คุณต้องการลบข้อมูลประเภทสินค้านี้หรือไม่?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'ใช่, ลบเลย',
+        cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            location.href = `process_category.delete.php?id=${categoryId}&action=delete`;
+        }
+    });
+}
+</script>
+
         </tbody>
       </table>
     </div>

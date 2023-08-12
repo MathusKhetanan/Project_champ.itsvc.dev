@@ -39,7 +39,6 @@ $result = $conn->query($sql);
             <th class="text-nowrap">ชื่อบัญชีผู้ขาย</th>
             <th width="15rem" class="text-nowrap">อีเมล</th>
             <th class="text-nowrap">ชื่อ-นามสกลุผู้ขาย</th>
-            <th class="text-nowrap">ที่อยู่ร้านค้า</th>
             <th class="text-nowrap">เบอร์ติดต่อ</th>
             <th class="text-nowrap text-center">ชื่อธนคาร</th>
             <th class="text-nowrap text-center">เลขที่บัญชี</th>
@@ -54,9 +53,6 @@ $result = $conn->query($sql);
               <td><?php echo $row['seller_username']; ?></td>
               <td><?php echo $row['seller_email']; ?></td>
               <td><?php echo $row['seller_username']; ?></td>
-              <td>
-                <div class="ellipsis-3" style="width: 10rem;"><?php echo $row['seller_address']; ?></div>
-              </td>
               <td><?php echo $row['seller_tel']; ?></td>
               <td><?php echo $row['seller_bank_name']; ?></td>
               <td><?php echo $row['seller_account_number']; ?></td>
