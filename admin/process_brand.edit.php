@@ -1,6 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- เรียกใช้ไฟล์ SweetAlert ผ่าน CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
+</head>
+<body>
 <?php 
   include('../config.php');
-
+?>
+<?php
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $brand_id = $conn->real_escape_string($_POST['brand_id']);
     $brand_name = $conn->real_escape_string($_POST['brand_name']);
@@ -13,22 +22,42 @@
         $sql = "UPDATE brands SET brand_name = '$brand_name', brand_image = '$pathImage' WHERE brand_id = ".$brand_id;
       }else{
         echo "<script>
-          alert('อัพโหลดรูปภาพแบรนด์ไม่สำเร็จ');
-          window.history.back();
+          Swal.fire({
+            icon: 'error',
+            title: 'อัพโหลดรูปภาพแบรนด์ไม่สำเร็จ',
+            showConfirmButton: false,
+            timer: 2500
+          }).then(() => {
+            window.history.back();
+          });
         </script>";
         exit();
       }
     }
     if($conn->query($sql)){
       echo "<script>
-        alert('แก้ไขข้อมูลแบรนด์สำเร็จ');
-        window.location.href = 'brands.php';
+        Swal.fire({
+          icon: 'success',
+          title: 'แก้ไขข้อมูลแบรนด์สำเร็จ',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          window.location.href = 'brands.php';
+        });
       </script>";
     }else{
       echo "<script>
-        alert('แก้ไขข้อมูลแบรนด์ไม่สำเร็จ');
-        window.history.back();
+        Swal.fire({
+          icon: 'error',
+          title: 'แก้ไขข้อมูลแบรนด์ไม่สำเร็จ',
+          showConfirmButton: false,
+          timer: 2500
+        }).then(() => {
+          window.history.back();
+        });
       </script>";
     }
   }
 ?>
+</body>
+</html>

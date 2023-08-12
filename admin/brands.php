@@ -47,9 +47,27 @@ $result = $conn->query($sql);
               <td width="1%" class="with-img"><img src="../<?php echo $row['brand_image']; ?>" class="img-rounded height-30" onError="this.src='https://thaigifts.or.th/wp-content/uploads/2017/03/no-image.jpg" /></td>
               <td><?php echo $row['brand_name']; ?></td>
               <td class="text-center">
-                <a class="btn btn-warning" href="brand.edit.php?id=<?php echo $row['brand_id']; ?>">แก้ไข</a>
-                <a class="btn btn-danger" onclick="if(confirm('คุณต้องการลบข้อมูลแบรนด์นี้หรือไม่?')){ location.href = 'process_brand.delete.php?id=<?php echo $row['brand_id']; ?>&action=delete' };">ลบ</a>
-              </td>
+    <a class="btn btn-warning" href="brand.edit.php?id=<?php echo $row['brand_id']; ?>">แก้ไข</a>
+    <a class="btn btn-danger" onclick="confirmDelete(<?php echo $row['brand_id']; ?>)">ลบ</a>
+</td>
+
+<script>
+    function confirmDelete(brandId) {
+        Swal.fire({
+            title: 'คุณต้องการลบข้อมูลแบรนด์นี้หรือไม่?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'ใช่, ลบเลย!',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.href = `process_brand.delete.php?id=${brandId}&action=delete`;
+            }
+        });
+    }
+</script>
             </tr>
           <?php } ?>
         </tbody>
