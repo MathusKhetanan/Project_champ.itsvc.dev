@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- เรียกใช้ไฟล์ SweetAlert ผ่าน CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
+</head>
+<body>
 <?php 
   include('../config.php');
 
@@ -19,22 +27,36 @@
         $sql = "UPDATE product SET category_id = $category_id, brand_id = $brand_id, product_name = '$product_name', product_detail = '$product_detail', product_price = $product_price, product_qty = $product_qty, product_image = '$pathImage', product_use = $product_use WHERE product_id = ".$product_id;
       }else{
         echo "<script>
-          alert('อัพโหลดรูปภาพสินค้าไม่สำเร็จ');
-          window.history.back();
+          Swal.fire({
+            title: 'อัพโหลดรูปภาพสินค้าไม่สำเร็จ',
+            icon: 'error'
+          }).then(() => {
+            window.history.back();
+          });
         </script>";
         exit();
       }
     }
     if($conn->query($sql)){
       echo "<script>
-        alert('แก้ไขข้อมูลสินค้าสำเร็จ');
-        window.location.href = 'product.php';
+        Swal.fire({
+          title: 'แก้ไขข้อมูลสินค้าสำเร็จ',
+          icon: 'success'
+        }).then(() => {
+          window.location.href = 'product.php';
+        });
       </script>";
     }else{
       echo "<script>
-        alert('แก้ไขข้อมูลสินค้าไม่สำเร็จ');
-        window.history.back();
+        Swal.fire({
+          title: 'แก้ไขข้อมูลสินค้าไม่สำเร็จ',
+          icon: 'error'
+        }).then(() => {
+          window.history.back();
+        });
       </script>";
     }
   }
 ?>
+</body>
+</html>
