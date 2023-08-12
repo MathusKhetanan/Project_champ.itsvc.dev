@@ -1,4 +1,4 @@
-<?php
+<?php 
 include('config.php');
 // login.php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_address'] = $row['user_address'];
             $_SESSION['user_tel'] = $row['user_tel'];
             $_SESSION['user_pet'] = $row['user_pet'];
+
             // Clear POST variables to prevent misuse
             unset($_POST['user_username']);
             unset($_POST['user_password']);
@@ -46,19 +47,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['seller_username'] = $row['seller_username'];
                 $_SESSION['seller_fullname'] = $row['seller_fullname'];
                 $_SESSION['seller_email'] = $row['seller_email'];
-                $_SESSION['seller_bank_name	'] = $row['seller_bank_name'];
+                $_SESSION['seller_payment_name'] = $row['seller_payment_name'];
                 $_SESSION['seller_address'] = $row['seller_address'];
                 $_SESSION['seller_tel'] = $row['seller_tel'];
-                $_SESSION['seller_account_number'] = $row['seller_account_number'];
+                $_SESSION['seller_payment'] = $row['seller_payment'];
 
                 header("Location: admin/index.php");
+                
             } else {
                 echo "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
-                header("Location: login.php");
+                 header("Location: login.php"); 
             }
         } else {
             echo "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
-            header("Location: login.php");
+                 header("Location: login.php"); 
         }
     }
 }
+?>

@@ -37,8 +37,6 @@ $result = $conn->query($sql);
             <th width="15rem" class="text-nowrap">ที่อยู่</th>
             <th class="text-nowrap">เบอร์ติดต่อ</th>
             <th class="text-nowrap">อัพเดทล่าสุด</th>
-            <th class="text-nowrap text-center">สถานะ</th>
-            <th class="text-nowrap text-center">ตัวเลือก</th>
           </tr>
         </thead>
         <tbody>
@@ -52,13 +50,6 @@ $result = $conn->query($sql);
               </td>
               <td><?php echo $row['user_tel']; ?></td>
               <td><?php echo $row['updatedAt']; ?></td>
-              <td class="text-center">
-                <form action="process_user.status.php" method="POST"><button type="submit" class="btn btn-<?php echo ($row['user_username'] === NULL) ? "warning" : (((bool)$row['user_status']) ? "success" : "danger"); ?>" name="change_status" value="<?php echo $row['user_id']; ?>" <?php echo ($row['user_username'] === NULL) ? "disabled" : ""; ?>><?php echo ($row['user_username'] === NULL) ? "ยังไม่ยืนยันตัวตน" : (((bool)$row['user_status']) ? "เปิดใช้งาน" : "ปิดใช้งาน"); ?></button></form>
-              </td>
-              <td class="text-center">
-                <a class="btn btn-danger" onclick="if(confirm('คุณต้องการลบข้อมูลสมาชิกนี้หรือไม่?')){ location.href = 'process_user.delete.php?id=<?php echo $row['user_id']; ?>&action=delete' };">ลบ</a>
-              </td>
-            </tr>
           <?php } ?>
         </tbody>
       </table>
