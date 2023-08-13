@@ -1,40 +1,32 @@
-<?php
-session_start();
-session_unset();
-session_destroy();
-
-$successMessage = "ออกจากระบบสำเร็จ";
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- โค้ดส่วนหัวของหน้า HTML ตามปกติ -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.21/dist/sweetalert2.min.js"></script>
+    <!-- เรียกใช้ไฟล์ SweetAlert ผ่าน CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
 </head>
 <body>
 
-<!-- โค้ดส่วนเนื้อหาของหน้า HTML ตามปกติ -->
+<?php
+  session_start();
+  session_unset();
+  session_destroy();
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  Swal.fire({
-    title: '<?= $successMessage ?>',
-    icon: 'success',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'ตกลง',
-    cancelButtonText: 'ยกเลิก'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      window.location.href = '../index.php';
-    }
-  });
-});
-</script>
+  // เพิ่มคำสั่งสร้าง JavaScript เพื่อแสดง SweetAlert
+  echo '<script>
+    // แสดง SweetAlert เมื่อ session ถูกล้างและทำลาย
+    Swal.fire({
+      title: "สำเร็จ!",
+      text: "คุณได้ทำการออกจากการเชื่อมต่อและถูกนำกลับสู่หน้าหลัก",
+      icon: "success",
+      confirmButtonText: "ตกลง",
+    }).then(() => {
+      // เปลี่ยนเส้นทางไปยัง index.php
+      window.location.href = "index.php";
+    });
+  </script>';
 
-<!-- ... ส่วนอื่น ๆ ในหน้า HTML ... -->
-
+  exit();
+?>
 </body>
 </html>

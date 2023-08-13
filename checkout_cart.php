@@ -191,31 +191,31 @@ $result = $conn->query($sql);
                                             </div>
                                         </div>
                                     </form>
+<!-- Amount -->
+<!-- Amount -->
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-lg-right">จำนวนเงิน <span class="text-danger">*</span></label>
+    <div class="col-md-4">
+        <input type="text" class="form-control" name="amount" data-parsley-group="step-3" placeholder="โปรดกรอกจำนวนเงินที่โอนให้ตรงกับราคาสินค้า" value="" required />
+    </div>
+</div>
 
-                                    <!-- Amount -->
-                                    <div class="form-group row">
-                                        <label class="col-md-4 col-form-label text-lg-right">จำนวนเงิน <span class="text-danger">*</span></label>
-                                        <div class="col-md-4">
-                                            <input type="text" class="form-control required" name="amount" placeholder="โปรดกรอกจำนวนเงินที่โอนให้ตรงกับราคาสินค้า" value="" />
-                                        </div>
-                                    </div>
+<!-- Payment Date -->
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-lg-right">วันที่และเวลาชำระเงิน <span class="text-danger">*</span></label>
+    <div class="col-md-4">
+        <input type="datetime-local" name="payment_date" class="form-control required" data-parsley-group="step-3" />
+    </div>
+</div>
 
-                                    <!-- Payment Date -->
-                                    <div class="form-group row">
-                                        <label class="col-md-4 col-form-label text-lg-right">วันที่และเวลาชำระเงิน <span class="text-danger">*</span></label>
-                                        <div class="col-md-4">
-                                            <input type="datetime-local" name="payment_date" class="form-control required" />
-                                        </div>
-                                    </div>
+<!-- Transfer Slip -->
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-lg-right">สลิปการโอน <span class="text-danger">*</span></label>
+    <div class="col-md-4">
+        <input type="file" name="slip" class="form-control required p-l-2 p-r-2 text-center" accept="image/*" data-parsley-group="step-3" />
+    </div>
+</div>
 
-                                    <!-- Transfer Slip -->
-                                    <div class="form-group row">
-                                        <label class="col-md-4 col-form-label text-lg-right">สลิปการโอน <span class="text-danger">*</span></label>
-                                        <div class="col-md-4">
-                                            <input type="file" name="slip" class="form-control required p-l-2 p-r-2 text-center" accept="image/*" />
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <!-- End checkout-body -->
                             </fieldset>

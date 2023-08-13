@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- เรียกใช้ไฟล์ SweetAlert ผ่าน CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
+</head>
+<body>
+
 <?php 
 include('config.php');
 // login.php
@@ -25,10 +34,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             unset($_POST['user_username']);
             unset($_POST['user_password']);
 
-            header("Location: index.php");
-            exit();
+            // แสดง SweetAlert หลังจากเข้าสู่ระบบสำเร็จ
+            echo '<script>
+                    Swal.fire({
+                      title: "สำเร็จ!",
+                      text: "เข้าสู่ระบบสำเร็จ",
+                      icon: "success",
+                      confirmButtonText: "ตกลง"
+                    }).then(() => {
+                      window.location.href = "index.php";
+                    });
+                  </script>';
         } else {
-            $error_message = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
+            // แสดง SweetAlert กรณีรหัสผ่านไม่ถูกต้อง
+            echo '<script>
+                    Swal.fire({
+                      title: "ผิดพลาด",
+                      text: "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง",
+                      icon: "error",
+                      confirmButtonText: "ตกลง"
+                    }).then(() => {
+                      window.location.href = "login.php";
+                    });
+                  </script>';
         }
     } else {
         $seller_username = $conn->real_escape_string($_POST['user_username']);
@@ -47,21 +75,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['seller_username'] = $row['seller_username'];
                 $_SESSION['seller_fullname'] = $row['seller_fullname'];
                 $_SESSION['seller_email'] = $row['seller_email'];
-                $_SESSION['seller_payment_name'] = $row['seller_payment_name'];
+                $_SESSION['seller_bank_name'] = $row['seller_bank_name'];
                 $_SESSION['seller_address'] = $row['seller_address'];
                 $_SESSION['seller_tel'] = $row['seller_tel'];
-                $_SESSION['seller_payment'] = $row['seller_payment'];
+                $_SESSION['seller_account_number'] = $row['seller_account_number'];
 
-                header("Location: admin/index.php");
-                
+                // แสดง SweetAlert หลังจากเข้าสู่ระบบสำเร็จ
+                echo '<script>
+                        Swal.fire({
+                          title: "สำเร็จ!",
+                          text: "เข้าสู่ระบบสำเร็จ",
+                          icon: "success",
+                          confirmButtonText: "ตกลง"
+                        }).then(() => {
+                          window.location.href = "admin/index.php";
+                        });
+                      </script>';
             } else {
-                echo "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
-                 header("Location: login.php"); 
+                // แสดง SweetAlert กรณีรหัสผ่านไม่ถูกต้อง
+                echo '<script>
+                        Swal.fire({
+                          title: "ผิดพลาด",
+                          text: "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง",
+                          icon: "error",
+                          confirmButtonText: "ตกลง"
+                        }).then(() => {
+                          window.location.href = "login.php";
+                        });
+                      </script>';
             }
         } else {
-            echo "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
-                 header("Location: login.php"); 
+            // แสดง SweetAlert กรณีชื่อผู้ใช้ไม่ถูกต้อง
+            echo '<script>
+                    Swal.fire({
+                      title: "ผิดพลาด",
+                      text: "ไม่พบชื่อผู้ใช้หรือชื่อผู้ใช้ถูกปิดใช้งาน",
+                      icon: "error",
+                      confirmButtonText: "ตกลง"
+                    }).then(() => {
+                      window.location.href = "login.php";
+                    });
+                  </script>';
         }
     }
 }
 ?>
+
+</body>
+</html>
