@@ -73,7 +73,8 @@ $result = $conn->query($sql);
         <!-- BEGIN checkout -->
         <div class="checkout">
             <!-- begin wizard-form -->
-            <form action="process_checkout.php" method="POST" name="form-wizard" class="form-control-with-bg">
+                        <form action="process_checkout.php" method="POST" name="form-wizard" class="form-control-with-bg">
+
                 <input type="hidden" name="amount">
                 <input type="hidden" name="items">
                 <input type="hidden" name="omiseToken">

@@ -39,9 +39,11 @@ if (isset($_SESSION['user_id'])) {
     <!-- Select2 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <!-- DataTables CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.10.20/dataTables.bootstrap4.min.css"rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.2.1/responsive.bootstrap4.min.css"rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.21/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.10.20/dataTables.bootstrap4.min.css"
+        rel="stylesheet" />
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.2.1/responsive.bootstrap4.min.css"
+        rel="stylesheet" />
     <!-- ================== END PAGE LEVEL STYLE ================== -->
 </head>
 <style>
@@ -450,7 +452,7 @@ p {
                             </div>
                         </div>
                     </li>
-
+                   
                     <li class="dropdown dropdown-hover dropdown-cart">
                         <a href="#" class="header-cart" data-toggle="dropdown">
                             <i class="fa fa-shopping-bag"></i>
@@ -495,7 +497,6 @@ p {
                             <a class="dropdown-item" href="admin/logout.php">ออกจากระบบ</a>
                         </div>
                     </li>
-
                     <?php } elseif (isset($_SESSION['seller_fullname'])) { // Check if it is a seller 
                     ?>
                     <li class="nav-item dropdown">
@@ -512,7 +513,6 @@ p {
                             <a class="dropdown-item" href="admin/logout.php">ออกจากระบบ</a>
                         </div>
                     </li>
-
                     <?php } else { ?>
                     <li class="divider"></li>
                     <li>
