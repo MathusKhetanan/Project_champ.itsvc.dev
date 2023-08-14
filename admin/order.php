@@ -4,10 +4,18 @@ include('includes/authentication.php');
 include('includes/header.php');
 
 $seller_id = $_SESSION['seller_id'];
-$sql_orders = "SELECT * FROM orders"; // คำสั่ง SQL สำหรับดึงข้อมูลออเดอร์
-$sql_banks = "SELECT * FROM tbl_bank"; // คำสั่ง SQL สำหรับดึงข้อมูลธนาคาร
-$result_orders = $conn->query($sql_orders); // ดึงข้อมูลออเดอร์
-$result_banks = $conn->query($sql_banks); // ดึงข้อมูลธนาคาร
+
+// ดึงข้อมูลออเดอร์
+$sql_orders = "SELECT * FROM orders";
+$result_orders = $conn->query($sql_orders);
+
+// ดึงข้อมูลธนาคาร
+$sql_banks = "SELECT * FROM tbl_bank";
+$result_banks = $conn->query($sql_banks);
+
+// ดึงข้อมูลสินค้า
+$sql_product = "SELECT * FROM product";
+$result_products = $conn->query($sql_product);
 ?>
 
 <div id="content" class="content">
@@ -41,7 +49,19 @@ $result_banks = $conn->query($sql_banks); // ดึงข้อมูลธน�
           <?php foreach ($result_orders as $key => $row) { ?>
             <tr>
               <td><?php echo $row['order_id']; ?></td>
-              <td><?php echo $row['product_name']; ?></td>
+              <td>
+                <?php
+                // ค้นหาชื่อสินค้าจาก $result_products ที่มี product_id เท่ากับ product_name
+                $product_name = '';
+                foreach ($result_products as $product_row) {
+                  if ($product_row['product_id'] == $row['product_name']) {
+                    $product_name = $product_row['product_name'];
+                    break;
+                  }
+                }
+                echo $product_name;
+                ?>
+              </td>
               <td><?php echo $row['order_fullname']; ?></td>
               <td><?php echo $row['order_address']; ?></td>
               <td><?php echo $row['order_tel']; ?></td>

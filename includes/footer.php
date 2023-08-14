@@ -10,8 +10,10 @@
 <script src="dist/js/e-commerce/app.min.js"></script>
 
 <script type="text/javascript" src="https://cdn.omise.co/omise.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/smartwizard/4.3.1/js/jquery.smartWizard.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/css/jquery.dataTables.min.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/3.2.2/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-responsive/2.2.3/dataTables.responsive.min.js">

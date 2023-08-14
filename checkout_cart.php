@@ -2,10 +2,15 @@
 include('config.php');
 include('includes/authentication.php');
 include('includes/header.php');
-$sql = "SELECT * FROM tbl_bank";
-$result = $conn->query($sql);
-?>
 
+// ดึงข้อมูลธนาคาร
+$sql_bank = "SELECT * FROM tbl_bank";
+$result_bank = $conn->query($sql_bank);
+
+// ดึงข้อมูลสินค้า
+$sql_product = "SELECT * FROM product";
+$result_products = $conn->query($sql_product);
+?>
 <style>
     .sw-main.sw-theme-default .step-anchor {
         background: #343a40;
@@ -73,8 +78,7 @@ $result = $conn->query($sql);
         <!-- BEGIN checkout -->
         <div class="checkout">
             <!-- begin wizard-form -->
-                        <form action="process_checkout.php" method="POST" name="form-wizard" class="form-control-with-bg">
-
+            <form action="process_checkout.php" method="POST" name="form-wizard" class="form-control-with-bg">
                 <input type="hidden" name="amount">
                 <input type="hidden" name="items">
                 <input type="hidden" name="omiseToken">
@@ -124,6 +128,7 @@ $result = $conn->query($sql);
                                         </table>
                                     </div>
                                 </div>
+
                                 <!-- END checkout-body -->
                             </fieldset>
                             <!-- end fieldset -->
@@ -171,19 +176,41 @@ $result = $conn->query($sql);
                             <fieldset>
                                 <!-- Begin checkout-body -->
                                 <div class="checkout-body">
-                                    <!-- Bank Selection -->
-                                    <!-- Bank Selection -->
+                                    <!-- Product Selection -->
                                     <div class="form-group row">
-                                        <label class="col-form-label col-md-4 text-lg-right">ธนาคารที่โอนเข้า <span class="text-danger">*</span></label>
-                                        <div class="col-md-4">
-                                            <select class="default-select2 form-control" id="brand_id" name="id" data-parsley-required="true">
-                                                <?php foreach ($result as $r) { ?>
-                                                    <option value="<?php echo $r['id']; ?>">
-                                                        <?php echo $r['b_name']; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div>
+                <label class="col-form-label col-md-4 text-lg-right">เลือกสินค้า <span class="text-danger">*</span></label>
+                <div class="col-md-4">
+                <select class="default-select2 form-control" id="product_id" name="product_id" data-parsley-required="true">
+    <option value="">-- เลือกสินค้า --</option>
+    <?php while ($row_product = $result_products->fetch_assoc()) { ?>
+        <option value="<?php echo $row_product['product_id']; ?>">
+            <?php echo $row_product['product_name']; ?>
+        </option>
+    <?php } ?>
+</select>   
+                </div>
+
+
+                
+            </div>
+
+
+
+
+            <!-- Bank Selection -->
+            <div class="form-group row">
+                <label class="col-form-label col-md-4 text-lg-right">ธนาคารที่โอนเข้า <span class="text-danger">*</span></label>
+                <div class="col-md-4">
+                    <select class="default-select2 form-control" id="brand_id" name="id" data-parsley-required="true">
+                        <option value="">-- เลือกธนาคาร --</option>
+                        <?php while ($row_bank = $result_bank->fetch_assoc()) { ?>
+                            <option value="<?php echo $row_bank['id']; ?>">
+                                <?php echo $row_bank['b_name']; ?>
+                            </option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
                                     <form method="post" action="process_form.php">
                                         <div class="form-group row">
                                             <label class="col-md-4 col-form-label text-lg-right">ข้อมูลธนาคารเลขบัญขี</label>
@@ -192,33 +219,23 @@ $result = $conn->query($sql);
                                             </div>
                                         </div>
                                     </form>
-<!-- Amount -->
-<!-- Amount -->
-<div class="form-group row">
-    <label class="col-md-4 col-form-label text-lg-right">จำนวนเงิน <span class="text-danger">*</span></label>
-    <div class="col-md-4">
-        <input type="text" class="form-control" name="amount" data-parsley-group="step-3" placeholder="โปรดกรอกจำนวนเงินที่โอนให้ตรงกับราคาสินค้า" value="" required />
-    </div>
-</div>
+                                    <!-- Amount -->
+                                    <!-- Amount -->
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label text-lg-right">จำนวนเงิน <span class="text-danger">*</span></label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="amount" data-parsley-group="step-3" placeholder="โปรดกรอกจำนวนเงินที่โอนให้ตรงกับราคาสินค้า" value="" required />
+                                        </div>
+                                    </div>
 
-<!-- Payment Date -->
-<div class="form-group row">
-    <label class="col-md-4 col-form-label text-lg-right">วันที่และเวลาชำระเงิน <span class="text-danger">*</span></label>
-    <div class="col-md-4">
-        <input type="datetime-local" name="payment_date" class="form-control required" data-parsley-group="step-3" />
-    </div>
-</div>
-
-<!-- Transfer Slip -->
-<div class="form-group row">
-    <label class="col-md-4 col-form-label text-lg-right">สลิปการโอน <span class="text-danger">*</span></label>
-    <div class="col-md-4">
-        <input type="file" name="slip" class="form-control required p-l-2 p-r-2 text-center" accept="image/*" data-parsley-group="step-3" />
-    </div>
-</div>
-
-
-                                <!-- End checkout-body -->
+                                    <!-- Payment Date -->
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label text-lg-right">วันที่และเวลาชำระเงิน <span class="text-danger">*</span></label>
+                                        <div class="col-md-4">
+                                            <input type="datetime-local" name="payment_date" class="form-control required" data-parsley-group="step-3" />
+                                        </div>
+                                    </div>
+                                    <!-- End checkout-body -->
                             </fieldset>
 
                             <!-- end fieldset -->

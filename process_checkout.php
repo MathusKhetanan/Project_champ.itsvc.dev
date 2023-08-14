@@ -30,7 +30,7 @@
     $datatimeorder = date('Y-m-d H:i:s'); // แก้ไขรูปแบบของวันที่และเวลา
     $order_slip = isset($_FILES['slip']) ? $_FILES['slip'] : ''; // ตัวแปร slip เป็นไฟล์สลิปการโอนที่ถูกส่งมา
     $order_status = "Paid"; // Initial order status
-    $product_name = isset($_POST['product_name']) ? $_POST['product_name'] : '';
+    $product_name = isset($_POST['product_id']) ? $_POST['product_id'] : '';
     // Use prepared statements and parameterized queries to prevent SQL injection
     $stmt = $conn->prepare("INSERT INTO `orders` (order_fullname, order_address, order_tel, order_bank, order_amount, datatimeorder, order_slip, product_name, order_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("sssssssss", $order_fullname, $order_address, $order_tel, $order_bank, $order_amount, $datatimeorder, $order_slip, $product_name, $order_status);
