@@ -1,31 +1,31 @@
-		<?php
-		include('../config.php');
-		include('includes/authentication.php');
-		include('includes/header.php');
+<?php 
+      include('../config.php');
+			include('includes/authentication.php'); 
+			include('includes/header.php'); 
 
-		$order_id = $conn->real_escape_string($_GET['id']);
-		$sql = "SELECT * FROM orders LEFT JOIN user ON orders.user_id = user.user_id WHERE order_id = $order_id AND seller_id = " . $_SESSION['seller_id'];
-		$result = $conn->query($sql);
-		$row = $result->fetch_assoc();
+			$order_id = $conn->real_escape_string($_GET['id']);
+      $sql = "SELECT * FROM orders LEFT JOIN user ON orders.user_id = user.user_id WHERE order_id = $order_id AND seller_id = ".$_SESSION['seller_id'];
+      $result = $conn->query($sql);
+			$row = $result->fetch_assoc();
 
-		$sql = "SELECT * FROM order_detail WHERE order_id = $order_id";
-		$result = $conn->query($sql);
+			$sql = "SELECT * FROM order_detail WHERE order_id = $order_id";
+      $result = $conn->query($sql);
 		?>
 
 		<!-- begin #content -->
 		<div id="content" class="content">
 			<!-- begin breadcrumb -->
 			<ol class="breadcrumb float-xl-right">
-				<li class="breadcrumb-item"><a href="./">หน้าหลัก</a></li>
-				<li class="breadcrumb-item"><a href="order.php">จัดการออเดอร์</a></li>
+        <li class="breadcrumb-item"><a href="./">หน้าหลัก</a></li>
+        <li class="breadcrumb-item"><a href="order.php">จัดการออเดอร์</a></li>
 				<li class="breadcrumb-item active">รายละเอียดออเดอร์</li>
 			</ol>
 			<!-- end breadcrumb -->
 			<!-- begin page-header -->
 			<h1 class="page-header">
-				รายละเอียดออเดอร์
-
-			</h1>
+				รายละเอียดออเดอร์ 
+        <!-- <small>header small text goes here...</small> -->
+      </h1>
 			<!-- end page-header -->
 
 			<!-- begin invoice -->
@@ -36,13 +36,13 @@
 						<div class="col-5">
 							ร้าน: <?php echo $_SESSION['seller_shop']; ?>
 						</div>
-						<div class="col-7 d-flex justify-content-end">
-							<?php if ($row['order_status'] == "preparing" || $row['order_status'] == "shipping") { ?>
-								อัพเดจสถานะ:
-								<form action="process_order.tracking.php" class="row d-flex justify-content-end" method="POST">
-									<input type="text" class="form-control w-50 mr-3" id="order_tracking" name="order_tracking" placeholder="กรอกหมายเลขพัสดุ" required>
-									<button type="submit" class="btn btn-<?php echo $StatusColor['shipping']; ?>" name="change_status" value="<?php echo $row['order_id']; ?>">อัพเดทหมายเลขพัสดุ</button>
-								</form>
+						<div class="col-7 d-flex justify-content-end" >
+							<?php if($row['order_status'] == "preparing" || $row['order_status'] == "shipping"){ ?>
+							อัพเดจสถานะ:
+							<form action="process_order.tracking.php" class="row d-flex justify-content-end" method="POST">
+								<input type="text" class="form-control w-50 mr-3" id="order_tracking" name="order_tracking" placeholder="กรอกหมายเลขพัสดุ" required>
+								<button type="submit" class="btn btn-<?php echo $StatusColor['shipping']; ?>" name="change_status" value="<?php echo $row['order_id']; ?>">อัพเดทหมายเลขพัสดุ</button>
+							</form>
 							<?php } ?>
 						</div>
 					</div>
@@ -65,7 +65,7 @@
 						</address>
 					</div>
 					<div class="invoice-date">
-						<small>สถานะออเดอร์ / <span class="badge bg-<?php echo $StatusColor[$row['order_status']]; ?>" style="font-size: 12px"><?php echo $Status[$row['order_status']]; ?></span></small><br />
+						<small>สถานะออเดอร์ / <span class="badge bg-<?php echo $StatusColor[$row['order_status']]; ?>" style="font-size: 12px"><?php echo $Status[$row['order_status']]; ?></span></small><br/>
 						หมายเลขพัสดุ: <?php echo $row['order_tracking']; ?>
 						<div class="date text-inverse m-t-5"><?php echo $row['createdAt']; ?></div>
 						<div class="invoice-detail">
@@ -85,24 +85,29 @@
 									<th class="text-center" width="10%">ราคา</th>
 									<th class="text-center" width="10%">จำนวน</th>
 									<th class="text-right" width="10%">รวมทั้งหมด</th>
+									<th class="text-right" width="10%">FEE+VAT</th>
+									<th class="text-right" width="15%">รวม</th>
 								</tr>
 							</thead>
 							<tbody>
-								<?php
-								$total = 0;
-								foreach ($result as $key => $item) {
-									$total += $item['order_subtotal'];
+								<?php 
+									$total = 0;
+									foreach ($result as $key => $item){ 
+										$total += $item['order_subtotal'];
 
+										$free = number_format(($item['order_subtotal'] * $row['order_total_free'])/100, 2);
+										$free_vat = number_format(($free * $row['order_total_free_vat'])/100, 2);
 								?>
-									<tr>
-										<td>
-											<span class="text-inverse"><?php echo $item['product_name']; ?></span>
-										</td>
-										<td class="text-center"><?php echo $item['product_price']; ?></td>
-										<td class="text-center">x <?php echo $item['order_qty']; ?></td>
-										<td class="text-right"><?php echo $item['order_subtotal']; ?></td>
-
-									</tr>
+								<tr>
+									<td>
+										<span class="text-inverse"><?php echo $item['product_name']; ?></span>
+									</td>
+									<td class="text-center"><?php echo $item['product_price']; ?></td>
+									<td class="text-center">x <?php echo $item['order_qty']; ?></td>
+									<td class="text-right"><?php echo $item['order_subtotal']; ?></td>
+									<td class="text-right"><?php echo $free+$free_vat; ?></td>
+									<td class="text-right"><?php echo $item['order_subtotal']-($free+$free_vat); ?></td>
+								</tr>
 								<?php } ?>
 							</tbody>
 						</table>
@@ -121,13 +126,12 @@
 								</div>
 								<div class="sub-price">
 									<small>FEE + VAT</small>
-									<span class="text-inverse"><?php echo $row['order_total_free_vat'] + $row['order_total_free']; ?></span>
+									<span class="text-inverse"><?php echo $row['order_total_free_vat']+$row['order_total_free']; ?></span>
 								</div>
 							</div>
 						</div>
 						<div class="invoice-price-right">
-							<small>จำนวนนวนเงินที่ได้รับ</small> <span class="f-w-600"><?php echo $row['order_total_net']; ?>
-								฿</span>
+							<small>จำนวนนวนเงินที่ได้รับ</small> <span class="f-w-600"><?php echo $row['order_total_net']; ?> ฿</span>
 						</div>
 					</div>
 					<!-- end invoice-price -->
@@ -139,10 +143,8 @@
 						ขอบคุณสำหรับธุรกิจของคุณ
 					</p>
 					<p class="text-center">
-						<span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> ติดต่อ:
-							<?php echo $_SESSION['seller_tel']; ?></span>
-						<span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i>
-							<?php echo $_SESSION['seller_email']; ?></span>
+						<span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> ติดต่อ: <?php echo $_SESSION['seller_tel']; ?></span>
+						<span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i> <?php echo $_SESSION['seller_email']; ?></span>
 					</p>
 				</div>
 				<!-- end invoice-footer -->
