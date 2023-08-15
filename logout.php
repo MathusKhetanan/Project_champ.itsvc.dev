@@ -17,7 +17,7 @@
     // แสดง SweetAlert เมื่อ session ถูกล้างและทำลาย
     Swal.fire({
       title: "สำเร็จ!",
-      text: "อาจจากระบบสําเร็จ",
+      text: "ออกจากระบบสําเร็จ",
       icon: "success",
       confirmButtonText: "ตกลง",
     }).then(() => {

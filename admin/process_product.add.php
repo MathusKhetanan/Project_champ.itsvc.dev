@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (file_exists($_FILES['product_image']['tmp_name']) || is_uploaded_file($_FILES['product_image']['tmp_name'])) {
         $extension = pathinfo($_FILES['product_image']['name'], PATHINFO_EXTENSION);
-        $pathImage = "dist/img/product/" . md5(time()) . "." . $extension;
+        $pathImage = "uploads" . md5(time()) . "." . $extension;
         
         if (move_uploaded_file($_FILES['product_image']['tmp_name'], "../" . $pathImage)) {
             $sql = "INSERT INTO product(seller_id, category_id, brand_id, product_name, product_detail, product_price, product_qty, product_image, product_use) VALUE($seller_id, $category_id, $brand_id, '$product_name', '$product_detail', $product_price, $product_qty, '$pathImage', $product_use)";

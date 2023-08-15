@@ -87,7 +87,7 @@ $resultBrands = $conn->query($sql);
         <div class="row row-space-10">
             <?php foreach ($resultTrending as $item) { ?>
                 <!-- BEGIN col-2 -->
-                <div class="col-lg-4 col-md-4">
+                <div class="col-lg-2 col-md-4">
                     <!-- BEGIN item -->
                     <div class="item item-thumbnail">
                         <a href="product_detail.php?id=<?php echo $item['product_id']; ?>" class="item-link">
@@ -129,7 +129,7 @@ foreach ($resultBrands as $row) {
                 </h4>
                 <div class="row row-space-12">
                     <?php foreach ($resultTrending as $item) { ?>
-                        <div class="col-lg-4 col-md-4">
+                        <div class="col-lg-2 col-md-4">
                             <!-- BEGIN item -->
                             <div class="item item-thumbnail">
                                 <a href="product_detail.php?id=<?php echo $item['product_id']; ?>" class="item-link">

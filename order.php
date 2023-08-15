@@ -8,8 +8,10 @@ $resultTrending = $conn->query($sql);
 $sql = "SELECT * FROM brands";
 $resultBrands = $conn->query($sql);
 $user_id = $_SESSION['user_id'];
-$sql = "SELECT * FROM orders";
-$result = $conn->query($sql);
+$sqlOrders = "SELECT * FROM orders";
+$resultOrders = $conn->query($sqlOrders);
+$sqlSellers = "SELECT * FROM seller";
+$resultSellers = $conn->query($sqlSellers);
 ?>
 
 <!-- BEGIN #my-account -->
@@ -35,36 +37,27 @@ $result = $conn->query($sql);
 						<table id="data-table-default" class="table table-striped table-bordered table-td-valign-middle">
 							<thead>
 								<tr>
-
 									<th class="text-nowrap">ชื่อผู้ขาย</th>
 									<th class="text-nowrap">ชื่อสินค้า</th>
 									<th class="text-nowrap">ราคาสินค้า</th>
-									<th class="text-nowrap">หลักฐานการโอน</th>
 									<th class="text-nowrap text-center">สถานะออเดอร์</th>
-									<th class="text-nowrap">สั่งซื้อเมื่อ</th>
+									<th class="text-nowrap">รายละเอียด</th>
 								</tr>
 							</thead>
 							<tbody>
-								<?php foreach ($result as $key => $row) { ?>
-									<tr>
-										<td width="1%" class="f-s-600 text-inverse"><?php echo $key + 1; ?></td>
-										<td><?php echo $row['seller_fullname']; ?></td>
-										<td><?php echo $row['order_total']; ?></td>
+    <?php foreach ($resultOrders as $key => $row) { ?>
+        <tr>
+            <td><?php echo $row['seller_fullname']; ?></td>
+            <td><?php echo $row['product_name']; ?></td>
+            <td><?php echo $row['order_total']; ?></td>
+            <td class="text-center"><span class="badge bg-<?php echo $StatusColor[$row['order_status']]; ?>" style="font-size: 14px"><?php echo $Status[$row['order_status']]; ?></span></td>
+            <td class="text-center">
+                <a class="btn btn-outline-info" href="order.detail.php?id=<?php echo $row['order_id']; ?>">ดูรายละเอียด</a>
+            </td>
+        </tr>
+    <?php } ?>
+</tbody>
 
-										<td><?php echo $row['createdAt']; ?></td>
-										<td><?php echo $row['order_ref']; ?></td>
-										<td class="text-center"><span class="badge bg-<?php echo $StatusColor[$row['order_status']]; ?>" style="font-size: 14px"><?php echo $Status[$row['order_status']]; ?></span>
-										</td>
-										</td>
-										<td class="text-center">
-											<a class="btn btn-outline-info" href="order.detail.php?id=<?php echo $row['order_id']; ?>">ดูรายละเอียด</a>
-										</td>
-										<td class="text-center">
-											<button class="btn btn-success" <?php echo ($row['order_status'] != "shipping") ? "disabled" : "" ?> onclick="if(confirm('คุณต้องการลบข้อมูลแบรนด์นี้หรือไม่?')){ location.href = 'process_order.status.php?change_status=<?php echo $row['order_id']; ?>&action=update' };">ยืนยันการรับสินค้า</button>
-										</td>
-									</tr>
-								<?php } ?>
-							</tbody>
 						</table>
 						<!-- end panel -->
 					</div>
