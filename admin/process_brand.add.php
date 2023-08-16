@@ -17,7 +17,7 @@
     $sql = "INSERT INTO brands(brand_name) VALUE('$brand_name')";
     if(file_exists($_FILES['brand_image']['tmp_name']) || is_uploaded_file($_FILES['brand_image']['tmp_name'])) {
       $extension = pathinfo($_FILES['brand_image']['name'], PATHINFO_EXTENSION);
-      $pathImage = "dist/img/brands/".md5(time()).".".$extension;
+      $pathImage = "images/".md5(time()).".".$extension;
       if(move_uploaded_file($_FILES['brand_image']['tmp_name'], "../".$pathImage)){
         $sql = "INSERT INTO brands(brand_name, brand_image) VALUE('$brand_name', '$pathImage')";
       }else{

@@ -21,33 +21,43 @@
 <script src="dist/js/demo/table-manage-default.demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.21/dist/sweetalert2.all.min.js"></script>
 <script>
-    Omise.setPublicKey("pkey_test_5r0gn5997jah59d6ns1");
+ Omise.setPublicKey("pkey_test_5r0gn5997jah59d6ns1");
 
-    let cartObject = JSON.parse(localStorage.getItem('items')) || [];
-    var cartGroupSeller = [];
-    const payOmise = () => {
-        var form = document.querySelector('form[action="process_checkout.php"]');
-        tokenParameters = {
-            "expiration_month": parseInt($('input[name="mm"]').val()),
-            "expiration_year": parseInt($('input[name="yy"]').val()),
-            "name": $('input[name="cardHolder"]').val(),
-            "number": $('input[name="cardNumber"]').val(),
-            "security_code": parseInt($('input[name="number"]').val()),
-        };
-        Omise.createToken("card", tokenParameters, function(statusCode, response) {
-            if (statusCode === 200) {
-                const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
-                groupSeller(newCartObject)
-                console.log(newCartObject.reduce((a, b) => a + b.price * b.qty, 0))
-                form.items.value = JSON.stringify(cartGroupSeller);
-                form.amount.value = newCartObject.reduce((a, b) => a + b.price * b.qty, 0) * 100;
-                form.omiseToken.value = response.id;
-                form.submit();
-            } else {
-                window.location.href = 'process_checkout.php';
-            }
-        });
+let cartObject = JSON.parse(localStorage.getItem('items')) || [];
+var cartGroupSeller = [];
+const payOmise = () => {
+    var form = document.querySelector('form[action="process_checkout.php"]');
+    let amount = parseFloat($('input[name="amount"]').val()) * 100;  // แปลงเป็น satangs
+
+    if (amount < 2000) {  // 2000000 satangs เท่ากับ 20 บาท
+        alert('จำนวนเงินต้องไม่น้อยกว่า 20 บาท (2000 satangs)');
+        return;
     }
+  
+    tokenParameters = {
+        "expiration_month": parseInt($('input[name="mm"]').val()),
+        "expiration_year": parseInt($('input[name="yy"]').val()),
+        "name": $('input[name="cardHolder"]').val(),
+        "number": $('input[name="cardNumber"]').val(),
+        "security_code": parseInt($('input[name="number"]').val()),
+        "amount": amount,
+    };
+    
+    Omise.createToken("card", tokenParameters, function(statusCode, response) {
+        if (statusCode === 200) {
+            const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
+            groupSeller(newCartObject)
+            console.log(newCartObject.reduce((a, b) => a + b.price * b.qty, 0))
+            form.items.value = JSON.stringify(cartGroupSeller);
+            form.amount.value = newCartObject.reduce((a, b) => a + b.price * b.qty, 0) * 100;
+            form.omiseToken.value = response.id;
+            form.submit();
+        } else {
+            window.location.href = 'process_checkout.php';
+        }
+    });
+}
+
     const groupSeller = (newCartObject) => {
         cartGroupSeller = [];
         newCartObject.map((item) => {
