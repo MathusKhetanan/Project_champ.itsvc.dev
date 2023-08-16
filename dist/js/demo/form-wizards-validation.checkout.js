@@ -57,8 +57,7 @@ var FormWizardValidation = function () {
 		//main function
 		init: function () {
 			handleBootstrapWizardsValidation();
-			$(".sw-btn-group").append('<button type="submit" name="submit_payment" class="btn btn-secondary sw-btn-submit sw-btn-next">ชำระเงิน</button>');
-
+			$(".sw-btn-group").append('<button type="button" class="btn btn-secondary sw-btn-submit sw-btn-next" onclick="payOmise()">ชำระเงิน</button>');	
 			$('button.sw-btn-submit').hide();	
 			if($('button.sw-btn-prev').hasClass('disabled')){
 				let cartObject = JSON.parse(localStorage.getItem('items')) || [];

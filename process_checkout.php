@@ -1,83 +1,80 @@
-  <!DOCTYPE html>
-  <html lang="en">
 
-  <head>
-    <!-- Include SweetAlert via CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
-  </head>
-  <body>
-    <?php
-    include('config.php');
+<?php 
+  include('config.php');
 
-    // Function to remove all items from the cart
-    function removeAllItems()
-    {
-      // Code to remove items from the cart, e.g., removing the variable that stores items in localStorage
-      echo "<script>
-        localStorage.removeItem('items');
-      </script>";
-    }
-
+  if($_SERVER['REQUEST_METHOD'] === 'POST'){
     try {
-      // Validate and sanitize input data
-      $order_fullname = isset($_POST['user_fullname']) ? $_POST['user_fullname'] : '';
-      $order_address = isset($_POST['user_address']) ? $_POST['user_address'] : '';
-      $order_tel = isset($_POST['user_tel']) ? $_POST['user_tel'] : '';
-      $order_bank = isset($_POST['id']) ? $_POST['id'] : ''; // ตัวแปร id เป็นชื่อธนาคารที่ถูกส่งมา
-      $order_amount = isset($_POST['amount']) ? $_POST['amount'] : '';
-      $datatimeorder = date('Y-m-d H:i:s'); // แก้ไขรูปแบบของวันที่และเวลา
-      $order_slip = isset($_FILES['slip']) ? $_FILES['slip'] : ''; // ตัวแปร slip เป็นไฟล์สลิปการโอนที่ถูกส่งมา
-      $order_status = "Paid"; // Initial order status
-      $product_name = isset($_POST['product_id']) ? $_POST['product_id'] : '';
-      // Use prepared statements and parameterized queries to prevent SQL injection
-      $stmt = $conn->prepare("INSERT INTO `orders` (order_fullname, order_address, order_tel, order_bank, order_amount, datatimeorder, order_slip, product_name, order_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-      $stmt->bind_param("sssssssss", $order_fullname, $order_address, $order_tel, $order_bank, $order_amount, $datatimeorder, $order_slip, $product_name, $order_status);
+      require_once dirname(__FILE__).'/Omise/lib/Omise.php';
+      define('OMISE_API_VERSION', '2019-05-29');
+      define('OMISE_PUBLIC_KEY', 'pkey_test_5r0gn5997jah59d6ns1');
+      define('OMISE_SECRET_KEY', 'skey_test_5r0gn599f16unthb4cs');
 
-      if ($stmt->execute()) {
-        // Perform actions after successful payment
-        removeAllItems();
+      $charge = OmiseCharge::create(array(
+        'amount' =>  $_POST['amount'],
+        'currency' => 'thb',
+        'card' => $_POST['omiseToken']
+      ));
+      echo "<pre>";
+      // print_r($charge['amount']);
+      // print_r($charge['net']);
+      // print_r($charge['fee']);
+      // print_r($charge['fee_vat']);
+      if($charge['status'] === "successful"){
+        $ref = substr(md5(rand().time()), 0, 8);
+        $items = json_decode($_POST['items'], true);
+        // print_r($items);
+        $conn->begin_transaction();
+        foreach($items as $item){
+          $user_id = $_SESSION['user_id'];
+          $seller_id = $conn->real_escape_string($item['key']);
+          $sql = "INSERT INTO orders(user_id, seller_id, order_status, order_ref) VALUES ($user_id, $seller_id, 'paid', '$ref')";
+          $conn->query($sql);
+          $order_id = $conn->insert_id;
+          $sumTotal = 0;
+          foreach($item['order'] as $order){
+            $product_id = $conn->real_escape_string($order['id']);
+            $product_name = $conn->real_escape_string($order['name']);
+            $product_price = $conn->real_escape_string($order['price']);
+            $order_qty = $conn->real_escape_string($order['qty']);
+            $order_subtotal = (float)$product_price*(float)$order_qty;
+            $sumTotal += $order_subtotal;
+            $sql = "SELECT product_qty FROM product WHERE product_id = $product_id";
+            $result = $conn->query($sql);
+            $row = $result->fetch_assoc();
+            if($row['product_qty'] < $order_qty){
+              throw new Exception("สินค้า ".$product_name." ไม่คงเหลือ ".$row['product_qty']." ชิ้น กรุณาอัพเดทตะกร้าของคุณ");
+            }
+            $free = ($sumTotal * $charge['transaction_fees']['fee_rate'])/100;
+            $free_vat = ($free * $charge['transaction_fees']['vat_rate'])/100;
+            $order_total_free = number_format($free, 2);
+            $order_total_free_vat = number_format($free_vat, 2);
+            $order_total_net = $sumTotal - ($order_total_free + $order_total_free_vat);
 
-        echo '<script>
-              Swal.fire({
-                  title: "สำเร็จ!",
-                  text: "บันทึกการชำระเงินสำเร็จ",
-                  icon: "success",
-                  confirmButtonText: "ตกลง"
-              }).then(() => {
-                  window.location.href = "index.php";
-              });
-              </script>';
-      } else {
-        echo '<script>
-              Swal.fire({
-                  title: "ผิดพลาด",
-                  text: "บันทึกการชำระเงินไม่สำเร็จ โปรดทำรายการใหม่อีกครั้ง",
-                  icon: "error",
-                  confirmButtonText: "ตกลง"
-              }).then(() => {
-                  window.history.back();
-              });
-              </script>';
-      }
-    } catch (Exception $e) {
-      // Log the error on the server
-      error_log("Error: " . $e->getMessage());
+            // Save transaction_fees
+            $order_total_free = $charge['transaction_fees']['fee_rate'];
+            $order_total_free_vat = $charge['transaction_fees']['vat_rate'];
 
-      echo '<script>
-          Swal.fire({
-              title: "ผิดพลาด",
-              text: "บันทึกการชำระเงินไม่สำเร็จ โปรดทำรายการใหม่อีกครั้ง",
-              icon: "error",
-              confirmButtonText: "ตกลง"
-          }).then(() => {
-              window.history.back();
-          });
+            $sql = "UPDATE orders SET order_total = $sumTotal, order_total_net = $order_total_net, order_total_free = $order_total_free, order_total_free_vat = $order_total_free_vat WHERE order_id = $order_id";
+            $conn->query($sql);
+            $sql = "UPDATE product SET product_qty = product_qty - ".(int)$order_qty." WHERE product_id = $product_id";
+            $conn->query($sql);
+            $sql = "INSERT INTO order_detail(order_id, product_id, product_name, product_price, order_qty, order_subtotal) VALUES ($order_id, $product_id, '$product_name', $product_price, $order_qty, $order_subtotal)";
+            $conn->query($sql);
+          }
+          $conn->commit();
+          echo '<script>
+            window.location = "order.php";
+            localStorage.removeItem("items");
+            alert("บันทึกข้อมูลชำระเงินสำเร็จ");
           </script>';
+        }
+      } 
+    }catch (Exception $e) {
+      $conn->Rollback();
+      echo '<script>
+        alert("'.$e->getMessage().'");
+        window.history.back();
+      </script>';
     }
-
-    $conn->close();
-    ?>
-  </body>
-
-  </html>
+  }
+?>
