@@ -1,10 +1,10 @@
-<?php 
+		<?php 
       include('../config.php');
 			include('includes/authentication.php'); 
 			include('includes/header.php'); 
 
 			$order_id = $conn->real_escape_string($_GET['id']);
-      $sql = "SELECT * FROM orders LEFT JOIN user ON orders.user_id = user.user_id WHERE order_id = $order_id AND seller_id = ".$_SESSION['seller_id'];
+      $sql = "SELECT * FROM orders LEFT JOIN user ON orders.user_id = user.user_id LEFT JOIN seller ON orders.seller_id = seller.seller_id WHERE order_id = $order_id";
       $result = $conn->query($sql);
 			$row = $result->fetch_assoc();
 
@@ -34,16 +34,20 @@
 				<div class="invoice-company">
 					<div class="row">
 						<div class="col-5">
-							ร้าน: <?php echo $_SESSION['seller_shop']; ?>
+							ร้าน: <?php echo $row['seller_shop']; ?>
 						</div>
 						<div class="col-7 d-flex justify-content-end" >
-							<?php if($row['order_status'] == "preparing" || $row['order_status'] == "shipping"){ ?>
 							อัพเดจสถานะ:
-							<form action="process_order.tracking.php" class="row d-flex justify-content-end" method="POST">
-								<input type="text" class="form-control w-50 mr-3" id="order_tracking" name="order_tracking" placeholder="กรอกหมายเลขพัสดุ" required>
-								<button type="submit" class="btn btn-<?php echo $StatusColor['shipping']; ?>" name="change_status" value="<?php echo $row['order_id']; ?>">อัพเดทหมายเลขพัสดุ</button>
+							<form action="process_order.detail.status.php?id=<?php echo $row['order_id']; ?>" class="ml-2 mr-2" method="POST">
+								<button type="submit" class="btn btn-<?php echo $StatusColor['paid']; ?>" name="change_status" value="paid"><?php echo $Status['paid']; ?></button>
 							</form>
-							<?php } ?>
+							<form action="process_order.detail.status.php?id=<?php echo $row['order_id']; ?>" class="ml-2 mr-3" method="POST">
+								<button type="submit" class="btn btn-<?php echo $StatusColor['preparing']; ?>" name="change_status" value="preparing"><?php echo $Status['preparing']; ?></button>
+							</form>
+							<form action="process_order.detail.status.php?id=<?php echo $row['order_id']; ?>" class="row d-flex justify-content-end"  method="POST">
+								<input type="text" class="form-control w-50 mr-3" id="order_tracking" name="order_tracking" placeholder="กรอกหมายเลขพัสดุ" required>
+								<button type="submit" class="btn btn-<?php echo $StatusColor['shipping']; ?>" name="change_status" value="shipping">อัพเดทหมายเลขพัสดุ</button>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -53,8 +57,8 @@
 					<div class="invoice-from">
 						<small>จาก</small>
 						<address class="m-t-5 m-b-5">
-							<strong class="text-inverse"><?php echo $_SESSION['seller_fullname']; ?>.</strong><br />
-							<?php echo $_SESSION['seller_address']; ?>
+							<strong class="text-inverse"><?php echo $row['seller_fullname']; ?>.</strong><br />
+							<?php echo $row['seller_address']; ?>
 						</address>
 					</div>
 					<div class="invoice-to">
@@ -143,8 +147,8 @@
 						ขอบคุณสำหรับธุรกิจของคุณ
 					</p>
 					<p class="text-center">
-						<span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> ติดต่อ: <?php echo $_SESSION['seller_tel']; ?></span>
-						<span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i> <?php echo $_SESSION['seller_email']; ?></span>
+						<span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> ติดต่อ: <?php echo $row['seller_tel']; ?></span>
+						<span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i> <?php echo $row['seller_email']; ?></span>
 					</p>
 				</div>
 				<!-- end invoice-footer -->

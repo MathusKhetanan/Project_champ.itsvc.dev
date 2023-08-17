@@ -198,7 +198,7 @@ include('includes/header.php');
 											ชื่อ-สกุล <span class="text-danger">*</span>
 										</label>
 										<div class="col-md-4">
-											<input type="text" placeholder="ชื่อ-สกุล" name="user_fullname" data-parsley-group="step-2" class="form-control" data-parsley-required="true" value="<?php echo $_SESSION['user_fullname']; ?>" readonly />
+											<input type="text" placeholder="ชื่อ-สกุล" name="user_fullname" data-parsley-group="step-2" class="form-control" data-parsley-required="true" value="<?php echo $_SESSION['user_fullname']; ?>" />
 										</div>
 									</div>
 									<div class="form-group row">
@@ -206,7 +206,7 @@ include('includes/header.php');
 											ที่อยู่ <span class="text-danger">*</span>
 										</label>
 										<div class="col-md-4">
-											<textarea name="user_address" placeholder="ที่อยู่" class="form-control" data-parsley-group="step-2" data-parsley-required="true" rows="3" readonly><?php echo $_SESSION['user_address']; ?></textarea>
+											<textarea name="user_address" placeholder="ที่อยู่" class="form-control" data-parsley-group="step-2" data-parsley-required="true" rows="3" ><?php echo $_SESSION['user_address']; ?></textarea>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -214,7 +214,7 @@ include('includes/header.php');
 											เบอร์ติดต่อ <span class="text-danger">*</span>
 										</label>
 										<div class="col-md-4">
-											<input type="text" name="user_tel" placeholder="เบอร์ติดต่อ" class="form-control" data-parsley-group="step-2" data-parsley-required="true" value="<?php echo $_SESSION['user_tel']; ?>" readonly />
+											<input type="text" name="user_tel" placeholder="เบอร์ติดต่อ" class="form-control" data-parsley-group="step-2" data-parsley-required="true" value="<?php echo $_SESSION['user_tel']; ?>"/>
 										</div>
 									</div>
 								</div>

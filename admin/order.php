@@ -1,4 +1,4 @@
-<?php   
+    <?php   
       include('../config.php');
 			include('includes/authentication.php'); 
 			include('includes/header.php'); 
@@ -44,7 +44,7 @@
 								<th class="text-nowrap text-center">ดูรายการคำสั่งซื้อ</th>
 							</tr>
 						</thead>
-						<tbody>	
+						<tbody>
               <?php foreach ($result as $key => $row){ 
 								$free = number_format(($row['order_total'] * $row['order_total_free'])/100, 2);
 								$free_vat = number_format(($free * $row['order_total_free_vat'])/100, 2);
