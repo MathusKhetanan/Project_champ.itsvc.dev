@@ -128,15 +128,10 @@
 							</tr>
 						</thead>
 					`);
-                $(".table-cart").append(`<tbody id="cart-item-${seller.key}">`)
-                seller.order.map((item) => {
-    const remainingStock = 5; // จำนวนสินค้าที่เหลือในระบบ
-    let quantityColor = ''; // สีข้อความแสดงจำนวนสินค้า
-    if (item.qty <= remainingStock) {
-        quantityColor = 'red'; // ถ้าจำนวนเหลือน้อยกว่าหรือเท่ากับจำนวนสินค้าที่กำหนด
-    }
-    $(`#cart-item-${seller.key}`).append(`
-        <tr>
+                    $(".table-cart").append(`<tbody id="cart-item-${seller.key}">`)
+					seller.order.map((item)=>{
+						$(`#cart-item-${seller.key}`).append(`
+							<tr>
             <td class="cart-product">
                 <div class="product-img" style="width: 5rem;">
                     <img src="${item.img}" onError="this.src='#'" />
