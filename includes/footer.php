@@ -225,7 +225,7 @@
                     <article class="mr-8 order-first">
                         <div style="display: flex; align-items: center; flex-direction: column;">
                             <a href="https://champ.itsvc.dev">
-                                <img src="https://cdn.discordapp.com/attachments/1128198864629940244/1128967842545545287/logo.png" class="img-fluid" style="max-width: 100px; height: auto;" alt="โลโก้ A&P">
+                                <img src="https://media.discordapp.net/attachments/1120961499196821596/1141926367336865852/logo.webp" class="img-fluid" style="max-width: 100px; height: auto;" alt="โลโก้ A&P">
                             </a>
                             <div class="description" style="margin-top: 10px;">
                                 <span style="font-size: 16px; display: flex; align-items: center;">
@@ -271,7 +271,7 @@
                 <aside class="col-sm-2 col-md-2">
                     <h5 class="title">ดาวน์โหลดแอปพลิเคชั่น</h5>
                     <a href="#" class="d-block mb-2" data-abc="true">
-                        <img class="img-responsive" src="https://media.discordapp.net/attachments/1120961499196821596/1127982211526819970/2.png" alt="โลโก้ A&P">
+                        <img class="img-responsive" src="https://cdn.discordapp.com/attachments/1120961499196821596/1141927560905773136/playstorn.webp" height="40" width="140" alt="โลโก้ A&P">
                     </a>
                 </aside>
             </div>
