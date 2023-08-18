@@ -91,8 +91,10 @@
 							<div class="cart-item-image"><img src="${item.img}" onError="#"/></div>
 							<div class="cart-item-info">
 								<h4>${item.name}</h4>
-								<p class="price">${item.price} ฿ <span class="pull-right">x ${item.qty}</span></p>
-								
+								<p class="price">
+    <span class="item-price">${parseFloat(item.price).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})} ฿</span>
+    <span class="pull-right">x ${item.qty}</span>
+</p>
 							</div>
 							<div class="cart-item-close">
 								<a data-toggle="tooltip" onclick="removeItemMiniCart(${item.id})">&times;</a>
@@ -122,47 +124,59 @@
 								<th class="text-center">ราคา</th>
 								<th class="text-center">จำนวน</th>
 								<th class="text-center">รวม</th>
+                                <th class="text-center">ตัวเลือก</th>
 							</tr>
 						</thead>
 					`);
                 $(".table-cart").append(`<tbody id="cart-item-${seller.key}">`)
                 seller.order.map((item) => {
-                    $(`#cart-item-${seller.key}`).append(`
-							<tr>
-								<td class="cart-product">
-									<div class="product-img" style="width: 5rem;">
-										<img src="${item.img}" onError="this.src='#'" />
-									</div>
-									<div class="product-info">
-										<div class="title">${item.name}</div>
-										<!-- <div class="desc">Delivers Tue 26/04/2016 - Free</div> -->
-									</div>
-								</td>
-								<td class="cart-price text-center">${item.price}</td>
-								<td class="cart-qty text-center">
-									<div class="cart-qty-input">
-										<a href="#" class="qty-control left disabled" data-id="${item.id}" data-click="decrease-qty" data-target="#qty-${item.id}"><i class="fa fa-minus"></i></a>
-										<input type="text" name="qty" value="${item.qty}" class="form-control" id="qty-${item.id}" />
-										<a href="#" class="qty-control right disabled" data-id="${item.id}" data-click="increase-qty" data-target="#qty-${item.id}"><i class="fa fa-plus"></i></a>
-									</div>
-									<div class="qty-desc" style="cursor: pointer;" onclick="removeItemCart(${seller.key}, ${item.id})">ลบสินค้านี้</div>
-								</td>
-								<td id="cart-total-${item.id}" class="cart-total text-center">
-									${item.price * item.qty}฿
-								</td>
-							</tr>`);
-                })
+    const remainingStock = 5; // จำนวนสินค้าที่เหลือในระบบ
+    let quantityColor = ''; // สีข้อความแสดงจำนวนสินค้า
+    if (item.qty <= remainingStock) {
+        quantityColor = 'red'; // ถ้าจำนวนเหลือน้อยกว่าหรือเท่ากับจำนวนสินค้าที่กำหนด
+    }
+    $(`#cart-item-${seller.key}`).append(`
+        <tr>
+            <td class="cart-product">
+                <div class="product-img" style="width: 5rem;">
+                    <img src="${item.img}" onError="this.src='#'" />
+                </div>
+                <div class="product-info">
+                    <div class="title">${item.name}</div>
+                    <!-- <div class="desc">Delivers Tue 26/04/2016 - Free</div> -->
+                </div>
+            </td>
+
+            <td class="cart-price text-center">${item.price}</td>
+            <td class="cart-qty text-center">
+                <div class="cart-qty-input">
+                    <a href="#" class="qty-control left disabled" data-id="${item.id}" data-click="decrease-qty" data-target="#qty-${item.id}"><i class="fa fa-minus"></i></a>
+                    <input type="text" name="qty" value="${item.qty}" class="form-control" id="qty-${item.id}" />
+                    <a href="#" class="qty-control right disabled" data-id="${item.id}" data-click="increase-qty" data-target="#qty-${item.id}"><i class="fa fa-plus"></i></a>
+                </div>
+               </td>
+           <td id="cart-total-${item.id}" class="cart-total text-center">
+                ${item.price * item.qty}฿
+            </td>
+
+            <td class="cart-actions text-center">
+                <div class="qty-desc" style="cursor: pointer;" onclick="removeItemCart(${seller.key}, ${item.id})">
+                    <i class="fas fa-trash-alt"></i> <!-- ไอคอนถังขยะ -->
+                </div>
+            </td>
+        </tr>
+    `);
+})
                 $(".table-cart").append(`</tbody>`)
             })
             $(".table-cart").append(`
   <tbody id="cart-item">
     <tr>
-      <td class="cart-summary" colspan="4">
+      <td class="cart-summary" colspan="7">
         <div class="summary-container">
           <div class="summary-row total" style="border-top: 0px; margin-top: 0;">
             <div class="field">รวมทั้งหมด</div>
-            <div class="value">${cartObject.reduce((a, b) => a + b.price * b.qty, 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ฿</div>
-          </div>
+            <div class="value">${cartObject.reduce((a, b)=> a + b.price * b.qty, 0)+"฿"}</div>
         </div>
       </td>
     </tr>

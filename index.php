@@ -63,13 +63,13 @@ $resultBrands = $conn->query($sql);
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img class="d-block w-100" src="https://media.discordapp.net/attachments/1129059372547453119/1141919992040915054/banner.webp?width=1025&height=320" alt="">
+            <img class="d-block w-100" src="https://media.discordapp.net/attachments/1129059372547453119/1141919992040915054/banner.webp" alt="">
         </div>
         <div class="carousel-item">
-            <img class="d-block w-100" src="https://media.discordapp.net/attachments/1129059372547453119/1141919992040915054/banner.webp?width=1025&height=320" alt="">
+        <img class="d-block w-100" src="https://media.discordapp.net/attachments/1129059372547453119/1141919992040915054/banner.webp" alt="">
         </div>
         <div class="carousel-item">
-            <img class="d-block w-100" src="https://media.discordapp.net/attachments/1129059372547453119/1141919992040915054/banner.webp?width=1025&height=320" alt="">
+        <img class="d-block w-100" src="https://media.discordapp.net/attachments/1129059372547453119/1141919992040915054/banner.webp" alt="">
         </div>
     </div>
 </div>
@@ -95,8 +95,14 @@ $resultBrands = $conn->query($sql);
                             <img src="<?php echo $item['product_image']; ?>" alt="<?php echo $item['product_name']; ?> Image" width="300" height="200">
                             <div class="item-info">
                                 <h4 class="item-title"><?php echo $item['product_name']; ?></h4>
-                                <p class="item-desc"><?php echo substr($item['product_detail'], 0, 100); ?></p>
-                                <div class="item-price"><?php echo number_format($item['product_price'], 2, '.', ','); ?> ฿</div>
+                                <p class="item-desc"><?php echo trim(substr($item['product_detail'], 0, 200)); ?></p>
+                                <div class="item-price">
+                                    <?php
+                                    $formatted_price = number_format($item['product_price'], 2, '.', ','); // จัดรูปแบบราคาแบบมีทศนิยม 2 ตำแหน่ง
+                                    $cleaned_price = rtrim(rtrim($formatted_price, '0'), '.'); // ลบ 0 ที่ตามหลังและตำแหน่งทศนิยมถ้าเป็น 0
+                                    echo $cleaned_price . ' ฿';
+                                    ?>
+                                </div>
                             </div>
                         </a>
                     </div>
@@ -139,8 +145,9 @@ foreach ($resultBrands as $row) {
                                     <img src="<?php echo $item['product_image']; ?>" alt="<?php echo $item['product_name']; ?> Image" width="300" height="200" />
                                     <div class="item-info">
                                         <h4 class="item-title"><?php echo $item['product_name']; ?></h4>
-                                        <p class="item-desc"> <?php echo substr($item['product_detail'], 0, 100); ?></p>
-                                        <div class="item-price"><?php echo number_format($item['product_price'], 2, '.', ','); ?> ฿</div>
+                                        <p class="item-desc"><?php echo trim(substr($item['product_detail'], 0, 200)); ?></p>
+                                        <div class="item-price"><?php echo number_format(floor($item['product_price']), 0, '', ','); ?> ฿</div>
+
                                     </div>
                                 </a>
                             </div>

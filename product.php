@@ -130,8 +130,13 @@ $resultCategories = $conn->query($sql);
                                         <img src="<?php echo $item['product_image']; ?>" />
                                         <div class="item-info">
                                             <h4 class="item-title"><?php echo $item['product_name']; ?></h4>
-                                            <p class="item-desc"> <?php echo substr($item['product_detail'], 0, 100); ?></p>
-                                            <div class="item-price"><?php echo number_format($item['product_price'], 2, '.', ','); ?> ฿</div>
+                                            <p class="item-desc"><?php echo trim(substr($item['product_detail'], 0, 200)); ?></p>
+                                            <div class="item-price">
+                                                <?php
+                                                $formatted_price = number_format($item['product_price'], 2, '.', ','); // จัดรูปแบบราคาแบบมีทศนิยม 2 ตำแหน่ง
+                                                echo rtrim(rtrim($formatted_price, '0'), '.') . ' ฿'; // ลบ 0 ที่ตามหลังและตำแหน่งทศนิยมถ้าเป็น 0
+                                                ?>
+                                            </div>
                                         </div>
                                     </a>
                                 </div>
