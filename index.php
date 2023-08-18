@@ -84,6 +84,7 @@ $resultBrands = $conn->query($sql);
         </h4>
         <!-- END section-title -->
         <!-- BEGIN row -->
+
         <div class="row row-space-10">
             <?php foreach ($resultTrending as $item) { ?>
                 <!-- BEGIN col-2 -->
@@ -91,13 +92,11 @@ $resultBrands = $conn->query($sql);
                     <!-- BEGIN item -->
                     <div class="item item-thumbnail">
                         <a href="product_detail.php?id=<?php echo $item['product_id']; ?>" class="item-link">
-                            <img src="<?php echo $item['product_image']; ?>" />
+                            <img src="<?php echo $item['product_image']; ?>" alt="<?php echo $item['product_name']; ?> Image" width="300" height="200">
                             <div class="item-info">
                                 <h4 class="item-title"><?php echo $item['product_name']; ?></h4>
-                                <p class="item-desc"> <?php echo substr($item['product_detail'], 0, 100); ?></p>
-                                <div class="item-price"><?php echo number_format($item['product_price'], 2, '.', ','); ?> ฿
-                                </div>
-
+                                <p class="item-desc"><?php echo substr($item['product_detail'], 0, 100); ?></p>
+                                <div class="item-price"><?php echo number_format($item['product_price'], 2, '.', ','); ?> ฿</div>
                             </div>
                         </a>
                     </div>
@@ -106,12 +105,16 @@ $resultBrands = $conn->query($sql);
                 <!-- END col-2 -->
             <?php } ?>
         </div>
-        <!-- END row -->
+        <!-- END item -->
     </div>
-    <!-- END container -->
+    <!-- END col-2 -->
+    <?php  ?>
+</div>
+<!-- END row -->
+</div>
+<!-- END container -->
 </div>
 <!-- END #trending-items -->
-
 <?php
 foreach ($resultBrands as $row) {
     $sql = "SELECT *,(SELECT SUM(order_qty) FROM order_detail WHERE order_detail.product_id = product.product_id) as topSell FROM product WHERE brand_id = " . $row['brand_id'] . "  ORDER BY topSell DESC LIMIT 6";
@@ -133,12 +136,11 @@ foreach ($resultBrands as $row) {
                             <!-- BEGIN item -->
                             <div class="item item-thumbnail">
                                 <a href="product_detail.php?id=<?php echo $item['product_id']; ?>" class="item-link">
-                                    <img src="<?php echo $item['product_image']; ?>" />
+                                    <img src="<?php echo $item['product_image']; ?>" alt="<?php echo $item['product_name']; ?> Image" width="300" height="200" />
                                     <div class="item-info">
                                         <h4 class="item-title"><?php echo $item['product_name']; ?></h4>
                                         <p class="item-desc"> <?php echo substr($item['product_detail'], 0, 100); ?></p>
-                                        <div class="item-price"><?php echo number_format($item['product_price'], 2, '.', ','); ?> ฿
-                                        </div>
+                                        <div class="item-price"><?php echo number_format($item['product_price'], 2, '.', ','); ?> ฿</div>
                                     </div>
                                 </a>
                             </div>
@@ -146,6 +148,7 @@ foreach ($resultBrands as $row) {
                         </div>
                         <!-- END col-2 -->
                     <?php } ?>
+
                 </div>
                 <!-- END row -->
             </div>

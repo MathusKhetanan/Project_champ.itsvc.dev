@@ -18,6 +18,9 @@
             <div class="col-md-12">
               <h4><i class="fa fa-universal-access fa-fw text-primary"></i> <a href="profile.php">จัดการบัญชีของฉัน</a></h4>
               <hr style="border-color: rgba(255,255,255,.45);" />
+              <h4><i class="fa fa-key fa-fw text-primary"></i><a href="password.php">เปลี่ยนรหัสผ่าน</a></h4>
+
+              <hr style="border-color: rgba(255,255,255,.45);" />
               <h4><i class="fab fa-gitlab fa-fw text-primary"></i> <a href="order.php">ประวัติการสั่งซื้อ</a></h4>
             </div>
             <!-- END col-6 -->

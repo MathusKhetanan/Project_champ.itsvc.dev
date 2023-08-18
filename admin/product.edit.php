@@ -92,7 +92,7 @@
           <div class="col-4">
             <div class="form-group">
               <label for="product_detail">รายละเอียดสินค้า</label>
-              <textarea class="form-control" id="product_detail" name="product_detail" placeholder="รายละเอียดสินค้า" data-parsley-required="true"><?php echo $row['product_detail']; ?></textarea>
+              <textarea class="form-control" id="product_detail" name="product_detail" placeholder="รายละเอียดสินค้า" data-parsley-required="true" rows="10"><?php echo $row['product_detail']; ?></textarea>
             </div>
           </div>
           <div class="col-4">

@@ -6,7 +6,7 @@
 </div>
 <!-- icon -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 <script src="dist/js/e-commerce/app.min.js"></script>
 
 <script type="text/javascript" src="https://cdn.omise.co/omise.js"></script>
@@ -21,42 +21,42 @@
 <script src="dist/js/demo/table-manage-default.demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.21/dist/sweetalert2.all.min.js"></script>
 <script>
- Omise.setPublicKey("pkey_test_5r0gn5997jah59d6ns1");
+    Omise.setPublicKey("pkey_test_5r0gn5997jah59d6ns1");
 
-let cartObject = JSON.parse(localStorage.getItem('items')) || [];
-var cartGroupSeller = [];
-const payOmise = () => {
-    var form = document.querySelector('form[action="process_checkout.php"]');
-    let amount = parseFloat($('input[name="amount"]').val()) * 100;  // แปลงเป็น satangs
+    let cartObject = JSON.parse(localStorage.getItem('items')) || [];
+    var cartGroupSeller = [];
+    const payOmise = () => {
+        var form = document.querySelector('form[action="process_checkout.php"]');
+        let amount = parseFloat($('input[name="amount"]').val()) * 100; // แปลงเป็น satangs
 
-    if (amount < 2000) {  // 2000000 satangs เท่ากับ 20 บาท
-        alert('จำนวนเงินต้องไม่น้อยกว่า 20 บาท (2000 satangs)');
-        return;
-    }
-  
-    tokenParameters = {
-        "expiration_month": parseInt($('input[name="mm"]').val()),
-        "expiration_year": parseInt($('input[name="yy"]').val()),
-        "name": $('input[name="cardHolder"]').val(),
-        "number": $('input[name="cardNumber"]').val(),
-        "security_code": parseInt($('input[name="number"]').val()),
-        "amount": amount,
-    };
-    
-    Omise.createToken("card", tokenParameters, function(statusCode, response) {
-        if (statusCode === 200) {
-            const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
-            groupSeller(newCartObject)
-            console.log(newCartObject.reduce((a, b) => a + b.price * b.qty, 0))
-            form.items.value = JSON.stringify(cartGroupSeller);
-            form.amount.value = newCartObject.reduce((a, b) => a + b.price * b.qty, 0) * 100;
-            form.omiseToken.value = response.id;
-            form.submit();
-        } else {
-            window.location.href = 'process_checkout.php';
+        if (amount < 2000) { // 2000000 satangs เท่ากับ 20 บาท
+            alert('จำนวนเงินต้องไม่น้อยกว่า 20 บาท (2000 satangs)');
+            return;
         }
-    });
-}
+
+        tokenParameters = {
+            "expiration_month": parseInt($('input[name="mm"]').val()),
+            "expiration_year": parseInt($('input[name="yy"]').val()),
+            "name": $('input[name="cardHolder"]').val(),
+            "number": $('input[name="cardNumber"]').val(),
+            "security_code": parseInt($('input[name="number"]').val()),
+            "amount": amount,
+        };
+
+        Omise.createToken("card", tokenParameters, function(statusCode, response) {
+            if (statusCode === 200) {
+                const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
+                groupSeller(newCartObject)
+                console.log(newCartObject.reduce((a, b) => a + b.price * b.qty, 0))
+                form.items.value = JSON.stringify(cartGroupSeller);
+                form.amount.value = newCartObject.reduce((a, b) => a + b.price * b.qty, 0) * 100;
+                form.omiseToken.value = response.id;
+                form.submit();
+            } else {
+                window.location.href = 'process_checkout.php';
+            }
+        });
+    }
 
     const groupSeller = (newCartObject) => {
         cartGroupSeller = [];
@@ -225,7 +225,7 @@ const payOmise = () => {
                     <article class="mr-8 order-first">
                         <div style="display: flex; align-items: center; flex-direction: column;">
                             <a href="https://champ.itsvc.dev">
-                                <img src="https://cdn.discordapp.com/attachments/1128198864629940244/1128967842545545287/logo.png" class="img-fluid" style="max-width: 100px; height: auto;">
+                                <img src="https://cdn.discordapp.com/attachments/1128198864629940244/1128967842545545287/logo.png" class="img-fluid" style="max-width: 100px; height: auto;" alt="โลโก้ A&P">
                             </a>
                             <div class="description" style="margin-top: 10px;">
                                 <span style="font-size: 16px; display: flex; align-items: center;">
@@ -239,7 +239,7 @@ const payOmise = () => {
                                     บริษัทขายเครื่องกรองน้ำ A & P
                                 </b>
                                 <p class="mt-3" style="font-size: 16px; margin-top: 10px;">
-                                    104/641 หมู่3 ถนน พ่อขุนทะเล ตำบล มะขามเตี้ย อำเภอเมือง
+                                    104/641 หมู่3 ถนน พ่อขุนทะเล ตำบล มะขามเตี้ย อำเภอเมือง <br>จังหวัด สุราษฎร์ธานี
                                 </p>
                             </div>
                         </div>
@@ -251,33 +251,27 @@ const payOmise = () => {
                     <ul class="list-unstyled">
                         <li><a href="product.php" data-abc="true">สินค้าทั้งหมด</a></li>
                         <li><a href="product.php" data-abc="true">สินค้าเครื่องกรองนํ้า</a></li>
-                        <li><a href="#" data-abc="true"></a></li>
-                        <li><a href="#" data-abc="true"></a></li>
                     </ul>
                 </aside>
                 <aside class="col-sm-3 col-md-2">
                     <h5 class="title">บริการช่วยเหลือ</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" data-abc="true">เช็คสถานะการจัดส่ง</a></li>
-                        <li><a href="#" data-abc="true">เงื่อนไขการรับประกัน</a></li>
-                        <li><a href="#" data-abc="true">นโยบายส่วนบุคคล</a></li>
-                        <li><a href="#" data-abc="true">วิธีการสั่งซื้อ</a></li>
-                        <li><a href="howtopayment.php" data-abc="true">วิธีการชำระเงิน</a></li>
+                        <li><a href="#" data-abc="true" aria-label="เงื่อนไขการแก้ไข">เงื่อนไขการแก้ไข</a></li>
+                        <li><a href="#" data-abc="true" aria-label="นโยบายส่วนบุคคล">นโยบายส่วนบุคคล</a></li>
+                        <li><a href="#" data-abc="true" aria-label="วิธีการแก้ไข">วิธีการแก้ไข</a></li>
+                        <li><a href="howtopayment.php" data-abc="true">ช่องทางการชําระเงิน</a></li>
                     </ul>
                 </aside>
                 <aside class="col-sm-3 col-md-2">
                     <h5 class="title">ติดต่อเรา</h5>
                     <ul class="list-unstyled">
                         <li><a href="#" data-abc="true"> เกี่ยวกับเรา </a></li>
-                        <li><a href="#" data-abc="true"> </a></li>
-                        <li><a href="#" data-abc="true"> </a></li>
-                        <li><a href="#" data-abc="true"> </a></li>
                     </ul>
                 </aside>
                 <aside class="col-sm-2 col-md-2">
                     <h5 class="title">ดาวน์โหลดแอปพลิเคชั่น</h5>
                     <a href="#" class="d-block mb-2" data-abc="true">
-                        <img class="img-responsive" src="https://media.discordapp.net/attachments/1120961499196821596/1127982211526819970/2.png" height="40" width="140">
+                        <img class="img-responsive" src="https://media.discordapp.net/attachments/1120961499196821596/1127982211526819970/2.png" alt="โลโก้ A&P">
                     </a>
                 </aside>
             </div>
