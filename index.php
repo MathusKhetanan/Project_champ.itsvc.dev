@@ -63,13 +63,13 @@ $resultBrands = $conn->query($sql);
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img class="d-block w-100" src="https://media.discordapp.net/attachments/1129059372547453119/1141919992040915054/banner.webp" alt="">
+            <img class="d-block w-100" src="https://media.discordapp.net/attachments/1129059372547453119/1141919992040915054/banner.webp" alt="banner">
         </div>
         <div class="carousel-item">
-        <img class="d-block w-100" src="https://media.discordapp.net/attachments/1129059372547453119/1141919992040915054/banner.webp" alt="">
+            <img class="d-block w-100" src="https://media.discordapp.net/attachments/1129059372547453119/1141919992040915054/banner.webp" alt="banner">
         </div>
         <div class="carousel-item">
-        <img class="d-block w-100" src="https://media.discordapp.net/attachments/1129059372547453119/1141919992040915054/banner.webp" alt="">
+            <img class="d-block w-100" src="https://media.discordapp.net/attachments/1129059372547453119/1141919992040915054/banner.webp" alt="banner">
         </div>
     </div>
 </div>

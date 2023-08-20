@@ -37,14 +37,14 @@ $result = $conn->query($sql);
                 <thead>
                     <tr>
                         <th width="1%"></th>
-                        <th width="1%" data-orderable="false"></th>
+                        <th class="text-nowrap">รูปสินค้า</th>
                         <th class="text-nowrap">ชื่อสินค้า</th>
                         <th class="text-nowrap">แบรนด์</th>
                         <th class="text-nowrap">ประเภทสินค้า</th>
                         <th width="15rem" class="text-nowrap">รายละเอียดสินค้า</th>
                         <th class="text-nowrap">ราคาสินค้า</th>
                         <th class="text-nowrap">จำนวนสินค้า</th>
-                        <th class="text-nowrap">ระยะเวลาการใช้(วัน)</th>
+                        <th class="text-nowrap">ระยะเวลาการใช้       </th>
                         <th class="text-nowrap text-center">ตัวเลือก</th>
                     </tr>
                 </thead>

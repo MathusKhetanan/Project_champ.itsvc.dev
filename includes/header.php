@@ -307,7 +307,7 @@ if (isset($_SESSION['user_id'])) {
                     <!-- <span class="brand-logo"></span> -->
                     <img src="https://media.discordapp.net/attachments/1120961499196821596/1132934419204816986/logo.png" class="ml-2 mr-3" width="50" height="50" alt="logo_Champ" />
                     <span class="brand-text">
-                        <span class="text-primary">C</span>hamp <span class="text-primary"><span class="text-primary">S</span>hop
+                        <span class="text-primary"></span>champ <span class="text-primary"><span class="text-primary">S</span>hop
                             <small>ร้านค้า ขายเครื่องกรองนํ้า A & P</small>
                         </span>
                 </a>

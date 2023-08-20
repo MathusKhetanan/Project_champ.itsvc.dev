@@ -14,7 +14,8 @@
   if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
   }
-
+  $sql = "SET sql_mode = '';";
+  $conn->query($sql);
   $sql = "UPDATE `withdraw` SET `withdraw_status` = 'successful' WHERE withdraw_status = 'wait_confirm' AND DATE(updatedAt+ INTERVAL 10 DAY) <= DATE(NOW())";
   $conn->query($sql);
   

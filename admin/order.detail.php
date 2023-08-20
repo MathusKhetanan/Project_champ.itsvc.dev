@@ -1,31 +1,31 @@
-		<?php 
-      include('../config.php');
-			include('includes/authentication.php'); 
-			include('includes/header.php'); 
+		<?php
+		include('../config.php');
+		include('includes/authentication.php');
+		include('includes/header.php');
 
-			$order_id = $conn->real_escape_string($_GET['id']);
-      $sql = "SELECT * FROM orders LEFT JOIN user ON orders.user_id = user.user_id LEFT JOIN seller ON orders.seller_id = seller.seller_id WHERE order_id = $order_id";
-      $result = $conn->query($sql);
-			$row = $result->fetch_assoc();
+		$order_id = $conn->real_escape_string($_GET['id']);
+		$sql = "SELECT * FROM orders LEFT JOIN user ON orders.user_id = user.user_id LEFT JOIN seller ON orders.seller_id = seller.seller_id WHERE order_id = $order_id";
+		$result = $conn->query($sql);
+		$row = $result->fetch_assoc();
 
-			$sql = "SELECT * FROM order_detail WHERE order_id = $order_id";
-      $result = $conn->query($sql);
+		$sql = "SELECT * FROM order_detail WHERE order_id = $order_id";
+		$result = $conn->query($sql);
 		?>
 
 		<!-- begin #content -->
 		<div id="content" class="content">
 			<!-- begin breadcrumb -->
 			<ol class="breadcrumb float-xl-right">
-        <li class="breadcrumb-item"><a href="./">หน้าหลัก</a></li>
-        <li class="breadcrumb-item"><a href="order.php">จัดการออเดอร์</a></li>
+				<li class="breadcrumb-item"><a href="./">หน้าหลัก</a></li>
+				<li class="breadcrumb-item"><a href="order.php">จัดการออเดอร์</a></li>
 				<li class="breadcrumb-item active">รายละเอียดออเดอร์</li>
 			</ol>
 			<!-- end breadcrumb -->
 			<!-- begin page-header -->
 			<h1 class="page-header">
-				รายละเอียดออเดอร์ 
-        <!-- <small>header small text goes here...</small> -->
-      </h1>
+				รายละเอียดออเดอร์
+				<!-- <small>header small text goes here...</small> -->
+			</h1>
 			<!-- end page-header -->
 
 			<!-- begin invoice -->
@@ -36,7 +36,7 @@
 						<div class="col-5">
 							ร้าน: <?php echo $row['seller_shop']; ?>
 						</div>
-						<div class="col-7 d-flex justify-content-end" >
+						<div class="col-7 d-flex justify-content-end">
 							อัพเดจสถานะ:
 							<form action="process_order.detail.status.php?id=<?php echo $row['order_id']; ?>" class="ml-2 mr-2" method="POST">
 								<button type="submit" class="btn btn-<?php echo $StatusColor['paid']; ?>" name="change_status" value="paid"><?php echo $Status['paid']; ?></button>
@@ -44,10 +44,14 @@
 							<form action="process_order.detail.status.php?id=<?php echo $row['order_id']; ?>" class="ml-2 mr-3" method="POST">
 								<button type="submit" class="btn btn-<?php echo $StatusColor['preparing']; ?>" name="change_status" value="preparing"><?php echo $Status['preparing']; ?></button>
 							</form>
-							<form action="process_order.detail.status.php?id=<?php echo $row['order_id']; ?>" class="row d-flex justify-content-end"  method="POST">
+							<form action="process_order.detail.status.php?id=<?php echo $row['order_id']; ?>" class="ml-2 mr-3" method="POST">
+								<button type="submit" class="btn btn-success" name="change_status" value="successful">ยืนยันการรับสินค้า</button>
+							</form>
+							<form action="process_order.detail.status.php?id=<?php echo $row['order_id']; ?>" class="row d-flex justify-content-end" method="POST">
 								<input type="text" class="form-control w-50 mr-3" id="order_tracking" name="order_tracking" placeholder="กรอกหมายเลขพัสดุ" required>
 								<button type="submit" class="btn btn-<?php echo $StatusColor['shipping']; ?>" name="change_status" value="shipping">อัพเดทหมายเลขพัสดุ</button>
 							</form>
+
 						</div>
 					</div>
 				</div>
@@ -69,7 +73,7 @@
 						</address>
 					</div>
 					<div class="invoice-date">
-						<small>สถานะออเดอร์ / <span class="badge bg-<?php echo $StatusColor[$row['order_status']]; ?>" style="font-size: 12px"><?php echo $Status[$row['order_status']]; ?></span></small><br/>
+						<small>สถานะออเดอร์ / <span class="badge bg-<?php echo $StatusColor[$row['order_status']]; ?>" style="font-size: 12px"><?php echo $Status[$row['order_status']]; ?></span></small><br />
 						หมายเลขพัสดุ: <?php echo $row['order_tracking']; ?>
 						<div class="date text-inverse m-t-5"><?php echo $row['createdAt']; ?></div>
 						<div class="invoice-detail">
@@ -94,24 +98,24 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php 
-									$total = 0;
-									foreach ($result as $key => $item){ 
-										$total += $item['order_subtotal'];
+								<?php
+								$total = 0;
+								foreach ($result as $key => $item) {
+									$total += $item['order_subtotal'];
 
-										$free = number_format(($item['order_subtotal'] * $row['order_total_free'])/100, 2);
-										$free_vat = number_format(($free * $row['order_total_free_vat'])/100, 2);
+									$free = number_format(($item['order_subtotal'] * $row['order_total_free']) / 100, 2);
+									$free_vat = number_format(($free * $row['order_total_free_vat']) / 100, 2);
 								?>
-								<tr>
-									<td>
-										<span class="text-inverse"><?php echo $item['product_name']; ?></span>
-									</td>
-									<td class="text-center"><?php echo $item['product_price']; ?></td>
-									<td class="text-center">x <?php echo $item['order_qty']; ?></td>
-									<td class="text-right"><?php echo $item['order_subtotal']; ?></td>
-									<td class="text-right"><?php echo $free+$free_vat; ?></td>
-									<td class="text-right"><?php echo $item['order_subtotal']-($free+$free_vat); ?></td>
-								</tr>
+									<tr>
+										<td>
+											<span class="text-inverse"><?php echo $item['product_name']; ?></span>
+										</td>
+										<td class="text-center"><?php echo $item['product_price']; ?></td>
+										<td class="text-center">x <?php echo $item['order_qty']; ?></td>
+										<td class="text-right"><?php echo $item['order_subtotal']; ?></td>
+										<td class="text-right"><?php echo $free + $free_vat; ?></td>
+										<td class="text-right"><?php echo $item['order_subtotal'] - ($free + $free_vat); ?></td>
+									</tr>
 								<?php } ?>
 							</tbody>
 						</table>
@@ -130,7 +134,7 @@
 								</div>
 								<div class="sub-price">
 									<small>FEE + VAT</small>
-									<span class="text-inverse"><?php echo $row['order_total_free_vat']+$row['order_total_free']; ?></span>
+									<span class="text-inverse"><?php echo $row['order_total_free_vat'] + $row['order_total_free']; ?></span>
 								</div>
 							</div>
 						</div>
