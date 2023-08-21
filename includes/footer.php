@@ -220,10 +220,7 @@
             renderCountCart();
         </script>
 <!-- ในส่วน footer.php -->
-<script>
-    // สร้างตัวแปร totalPriceString และกำหนดค่าจาก cartObject ลงในนั้น
-    var totalPriceString = '${cartObject.reduce((a, b) => a + b.price * b.qty, 0)}฿';
-</script>
+
 
 <script src="dist/js/demo/form-wizards-validation.checkout.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
@@ -244,6 +241,18 @@
             alert('กรุณากรอกข้อมูลให้ครบทุกช่อง'); // แจ้งเตือนให้ผู้ใช้กรอกข้อมูล
         }
     });
+</script>
+<!-- เพิ่มส่วนโค้ดนี้ลงในส่วน script ของหน้าเว็บของคุณ -->
+<script>
+    const updateTotalPrice = () => {
+        const cartObject = JSON.parse(localStorage.getItem('items')) || [];
+        const totalPrice = cartObject.reduce((a, b) => a + b.price * b.qty, 0);
+        document.getElementById('totalPrice').textContent = `${totalPrice.toFixed(2)} ฿`;
+        document.querySelector('input[name="amount"]').value = totalPrice.toFixed(2);
+    }
+
+    // เรียกใช้ฟังก์ชันเมื่อหน้าเว็บโหลด
+    updateTotalPrice();
 </script>
 
 </body>

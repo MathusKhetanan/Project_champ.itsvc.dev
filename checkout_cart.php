@@ -1,154 +1,153 @@
-	<?php
-	include('config.php');
-	include('includes/authentication.php');
-	include('includes/header.php');
-	$sql = "SELECT * FROM `tbl_bank`";
-	$result = $conn->query($sql);
+<?php
+include('config.php');
+include('includes/authentication.php');
+include('includes/header.php');
+$sql = "SELECT * FROM `tbl_bank`";
+$result = $conn->query($sql);
 
-	// ตรวจสอบว่ามีสินค้าในตะกร้าหรือไม่
-	if (isset($_SESSION['items']) && !empty($_SESSION['items'])) {
-		$totalPrice = 0;
+// ตรวจสอบว่ามีสินค้าในตะกร้าหรือไม่
+if (isset($_SESSION['items']) && is_array($_SESSION['items']) && count($_SESSION['items']) > 0) {
+    $totalPrice = 0;
 
-		// หาราคารวมของสินค้าในตะกร้า
-		foreach ($_SESSION['items'] as $item) {
-			$totalPrice += $item['price'] * $item['qty'];
-		}
-	} else {
-		// กรณีไม่มีสินค้าในตะกร้า
-		$totalPrice = 0;
+    // หาราคารวมของสินค้าในตะกร้า
+    foreach ($_SESSION['items'] as $item) {
+        $totalPrice += $item['price'] * $item['qty'];
+    }
+} else {
+    // กรณีไม่มีสินค้าในตะกร้า
+    $totalPrice = 0;
+}
+?>
+
+<style>
+	.sw-main.sw-theme-default .step-anchor {
+		background: #343a40;
 	}
-	?>
 
+	.sw-main.sw-theme-default .step-anchor>li.active {
+		background: #303030 !important;
+	}
 
-	<style>
-		.sw-main.sw-theme-default .step-anchor {
-			background: #343a40;
-		}
+	.sw-theme-default>ul.step-anchor>li.done>a {
+		color: #6f8293 !important;
+	}
 
-		.sw-main.sw-theme-default .step-anchor>li.active {
-			background: #303030 !important;
-		}
+	.sw-main.sw-theme-default .step-anchor>li.done>a .number:before {
+		background: #d5dbe0 !important;
+		color: #4d353c !important;
+	}
 
-		.sw-theme-default>ul.step-anchor>li.done>a {
-			color: #6f8293 !important;
-		}
+	.nav.nav-tabs .nav-item .nav-link:hover {
+		color: #fff;
+	}
 
-		.sw-main.sw-theme-default .step-anchor>li.done>a .number:before {
-			background: #d5dbe0 !important;
-			color: #4d353c !important;
-		}
+	.sw-main.sw-theme-default .sw-toolbar {
+		background: #dee2e6;
+	}
 
-		.nav.nav-tabs .nav-item .nav-link:hover {
-			color: #fff;
-		}
+	.sw-theme-default .sw-toolbar-bottom {
+		padding: 1.5625rem 1.875rem !important;
+	}
 
-		.sw-main.sw-theme-default .sw-toolbar {
-			background: #dee2e6;
-		}
+	.btn-group,
+	.btn-group-vertical {
+		display: block;
+	}
 
-		.sw-theme-default .sw-toolbar-bottom {
-			padding: 1.5625rem 1.875rem !important;
-		}
+	.sw-btn-prev {
+		color: #212529 !important;
+		background-color: #fff !important;
+		border-color: #fff !important;
+		-webkit-box-shadow: 0 !important;
+		box-shadow: 0 !important;
+	}
 
-		.btn-group,
-		.btn-group-vertical {
-			display: block;
-		}
+	.sw-btn-prev,
+	.sw-btn-next {
+		width: 12.5rem !important;
 
-		.sw-btn-prev {
-			color: #212529 !important;
-			background-color: #fff !important;
-			border-color: #fff !important;
-			-webkit-box-shadow: 0 !important;
-			box-shadow: 0 !important;
-		}
+		font-size: 1rem;
 
-		.sw-btn-prev,
-		.sw-btn-next {
-			width: 12.5rem !important;
+		color: #fff;
+		background-color: #2d353c;
+		border-color: #2d353c;
 
-			font-size: 1rem;
+		padding: .75rem 1.875rem;
+		font-weight: 700;
+		-webkit-border-radius: 6px;
+		border-radius: 6px;
+	}
 
-			color: #fff;
-			background-color: #2d353c;
-			border-color: #2d353c;
+	/* สไตล์ของช่องแนบสลิป */
+	input[type="file"] {
+		border: 2px solid #3498db;
+		/* สีขอบช่องแนบ */
+		background-color: #f0f0f0;
+		/* สีพื้นหลังช่องแนบ */
+		color: #333;
+		/* สีข้อความในช่องแนบ */
+		padding: 10px;
+		/* ระยะห่างของข้อความภายในช่องแนบ */
+		border-radius: 5px;
+		/* ขอบมนของช่องแนบ */
+		font-size: 16px;
+		/* ขนาดตัวอักษรข้อความในช่องแนบ */
+	}
 
-			padding: .75rem 1.875rem;
-			font-weight: 700;
-			-webkit-border-radius: 6px;
-			border-radius: 6px;
-		}
+	/* สไตล์ของช่องแนบสลิปเมื่อได้รับการโฟกัส */
+	input[type="file"]:focus {
+		outline: none;
+		/* ไม่แสดงเส้นขอบ (outline) เมื่อได้รับการโฟกัส */
+		border-color: #0078d4;
+		/* เปลี่ยนสีขอบช่องแนบเมื่อได้รับการโฟกัส */
+		box-shadow: 0 0 5px rgba(0, 120, 212, 0.5);
+		/* เพิ่มเงาเมื่อได้รับการโฟกัส */
+	}
+</style>
 
-		/* สไตล์ของช่องแนบสลิป */
-		input[type="file"] {
-			border: 2px solid #3498db;
-			/* สีขอบช่องแนบ */
-			background-color: #f0f0f0;
-			/* สีพื้นหลังช่องแนบ */
-			color: #333;
-			/* สีข้อความในช่องแนบ */
-			padding: 10px;
-			/* ระยะห่างของข้อความภายในช่องแนบ */
-			border-radius: 5px;
-			/* ขอบมนของช่องแนบ */
-			font-size: 16px;
-			/* ขนาดตัวอักษรข้อความในช่องแนบ */
-		}
-
-		/* สไตล์ของช่องแนบสลิปเมื่อได้รับการโฟกัส */
-		input[type="file"]:focus {
-			outline: none;
-			/* ไม่แสดงเส้นขอบ (outline) เมื่อได้รับการโฟกัส */
-			border-color: #0078d4;
-			/* เปลี่ยนสีขอบช่องแนบเมื่อได้รับการโฟกัส */
-			box-shadow: 0 0 5px rgba(0, 120, 212, 0.5);
-			/* เพิ่มเงาเมื่อได้รับการโฟกัส */
-		}
-	</style>
-
-	<!-- BEGIN #checkout-cart -->
-	<div class="section-container" id="checkout-cart">
-		<!-- BEGIN container -->
-		<div class="container">
-			<!-- BEGIN checkout -->
-			<div class="checkout">
-				<!-- begin wizard-form -->
-				<form action="process_checkout.php" method="POST" name="form-wizard" class="form-control-with-bg">
-					<input type="hidden" name="amount" value="<?php echo $totalPrice; ?>"> <!-- เพิ่มค่าเงินจากราคาสินค้าที่ถูกคำนวณ -->
-					<input type="hidden" name="items">
-					<input type="hidden" name="omiseToken">
-					<!-- begin wizard -->
-					<div id="wizard">
-						<!-- begin wizard-step -->
-						<ul>
-							<li>
-								<a href="#step-1">
-									<span class="number">1</span>
-									<span class="info">
-										จัดการตะกร้าสินค้า
-										<small>Lorem ipsum dolor sit amet.</small>
-									</span>
-								</a>
-							</li>
-							<li>
-								<a href="#step-2">
-									<span class="number">2</span>
-									<span class="info">
-										จัดการที่อยู่
-										<small>Vivamus eleifend euismod.</small>
-									</span>
-								</a>
-							</li>
-							<li>
-								<a href="#step-3">
-									<span class="number">3</span>
-									<span class="info">
-										จัดการชำระเงิน
-										<small>Aenean ut pretium ipsum.</small>
-									</span>
-								</a>
-							</li>
-							<!-- <li>
+<!-- BEGIN #checkout-cart -->
+<div class="section-container" id="checkout-cart">
+	<!-- BEGIN container -->
+	<div class="container">
+		<!-- BEGIN checkout -->
+		<div class="checkout">
+			<!-- begin wizard-form -->
+			<form action="process_checkout.php" method="POST" name="form-wizard" class="form-control-with-bg">
+				<input type="hidden" name="amount"> <!-- เพิ่มค่าเงินจากราคาสินค้าที่ถูกคำนวณ -->
+				<input type="hidden" name="items">
+				<input type="hidden" name="omiseToken">
+				<!-- begin wizard -->
+				<div id="wizard">
+					<!-- begin wizard-step -->
+					<ul>
+						<li>
+							<a href="#step-1">
+								<span class="number">1</span>
+								<span class="info">
+									จัดการตะกร้าสินค้า
+									<small>Lorem ipsum dolor sit amet.</small>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#step-2">
+								<span class="number">2</span>
+								<span class="info">
+									จัดการที่อยู่
+									<small>Vivamus eleifend euismod.</small>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#step-3">
+								<span class="number">3</span>
+								<span class="info">
+									จัดการชำระเงิน
+									<small>Aenean ut pretium ipsum.</small>
+								</span>
+							</a>
+						</li>
+						<!-- <li>
 										<a href="#step-4">
 											<span class="number">4</span> 
 											<span class="info">
@@ -157,94 +156,102 @@
 											</span>
 										</a>
 									</li> -->
-						</ul>
-						<!-- end wizard-step -->
-						<!-- begin wizard-content -->
-						<div>
-							<!-- begin step-1 -->
-							<div id="step-1" class="checkout p-0">
-								<!-- begin fieldset -->
-								<fieldset>
-									<!-- BEGIN checkout-body -->
-									<div class="checkout-body">
-										<div class="table-responsive">
-											<table class="table table-cart">
-											
+					</ul>
+					<!-- end wizard-step -->
+					<!-- begin wizard-content -->
+					<div>
+						<!-- begin step-1 -->
+						<div id="step-1" class="checkout p-0">
+							<!-- begin fieldset -->
+							<fieldset>
+								<!-- BEGIN checkout-body -->
+								<div class="checkout-body">
+									<div class="table-responsive">
+										<table class="table table-cart">
+
 										</table>
-										</div>
-									</div>
-									<!-- END checkout-body -->
-								</fieldset>
-								<!-- end fieldset -->
-							</div>
-							<!-- end step-1 -->
-							<!-- begin step-2 -->
-							<div id="step-2">
-								<!-- begin fieldset -->
-								<fieldset>
-									<!-- BEGIN checkout-body -->
-									<div class="checkout-body">
-										<div class="form-group row">
-											<label class="col-form-label col-md-4 text-lg-right">
-												ชื่อ-สกุล <span class="text-danger">*</span>
-											</label>
-											<div class="col-md-4">
-												<input type="text" placeholder="ชื่อ-สกุล" name="user_fullname" data-parsley-group="step-2" class="form-control" data-parsley-required="true" value="<?php echo $_SESSION['user_fullname']; ?>" />
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-form-label col-md-4 text-lg-right">
-												ที่อยู่ <span class="text-danger">*</span>
-											</label>
-											<div class="col-md-4">
-												<textarea name="user_address" placeholder="ที่อยู่" class="form-control" data-parsley-group="step-2" data-parsley-required="true" rows="3"><?php echo $_SESSION['user_address']; ?></textarea>
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-form-label col-md-4 text-lg-right">
-												เบอร์ติดต่อ <span class="text-danger">*</span>
-											</label>
-											<div class="col-md-4">
-												<input type="text" name="user_tel" placeholder="เบอร์ติดต่อ" class="form-control" data-parsley-group="step-2" data-parsley-required="true" value="<?php echo $_SESSION['user_tel']; ?>" />
-											</div>
-										</div>
-									</div>
-									<!-- END checkout-body -->
-								</fieldset>
-								<!-- end fieldset -->
-							</div>
-							<!-- end step-2 -->
-							<div id="step-3">
-								<!-- รายละเอียดการชำระเงินและแนบสลิป -->
-								<div class="form-group row">
-									<label class="col-md-4 col-form-label text-lg-right">เลือกธนาคาร: <span class="text-danger">*</span></label>
-									<div class="col-md-4">
-										<select class="form-control" id="bank" name="bank" required>
-											<?php
-											if ($result->num_rows > 0) {
-												while ($row = $result->fetch_assoc()) {
-													echo '<option value="' . $row['id'] . '">' . $row['b_name'] . '</option>';
-												}
-											}
-											?>
-										</select>
 									</div>
 								</div>
-								<div class="form-group row">
-                                <label class="col-md-4 col-form-label text-lg-right">
-                                    จำนวนเงิน <span class="text-danger">*</span>
-                                </label>
-                                <div class="col-md-4">
-								<input type="text" class="form-control" name="amount" data-parsley-group="step-3" placeholder="โปรดกรอกจำนวนเงินที่โอนให้ตรงกับราคาสินค้า" value="<?php echo number_format($totalPrice, 0); ?> ฿" required />
-                                </div>
-                            </div>
-                            <!-- ส่วนที่คุณเพิ่มขึ้นเพื่อแนบสลิป -->
-                            <div class="form-group row">
-                                <label class="col-md-4 col-form-label text-lg-right">แนบสลิป <span class="text-danger">*</span></label>
-                                <div class="col-md-4">
-                                    <input type="file" class="form-control-file" name="slip" accept=".pdf,.jpg,.png" required />
-                                </div>
-                            </div>
+								<!-- END checkout-body -->
+							</fieldset>
+							<!-- end fieldset -->
+						</div>
+						<!-- end step-1 -->
+						<!-- begin step-2 -->
+						<div id="step-2">
+							<!-- begin fieldset -->
+							<fieldset>
+								<!-- BEGIN checkout-body -->
+								<div class="checkout-body">
+									<div class="form-group row">
+										<label class="col-form-label col-md-4 text-lg-right">
+											ชื่อ-สกุล <span class="text-danger">*</span>
+										</label>
+										<div class="col-md-4">
+											<input type="text" placeholder="ชื่อ-สกุล" name="user_fullname" data-parsley-group="step-2" class="form-control" data-parsley-required="true" value="<?php echo $_SESSION['user_fullname']; ?>" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-md-4 text-lg-right">
+											ที่อยู่ <span class="text-danger">*</span>
+										</label>
+										<div class="col-md-4">
+											<textarea name="user_address" placeholder="ที่อยู่" class="form-control" data-parsley-group="step-2" data-parsley-required="true" rows="3"><?php echo $_SESSION['user_address']; ?></textarea>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-md-4 text-lg-right">
+											เบอร์ติดต่อ <span class="text-danger">*</span>
+										</label>
+										<div class="col-md-4">
+											<input type="text" name="user_tel" placeholder="เบอร์ติดต่อ" class="form-control" data-parsley-group="step-2" data-parsley-required="true" value="<?php echo $_SESSION['user_tel']; ?>" />
+										</div>
+									</div>
+								</div>
+								<!-- END checkout-body -->
+							</fieldset>
+							<!-- end fieldset -->
+						</div>
+						<!-- end step-2 -->
+						<div id="step-3">
+							<!-- รายละเอียดการชำระเงินและแนบสลิป -->
+						<!-- ส่วนของรายละเอียดการชำระเงินและแนบสลิป -->
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-lg-right">เลือกธนาคาร: <span class="text-danger">*</span></label>
+    <div class="col-md-4">
+        <select class="form-control" id="bank" name="bank" required>
+            <?php
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<option value="' . $row['id'] . '">' . $row['b_name'] . '</option>';
+                }
+            }
+            ?>
+        </select>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-lg-right">
+        จำนวนเงิน <span class="text-danger">*</span>
+    </label>
+    <div class="col-md-4">
+        <div class="value" id="totalPrice"><?php echo number_format($totalPrice, 2, '.', ''); ?> ฿</div>
+        <input type="hidden" name="amount" value="<?php echo number_format($totalPrice, 2, '.', ''); ?>">
+    </div>
+</div>
+
+<script>
+    const totalPrice = <?php echo $totalPrice; ?>;
+    document.getElementById('totalPrice').textContent = totalPrice.toFixed(2) + ' ฿';
+</script>
+
+							<!-- ส่วนที่คุณเพิ่มขึ้นเพื่อแนบสลิป -->
+							<div class="form-group row">
+								<label class="col-md-4 col-form-label text-lg-right">แนบสลิป <span class="text-danger">*</span></label>
+								<div class="col-md-4">
+									<input type="file" class="form-control-file" name="slip" accept=".pdf,.jpg,.png" required />
+								</div>
+							</div>
 							<div id="hidden-step-3" style="display: none;">
 								<!-- ... ส่วนที่คุณต้องการซ่อน -->
 								<div class="form-group row">
@@ -286,39 +293,12 @@
 									</div>
 								</div>
 							</div>
-
-							<!-- END checkout-body -->
-							</fieldset>
-							<!-- end fieldset -->
 						</div>
-						<!-- end step-3 -->
-
-
-						<!-- begin step-4 -->
-
-						<!-- END checkout-message -->
 					</div>
-					<!-- END checkout-body -->
-					</fieldset>
 				</div>
-				<!-- end step-4 -->
-			</div>
-			<!-- END checkout-body -->
-			</fieldset>
+			</form>
 		</div>
-		<!-- end step-4 -->
 	</div>
-	<!-- end wizard-content -->
-	</div>
-	<!-- end wizard -->
-	</form>
-	<!-- end wizard-form -->
-	</div>
-	<!-- END checkout -->
+</div>
 
-	</div>
-	<!-- END container -->
-	</div>
-	<!-- END #checkout-cart -->
-
-	<?php include('includes/footer.php'); ?>
+<?php include('includes/footer.php'); ?>
