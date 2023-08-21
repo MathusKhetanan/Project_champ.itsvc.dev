@@ -31,7 +31,7 @@ $result = $conn->query($sql);
       <table id="data-table-default" class="table table-bordered">
         <thead>
           <tr>
-            <th width="1%"></th>
+          <th class="text-nowrap">ลําดับ</th>
             <th class="text-nowrap">ชื่อ-สกุล</th>
             <th class="text-nowrap">ชื่อบัญชีผู้ใช้</th>
             <th width="15rem" class="text-nowrap">ที่อยู่</th>

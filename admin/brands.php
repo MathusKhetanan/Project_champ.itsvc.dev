@@ -34,8 +34,8 @@ $result = $conn->query($sql);
       <table id="data-table-default" class="table table-bordered">
         <thead>
           <tr>
-            <th width="1%"></th>
-            <th width="1%" data-orderable="false"></th>
+          <th class="text-nowrap">ลําดับ</th>
+            <th class="text-nowrap">รูปแบรนด์</th>
             <th class="text-nowrap">ชื่อแบรนด์</th>
             <th class="text-nowrap text-center">ตัวเลือก</th>
           </tr>

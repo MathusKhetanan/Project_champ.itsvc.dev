@@ -36,7 +36,7 @@ $result = $conn->query($sql);
             <table id="data-table-default" class="table table-bordered">
                 <thead>
                     <tr>
-                        <th width="1%"></th>
+                        <th class="text-nowrap">ลําดับ</th>
                         <th class="text-nowrap">รูปสินค้า</th>
                         <th class="text-nowrap">ชื่อสินค้า</th>
                         <th class="text-nowrap">แบรนด์</th>
@@ -44,7 +44,7 @@ $result = $conn->query($sql);
                         <th width="15rem" class="text-nowrap">รายละเอียดสินค้า</th>
                         <th class="text-nowrap">ราคาสินค้า</th>
                         <th class="text-nowrap">จำนวนสินค้า</th>
-                        <th class="text-nowrap">ระยะเวลาการใช้       </th>
+                        <th class="text-nowrap">ระยะเวลาการใช้ </th>
                         <th class="text-nowrap text-center">ตัวเลือก</th>
                     </tr>
                 </thead>

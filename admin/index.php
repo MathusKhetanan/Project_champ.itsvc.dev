@@ -75,9 +75,9 @@ $resultSumOrderTotalCategory = $conn->query($sql);
 					<table id="data-table-default-2" class="table table-bordered">
 						<thead>
 							<tr>
-								<th width="1%"></th>
-								<th width="1%" data-orderable="false"></th>
-								<th class="text-nowrap">ชื่อแบรด์</th>
+								<th class="text-nowrap">ลําดับ</th>
+								<th class="text-nowrap">รูปแบรนด์</th>
+								<th class="text-nowrap">ชื่อแบรนด์</th>
 								<th class="text-nowrap">ยอดขายเดือนนี้</th>
 							</tr>
 						</thead>
@@ -110,7 +110,7 @@ $resultSumOrderTotalCategory = $conn->query($sql);
 					<table id="data-table-default-3" class="table table-bordered">
 						<thead>
 							<tr>
-								<th width="1%"></th>
+								<th class="text-nowrap">ลําดับ</th>
 								<th class="text-nowrap">ประเภทสินค้า</th>
 								<th class="text-nowrap">ยอดขายเดือนนี้</th>
 							</tr>

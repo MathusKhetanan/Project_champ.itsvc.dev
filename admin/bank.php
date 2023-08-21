@@ -32,26 +32,26 @@ $result = $conn->query($sql);
         <thead>
           <tr>
 
-        <th width="ลําดับ"></th>
-        <th class="text-nowrap text-center">ชื่อธนคาร</th>
-        <th class="text-nowrap text-center">เลขที่บัญชีธนาคาร</th>
-        <th class="text-nowrap text-center">ประเภทธนคาร</th>
-        <th class="text-nowrap text-center">ชื่อ-นามสกุล</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($result as $key => $row) { ?>
-        <tr>
-          <td width="1%" class="f-s-600 text-inverse"><?php echo $key + 1; ?></td>
-          <td><?php echo $row['b_name']; ?></td>
-          <td><?php echo $row['b_number']; ?></td>
-          <td><?php echo $row['b_type']; ?></td>
-          <td>
-            <div class="ellipsis-3" style="width: rem;"><?php echo $row['b_owner']; ?></div>
-          </td>
-        </tr>
-      <?php } ?>
-    </tbody>
-  </table>
-</div>
-<?php include('includes/footer.php'); ?>
+            <th class="text-nowrap text-center">ลําดับ</th>
+            <th class="text-nowrap text-center">ชื่อธนคาร</th>
+            <th class="text-nowrap text-center">เลขที่บัญชีธนาคาร</th>
+            <th class="text-nowrap text-center">ประเภทธนคาร</th>
+            <th class="text-nowrap text-center">ชื่อ-นามสกุล</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($result as $key => $row) { ?>
+            <tr>
+              <td width="1%" class="f-s-600 text-inverse"><?php echo $key + 1; ?></td>
+              <td><?php echo $row['b_name']; ?></td>
+              <td><?php echo $row['b_number']; ?></td>
+              <td><?php echo $row['b_type']; ?></td>
+              <td>
+                <div class="ellipsis-3" style="width: rem;"><?php echo $row['b_owner']; ?></div>
+              </td>
+            </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+    <?php include('includes/footer.php'); ?>

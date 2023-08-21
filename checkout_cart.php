@@ -3,10 +3,22 @@
 	include('includes/authentication.php');
 	include('includes/header.php');
 	$sql = "SELECT * FROM `tbl_bank`";
-
-
 	$result = $conn->query($sql);
+
+	// ตรวจสอบว่ามีสินค้าในตะกร้าหรือไม่
+	if (isset($_SESSION['items']) && !empty($_SESSION['items'])) {
+		$totalPrice = 0;
+
+		// หาราคารวมของสินค้าในตะกร้า
+		foreach ($_SESSION['items'] as $item) {
+			$totalPrice += $item['price'] * $item['qty'];
+		}
+	} else {
+		// กรณีไม่มีสินค้าในตะกร้า
+		$totalPrice = 0;
+	}
 	?>
+
 
 	<style>
 		.sw-main.sw-theme-default .step-anchor {
@@ -102,7 +114,7 @@
 			<div class="checkout">
 				<!-- begin wizard-form -->
 				<form action="process_checkout.php" method="POST" name="form-wizard" class="form-control-with-bg">
-					<input type="hidden" name="amount">
+					<input type="hidden" name="amount" value="<?php echo $totalPrice; ?>"> <!-- เพิ่มค่าเงินจากราคาสินค้าที่ถูกคำนวณ -->
 					<input type="hidden" name="items">
 					<input type="hidden" name="omiseToken">
 					<!-- begin wizard -->
@@ -137,14 +149,14 @@
 								</a>
 							</li>
 							<!-- <li>
-									<a href="#step-4">
-										<span class="number">4</span> 
-										<span class="info">
-											Complete Payment
-											<small>Curabitur interdum libero.</small>
-										</span>
-									</a>
-								</li> -->
+										<a href="#step-4">
+											<span class="number">4</span> 
+											<span class="info">
+												Complete Payment
+												<small>Curabitur interdum libero.</small>
+											</span>
+										</a>
+									</li> -->
 						</ul>
 						<!-- end wizard-step -->
 						<!-- begin wizard-content -->
@@ -157,7 +169,8 @@
 									<div class="checkout-body">
 										<div class="table-responsive">
 											<table class="table table-cart">
-											</table>
+											
+										</table>
 										</div>
 									</div>
 									<!-- END checkout-body -->
@@ -201,12 +214,12 @@
 								<!-- end fieldset -->
 							</div>
 							<!-- end step-2 -->
-							<!-- begin step-3 -->
 							<div id="step-3">
+								<!-- รายละเอียดการชำระเงินและแนบสลิป -->
 								<div class="form-group row">
 									<label class="col-md-4 col-form-label text-lg-right">เลือกธนาคาร: <span class="text-danger">*</span></label>
 									<div class="col-md-4">
-										<select class="form-control" id="bank" name="bank">
+										<select class="form-control" id="bank" name="bank" required>
 											<?php
 											if ($result->num_rows > 0) {
 												while ($row = $result->fetch_assoc()) {
@@ -218,30 +231,20 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label class="col-md-4 col-form-label text-lg-right">จำนวนเงิน <span class="text-danger">*</span></label>
-									<div class="col-md-4">
-										<input type="text" class="form-control" name="amount" data-parsley-group="step-3"  required title="กรุณากรอกจำนวนเงินที่โอนให้ตรงกับราคาสินค้า" />
-									</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-md-4 col-form-label text-lg-right">แนบสลิป <span class="text-danger">*</span></label>
-									<div class="col-md-4">
-										<input type="file" class="form-control-file" name="slip" accept=".pdf,.jpg,.png"/>
-									</div>
-								</div>
-							</div>
-
-
-
-
-
-
-
-
-
-
-
-
+                                <label class="col-md-4 col-form-label text-lg-right">
+                                    จำนวนเงิน <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-md-4">
+								<input type="text" class="form-control" name="amount" data-parsley-group="step-3" placeholder="โปรดกรอกจำนวนเงินที่โอนให้ตรงกับราคาสินค้า" value="<?php echo number_format($totalPrice, 0); ?> ฿" required />
+                                </div>
+                            </div>
+                            <!-- ส่วนที่คุณเพิ่มขึ้นเพื่อแนบสลิป -->
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label text-lg-right">แนบสลิป <span class="text-danger">*</span></label>
+                                <div class="col-md-4">
+                                    <input type="file" class="form-control-file" name="slip" accept=".pdf,.jpg,.png" required />
+                                </div>
+                            </div>
 							<div id="hidden-step-3" style="display: none;">
 								<!-- ... ส่วนที่คุณต้องการซ่อน -->
 								<div class="form-group row">
@@ -297,10 +300,15 @@
 					</div>
 					<!-- END checkout-body -->
 					</fieldset>
+				</div>
+				<!-- end step-4 -->
 			</div>
-			<!-- end step-4 -->
+			<!-- END checkout-body -->
+			</fieldset>
 		</div>
-		<!-- end wizard-content -->
+		<!-- end step-4 -->
+	</div>
+	<!-- end wizard-content -->
 	</div>
 	<!-- end wizard -->
 	</form>
@@ -314,6 +322,3 @@
 	<!-- END #checkout-cart -->
 
 	<?php include('includes/footer.php'); ?>
-</body>
-
-</html>

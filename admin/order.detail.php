@@ -93,7 +93,7 @@
 									<th class="text-center" width="10%">ราคา</th>
 									<th class="text-center" width="10%">จำนวน</th>
 									<th class="text-right" width="10%">รวมทั้งหมด</th>
-									<th class="text-right" width="10%">FEE+VAT</th>
+								
 									<th class="text-right" width="15%">รวม</th>
 								</tr>
 							</thead>
