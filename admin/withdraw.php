@@ -2,7 +2,6 @@
 include('../config.php');
 include('includes/authentication.php');
 include('includes/header.php');
-// 7,783.65
 $seller_id = $_SESSION['seller_id'];
 $sql = "SELECT *, COALESCE(ROUND(SUM(order_total_net), 2), 0) as sumTotal FROM orders WHERE seller_id = $seller_id AND order_status = 'successful'";
 $result = $conn->query($sql);

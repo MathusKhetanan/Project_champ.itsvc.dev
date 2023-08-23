@@ -20,14 +20,14 @@
 </script>
 <script src="dist/js/demo/table-manage-default.demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.21/dist/sweetalert2.all.min.js"></script>
-        <script>
-            Omise.setPublicKey("pkey_test_5r0gn5997jah59d6ns1");
+<script>
+    Omise.setPublicKey("pkey_test_5r0gn5997jah59d6ns1");
 
-            let cartObject = JSON.parse(localStorage.getItem('items')) || [];
-            var cartGroupSeller = [];
-            const payOmise = () => {
-                var form = document.querySelector('form[action="process_checkout.php"]');
-                let amount = parseFloat($('input[name="amount"]').val()) * 100; // แปลงเป็น satangs
+    let cartObject = JSON.parse(localStorage.getItem('items')) || [];
+		var cartGroupSeller = [];
+		const payOmise = () => {
+        var form = document.querySelector('form[action="process_checkout.php"]');
+        let amount = parseFloat($('input[name="amount"]').val()) * 100; // แปลงเป็น satangs
 
         if (amount < 2000) { // 2000000 satangs เท่ากับ 20 บาท
             alert('จำนวนเงินต้องไม่น้อยกว่า 20 บาท (2000 satangs)');
@@ -45,50 +45,50 @@
             "bank": $('select[name="bank"]').val(), // เลือกธนาคาร
         };
 
-                Omise.createToken("card", tokenParameters, function(statusCode, response) {
-                    if (statusCode === 200) {
-                        const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
-                        groupSeller(newCartObject)
-                        console.log(newCartObject.reduce((a, b) => a + b.price * b.qty, 0))
-                        form.items.value = JSON.stringify(cartGroupSeller);
-                        form.amount.value = newCartObject.reduce((a, b) => a + b.price * b.qty, 0) * 100;
-                        form.omiseToken.value = response.id;
-                        form.submit();
-                    } else {
-                        window.location.href = 'process_checkout.php';
-                    }
-                });
+        Omise.createToken("card", tokenParameters, function(statusCode, response) {
+            if (statusCode === 200) {
+                const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
+                groupSeller(newCartObject)
+                console.log(newCartObject.reduce((a, b) => a + b.price * b.qty, 0))
+                form.items.value = JSON.stringify(cartGroupSeller);
+                form.amount.value = newCartObject.reduce((a, b) => a + b.price * b.qty, 0) * 100;
+                form.omiseToken.value = response.id;
+                form.submit();
+            } else {
+                window.location.href = 'process_checkout.php';
             }
+        });
+    }
 
-            const groupSeller = (newCartObject) => {
-                cartGroupSeller = [];
-                newCartObject.map((item) => {
-                    let checkItem = cartGroupSeller.find((x) => x.key == item.seller)
-                    if (checkItem) {
-                        checkItem.order = [...checkItem.order, item]
-                        cartGroupSeller.map((x) => x.seller === item.seller ? checkItem : x);
-                    } else {
-                        const newItem = {
-                            key: item.seller,
-                            shop: item.shop,
-                            order: [item]
-                        }
-                        cartGroupSeller = [...cartGroupSeller, newItem];
-                    }
-                })
+    const groupSeller = (newCartObject) => {
+        cartGroupSeller = [];
+        newCartObject.map((item) => {
+            let checkItem = cartGroupSeller.find((x) => x.key == item.seller)
+            if (checkItem) {
+                checkItem.order = [...checkItem.order, item]
+                cartGroupSeller.map((x) => x.seller === item.seller ? checkItem : x);
+            } else {
+                const newItem = {
+                    key: item.seller,
+                    shop: item.shop,
+                    order: [item]
+                }
+                cartGroupSeller = [...cartGroupSeller, newItem];
             }
-            const renderCountCart = () => {
-                const cartObject = JSON.parse(localStorage.getItem('items')) || [];
-                $(".dropdown-cart .header-cart span.total").html(cartObject.reduce((a, b) => a + b.qty, 0));
-                $(".dropdown-cart .cart-header .cart-title").html(
-                    `ตะกร้าสินค้า (${cartObject.reduce((a, b)=> a + b.qty, 0)})`);
-                $(".dropdown-cart .cart-body .cart-item").html("");
-                if (cartObject.length <= 0) {
-                    $(".dropdown-cart .cart-body .cart-item").append(`<h5 class="text-center">ตะกร้าสินค้าว่าง</h5>`);
-                } else {
-                    const cartObjectLimit = cartObject.slice(0, 5)
-                    cartObjectLimit.map((item) => {
-                        $(".dropdown-cart .cart-body .cart-item").append(`
+        })
+    }
+    const renderCountCart = () => {
+        const cartObject = JSON.parse(localStorage.getItem('items')) || [];
+        $(".dropdown-cart .header-cart span.total").html(cartObject.reduce((a, b) => a + b.qty, 0));
+        $(".dropdown-cart .cart-header .cart-title").html(
+            `ตะกร้าสินค้า (${cartObject.reduce((a, b)=> a + b.qty, 0)})`);
+        $(".dropdown-cart .cart-body .cart-item").html("");
+        if (cartObject.length <= 0) {
+            $(".dropdown-cart .cart-body .cart-item").append(`<h5 class="text-center">ตะกร้าสินค้าว่าง</h5>`);
+        } else {
+            const cartObjectLimit = cartObject.slice(0, 5)
+            cartObjectLimit.map((item) => {
+                $(".dropdown-cart .cart-body .cart-item").append(`
                                     <li>
                                         <div class="cart-item-image"><img src="${item.img}" onError="#"/></div>
                                         <div class="cart-item-info">
@@ -103,23 +103,23 @@
                                         </div>
                                     </li>
                                 `);
-                    })
-                }
-            }
-            const renderCart = () => {
-                const cartObject = JSON.parse(localStorage.getItem('items')) || [];
-                groupSeller(cartObject)
-                $(".table-cart").html("")
-                $(`#cart-item-*`).html("")
-                if (cartObject.length <= 0) {
-                    $(".table-cart").append(
-                        `<tr> <th scope="row" colspan="5" class="text-center">ตะกร้าของคุณว่าง กรุณาสั่งซื้อสินค้า</th> </tr>`
-                    );
-                    $("button.sw-btn-next").hide();
-                } else {
-                    $("button.sw-btn-next").show();
-                    cartGroupSeller.map((seller) => {
-                        $(".table-cart").append(`
+            })
+        }
+    }
+    const renderCart = () => {
+        const cartObject = JSON.parse(localStorage.getItem('items')) || [];
+        groupSeller(cartObject)
+        $(".table-cart").html("")
+        $(`#cart-item-*`).html("")
+        if (cartObject.length <= 0) {
+            $(".table-cart").append(
+                `<tr> <th scope="row" colspan="5" class="text-center">ตะกร้าของคุณว่าง กรุณาสั่งซื้อสินค้า</th> </tr>`
+            );
+            $("button.sw-btn-next").hide();
+        } else {
+            $("button.sw-btn-next").show();
+            cartGroupSeller.map((seller) => {
+                $(".table-cart").append(`
                                     <thead id="cart-head">
                                         <tr>
                                         <th>รูปสินค้า&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ชื่อสินค้า</th>
@@ -130,9 +130,9 @@
                                         </tr>
                                     </thead>
                                 `);
-                        $(".table-cart").append(`<tbody id="cart-item-${seller.key}">`)
-                        seller.order.map((item) => {
-                            $(`#cart-item-${seller.key}`).append(`
+                $(".table-cart").append(`<tbody id="cart-item-${seller.key}">`)
+                seller.order.map((item) => {
+                    $(`#cart-item-${seller.key}`).append(`
                                         <tr>
                         <td class="cart-product">
                             <div class="product-img" style="width: 5rem;">
@@ -145,12 +145,12 @@
                         </td>
 
                         <td class="cart-price text-center">${item.price}</td>
-                        <td class="cart-qty text-center">
-                        <div class="cart-qty-input">
-                        <a href="#" class="qty-control left ${item.qty > 1 ? '' : 'disabled'}" data-id="${item.id}" data-click="decrease-qty" data-target="#qty-${item.id}"><i class="fa fa-minus"></i></a>
-                        <input type="text" name="qty" value="${item.qty}" class="form-control" id="qty-${item.id}" />
-                        <a href="#" class="qty-control right ${item.qty > 0 ? '' : 'disabled'}" data-id="${item.id}" data-click="increase-qty" data-target="#qty-${item.id}"><i class="fa fa-plus"></i></a>
-                        </div>
+								<td class="cart-qty text-center">
+									<div class="cart-qty-input">
+										<a href="#" class="qty-control left disabled" data-id="${item.id}" data-click="decrease-qty" data-target="#qty-${item.id}"><i class="fa fa-minus"></i></a>
+										<input type="text" name="qty" value="${item.qty}" class="form-control" id="qty-${item.id}"/>
+										<a href="#" class="qty-control right disabled" data-id="${item.id}" data-click="increase-qty" data-target="#qty-${item.id}"><i class="fa fa-plus"></i></a>
+									</div>
                         </td>
                     <td id="cart-total-${item.id}" class="cart-total text-center">
                             ${item.price * item.qty}฿
@@ -163,10 +163,10 @@
                         </td>
                     </tr>
                 `);
-                        })
-                        $(".table-cart").append(`</tbody>`)
-                    })
-                    $(".table-cart").append(`
+                })
+                $(".table-cart").append(`</tbody>`)
+            })
+            $(".table-cart").append(`
                     <tbody id="cart-item">
                 <tr>
                 <td class="cart-summary" colspan="7">
@@ -182,46 +182,43 @@
                 </tr>
             </tbody>
             `);
-                }
-            }
-            const addCart = (seller, shop, id, name, price, img) => {
-                const checkItem = cartObject.find((x) => x.id === id);
-                if (checkItem) {
-                    checkItem.qty = parseInt(checkItem.qty) + 1;
-                    cartObject.map((x) => x.id === id ? checkItem : x);
-                } else {
-                    cartObject = [...cartObject, {
-                        seller,
-                        shop,
-                        id,
-                        name,
-                        price,
-                        qty: 1,
-                        img
-                    }];
-                }
-                localStorage.setItem("items", JSON.stringify(cartObject));
-                renderCountCart();
-            }
-            const removeItemMiniCart = (id) => {
-                cartObject = cartObject.filter((x) => x.id !== id)
-                localStorage.setItem("items", JSON.stringify(cartObject));
-                renderCountCart();
-            }
-            const removeItemCart = (seller, id) => {
-                cartObject = cartObject.filter((x) => x.id !== id)
-                localStorage.setItem("items", JSON.stringify(cartObject));
-                const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
-                groupSeller(newCartObject)
-                renderCart();
-                renderCountCart();
-            }
-            renderCart();
-            renderCountCart();
-        </script>
-<!-- ในส่วน footer.php -->
-
-
+        }
+    }
+    const addCart = (seller, shop, id, name, price, img) => {
+        const checkItem = cartObject.find((x) => x.id === id);
+        if (checkItem) {
+            checkItem.qty = parseInt(checkItem.qty) + 1;
+            cartObject.map((x) => x.id === id ? checkItem : x);
+        } else {
+            cartObject = [...cartObject, {
+                seller,
+                shop,
+                id,
+                name,
+                price,
+                qty: 1,
+                img
+            }];
+        }
+        localStorage.setItem("items", JSON.stringify(cartObject));
+        renderCountCart();
+    }
+    const removeItemMiniCart = (id) => {
+        cartObject = cartObject.filter((x) => x.id !== id)
+        localStorage.setItem("items", JSON.stringify(cartObject));
+        renderCountCart();
+    }
+    const removeItemCart = (seller, id) => {
+        cartObject = cartObject.filter((x) => x.id !== id)
+        localStorage.setItem("items", JSON.stringify(cartObject));
+        const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
+        groupSeller(newCartObject)
+        renderCart();
+        renderCountCart();
+    }
+    renderCart();
+    renderCountCart();
+</script>
 <script src="dist/js/demo/form-wizards-validation.checkout.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
 <script>
@@ -230,29 +227,25 @@
     });
 </script>
 <script>
-    // เมื่อฟอร์มถูกส่ง
-    document.querySelector('form').addEventListener('submit', function(event) {
-        const amountField = document.querySelector('input[name="amount"]');
-        const slipField = document.querySelector('input[name="slip"]');
-
-        // ตรวจสอบว่ามีการกรอกจำนวนเงินและแนบสลิปหรือไม่
-        if (amountField.value.trim() === '' || slipField.files.length === 0) {
-            event.preventDefault(); // หยุดการส่งฟอร์ม
-            alert('กรุณากรอกข้อมูลให้ครบทุกช่อง'); // แจ้งเตือนให้ผู้ใช้กรอกข้อมูล
-        }
-    });
-</script>
-<!-- เพิ่มส่วนโค้ดนี้ลงในส่วน script ของหน้าเว็บของคุณ -->
-<script>
-    const updateTotalPrice = () => {
+    const updateUserFullname = () => {
+        const userFullnameElement = document.getElementById('userFullname');
         const cartObject = JSON.parse(localStorage.getItem('items')) || [];
         const totalPrice = cartObject.reduce((a, b) => a + b.price * b.qty, 0);
-        document.getElementById('totalPrice').textContent = `${totalPrice.toFixed(2)} ฿`;
-        document.querySelector('input[name="amount"]').value = totalPrice.toFixed(2);
+
+        // แปลงราคาเป็นตัวเลขแบบทศนิยม 2 ตำแหน่ง
+        const totalPriceFormatted = parseFloat(totalPrice).toLocaleString('en-US', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2
+        });
+
+        userFullnameElement.value = totalPriceFormatted + " ฿";
     }
 
     // เรียกใช้ฟังก์ชันเมื่อหน้าเว็บโหลด
-    updateTotalPrice();
+    updateUserFullname();
+
+    // อัปเดตราคารวมโดยตบอดเวลาทุก 5 วินาที
+    setInterval(updateUserFullname, 1000); // 5000 มิลลิวินาที = 5 วินาที
 </script>
 
 </body>

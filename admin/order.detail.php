@@ -113,7 +113,7 @@
 										<td class="text-center"><?php echo $item['product_price']; ?></td>
 										<td class="text-center">x <?php echo $item['order_qty']; ?></td>
 										<td class="text-right"><?php echo $item['order_subtotal']; ?></td>
-										<td class="text-right"><?php echo $free + $free_vat; ?></td>
+										
 										<td class="text-right"><?php echo $item['order_subtotal'] - ($free + $free_vat); ?></td>
 									</tr>
 								<?php } ?>
@@ -129,17 +129,12 @@
 									<small>รวมทั้งหมด</small>
 									<span class="text-inverse"><?php echo $row['order_total']; ?></span>
 								</div>
-								<div class="sub-price">
-									<i class="fa fa-plus text-muted"></i>
-								</div>
-								<div class="sub-price">
-									<small>FEE + VAT</small>
-									<span class="text-inverse"><?php echo $row['order_total_free_vat'] + $row['order_total_free']; ?></span>
-								</div>
+						
+							
 							</div>
 						</div>
 						<div class="invoice-price-right">
-							<small>จำนวนนวนเงินที่ได้รับ</small> <span class="f-w-600"><?php echo $row['order_total_net']; ?> ฿</span>
+							<small>จำนวนนวนเงินที่ได้รับ</small> <span class="f-w-600"><?php echo $row['order_total']; ?> ฿</span>
 						</div>
 					</div>
 					<!-- end invoice-price -->
