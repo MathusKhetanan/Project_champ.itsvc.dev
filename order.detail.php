@@ -4,7 +4,7 @@
 		include('includes/header.php');
 
 		$order_id = $conn->real_escape_string($_GET['id']);
-		$sql = "SELECT * FROM orders LEFT JOIN user ON orders.user_id = user.user_id LEFT JOIN seller ON orders.seller_id = seller.seller_id WHERE order_id = $order_id AND orders.user_id = " . $_SESSION['user_id'];
+		$sql = "SELECT * FROM orders LEFT JOIN user ON orders.user_id = user.user_id LEFT JOIN admin ON orders.admin_id = admin.admin_id WHERE order_id = $order_id AND orders.user_id = " . $_SESSION['user_id'];
 		$result = $conn->query($sql);
 		$row = $result->fetch_assoc();
 
@@ -36,7 +36,7 @@
 								<div class="invoice">
 									<!-- begin invoice-company -->
 									<div class="invoice-company">
-										ร้าน: <?php echo $row['seller_shop']; ?>
+										ร้าน: <?php echo $row['admin_shop']; ?>
 									</div>
 									<!-- end invoice-company -->
 									<!-- begin invoice-header -->
@@ -44,8 +44,8 @@
 										<div class="invoice-from">
 											<small>จาก</small>
 											<address class="m-t-5 m-b-5">
-												<strong class="text-inverse"><?php echo $row['seller_fullname']; ?>.</strong><br />
-												<?php echo $row['seller_address']; ?>
+												<strong class="text-inverse"><?php echo $row['admin_fullname']; ?>.</strong><br />
+												<?php echo $row['admin_address']; ?>
 											</address>
 										</div>
 										<div class="invoice-to">
@@ -57,7 +57,7 @@
 										</div>
 										<div class="invoice-date">
 											<small>สถานะออเดอร์ / <span class="badge bg-<?php echo $StatusColor[$row['order_status']]; ?>" style="font-size: 12px"><?php echo $Status[$row['order_status']]; ?></span></small><br />
-											หมายเลขพัสดุ: <?php echo $row['order_tracking']; ?>
+											หมายเลขออเดอร์: <?php echo $row['order_tracking']; ?>
 											<div class="date text-inverse m-t-5"><?php echo $row['createdAt']; ?></div>
 											<div class="invoice-detail">
 												#ref-<?php echo $row['order_ref']; ?><br />
@@ -70,15 +70,17 @@
 										<!-- begin table-responsive -->
 										<div class="table-responsive">
 											<table class="table table-invoice">
-												<thead>
-													<tr>
-														<th>ชื่อสินค้า</th>
-														<th class="text-center" width="10%">ราคา</th>
-														<th class="text-center" width="10%">จำนวน</th>
-														<th class="text-right" width="20%">รวม</th>
-														<th class="text-right" width="20%">ตัวเลือก</th>
-													</tr>
-												</thead>
+											<thead>
+    <tr>
+        <th>ชื่อสินค้า</th>
+        <th class="text-center" width="10%">ราคา</th>
+        <th class="text-center" width="10%">จำนวน</th>
+        <th class="text-right" width="10%">รวม</th>
+        <th class="text-right" width="20%">สลิปการชำระเงิน</th> <!-- เพิ่มหัวข้อสำหรับสลิปการชำระเงิน -->
+        <th class="text-right" width="0%">ตัวเลือก</th>
+    </tr>
+</thead>
+
 												<tbody>
 													<?php
 													$total = 0;
@@ -94,6 +96,18 @@
 															<td class="text-center"><?php echo $item['product_price']; ?></td>
 															<td class="text-center">x <?php echo $item['order_qty']; ?></td>
 															<td class="text-right"><?php echo $item['order_subtotal']; ?></td>
+															<td class="text-right">
+															<button id="showSlipButton" class="slip-button">แสดงสลิป</button>
+
+<div id="slip-modal" class="slip-modal">
+  <div class="slip-modal-content">
+    <img id="slip-image" src="" alt="รูปภาพสลิป">
+    <button id="closeSlipButton" class="slip-close-button">ปิด</button>
+  </div>
+</div>
+
+</td>
+
 															<td class="text-right">
 																<form action="product_detail.php?id=<?php echo $item['product_id']; ?>" method="post">
 																	<button type="submit" class="btn btn-lime" name="order_id" value="<?php echo $item['order_id']; ?>" <?php echo ($row['order_status'] != "successful" || $result2->num_rows > 0) ? "disabled" : ""; ?>>เขียนรีวิว</button>
@@ -121,9 +135,9 @@
 										</p>
 										<p class="text-center">
 											<span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> ติดต่อ:
-												<?php echo $row['seller_tel']; ?></span>
+												<?php echo $row['admin_tel']; ?></span>
 											<span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i>
-												<?php echo $row['seller_email']; ?></span>
+												<?php echo $row['admin_email']; ?></span>
 										</p>
 									</div>
 									<!-- end invoice-footer -->

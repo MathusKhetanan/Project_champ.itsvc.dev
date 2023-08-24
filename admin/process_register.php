@@ -2,17 +2,17 @@
   include('../config.php');
   include('includes/header.php');
   try {
-    $seller_fullname = $conn->real_escape_string($_POST['seller_fullname']);
-    $seller_email = $conn->real_escape_string($_POST['seller_email']);
-    $seller_username = $conn->real_escape_string($_POST['seller_username']);
-    $seller_password = $conn->real_escape_string($_POST['seller_password']);
+    $admin_fullname = $conn->real_escape_string($_POST['admin_fullname']);
+    $admin_email = $conn->real_escape_string($_POST['admin_email']);
+    $admin_username = $conn->real_escape_string($_POST['admin_username']);
+    $admin_password = $conn->real_escape_string($_POST['admin_password']);
     $token = md5(rand() . time());
 
     // INSERT YOUR CODE HERE - Replace this line with your own password hashing logic
-    $hashed_password = password_hash($seller_password, PASSWORD_DEFAULT);
+    $hashed_password = password_hash($admin_password, PASSWORD_DEFAULT);
 
     // INSERT YOUR CODE HERE - Replace this line with your own SQL query to insert data into the database
-    $sql = "INSERT INTO seller (seller_fullname, seller_email, seller_username, seller_password, token) VALUES ('$seller_fullname', '$seller_email', '$seller_username', '$hashed_password', '$token')";
+    $sql = "INSERT INTO admin (admin_fullname, admin_email, admin_username, admin_password, token) VALUES ('$admin_fullname', '$admin_email', '$admin_username', '$hashed_password', '$token')";
 
     if ($conn->query($sql)) {
       echo "<script>

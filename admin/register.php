@@ -49,16 +49,16 @@
       <div class="login-content">
         <form action="process_register.php" method="POST" class="margin-bottom-0" data-parsley-validate="true">
           <div class="form-group m-b-20">
-            <input type="text" class="form-control form-control-lg" name="seller_fullname" placeholder="ชื่อ-สกุล" data-parsley-required="true" />
+            <input type="text" class="form-control form-control-lg" name="admin_fullname" placeholder="ชื่อ-สกุล" data-parsley-required="true" />
           </div>
           <div class="form-group m-b-20">
-            <input type="email" class="form-control form-control-lg" name="seller_email" placeholder="อีเมล" data-parsley-required="true" data-parsley-type="email" />
+            <input type="email" class="form-control form-control-lg" name="admin_email" placeholder="อีเมล" data-parsley-required="true" data-parsley-type="email" />
           </div>
           <div class="form-group m-b-20">
-            <input type="text" class="form-control form-control-lg" name="seller_username" placeholder="ชื่อผู้ใช้" data-parsley-required="true" />
+            <input type="text" class="form-control form-control-lg" name="admin_username" placeholder="ชื่อผู้ใช้" data-parsley-required="true" />
           </div>
           <div class="form-group m-b-20">
-            <input type="password" class="form-control form-control-lg" name="seller_password" placeholder="รหัสผ่าน" data-parsley-required="true" />
+            <input type="password" class="form-control form-control-lg" name="admin_password" placeholder="รหัสผ่าน" data-parsley-required="true" />
           </div>
           <div class="login-buttons">
             <button type="submit" class="btn btn-success btn-block btn-lg">ลงทะเบียน</button>

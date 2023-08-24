@@ -3,7 +3,7 @@ include('../config.php');
 include('includes/authentication.php');
 include('includes/header.php');
 
-$seller_id = $_SESSION['seller_id'];
+$admin_id = $_SESSION['admin_id'];
 $date = date_create("2202-03-07");
 $date = date_format($date, "Y-m-d");
 if (isset($_GET['date'])) {
@@ -18,12 +18,12 @@ $result = $conn->query($sql);
 $rowSumOrderTotal = $result->fetch_assoc();
 
 $sql = "SELECT *, COALESCE(ROUND(SUM(order_total_net), 2), 0)as order_total_net 
-        FROM seller 
-        LEFT JOIN orders ON seller.seller_id = orders.seller_id 
-        WHERE DATE_FORMAT(orders.createdAt, '%Y-%m') = DATE_FORMAT(NOW(), '%Y-%m') AND order_status = 'successful' AND seller_status = 1 
-        GROUP BY seller.seller_id
+        FROM admin 
+        LEFT JOIN orders ON admin.admin_id = orders.admin_id 
+        WHERE DATE_FORMAT(orders.createdAt, '%Y-%m') = DATE_FORMAT(NOW(), '%Y-%m') AND order_status = 'successful' AND admin_status = 1 
+        GROUP BY admin.admin_id
         ORDER BY order_total_net DESC";
-$resultSumOrderTotalSeller = $conn->query($sql);
+$resultSumOrderTotaladmin = $conn->query($sql);
 
 $sql = "SELECT *, (COALESCE(SUM(order_subtotal), 0))as order_total, (COALESCE(SUM(order_qty), 0))as qty_total
         FROM product 
@@ -66,7 +66,7 @@ $resultSumOrderTotalCategory = $conn->query($sql);
 	<!-- end page-header -->
 <!-- begin page-header -->
 <h1 class="page-header mb-5">
-		รายงานยอดขาย (ข้อมูลตัวอย่างให้เลือกวันที่เป็นเดือนมีนาคม)
+		รายงานยอดขาย
 		<!-- <small>header small text goes here...</small> -->
 
 		<form action="#" method="get">
@@ -144,11 +144,11 @@ $resultSumOrderTotalCategory = $conn->query($sql);
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach ($resultSumOrderTotalSeller as $key => $row) { ?>
+							<?php foreach ($resultSumOrderTotaladmin as $key => $row) { ?>
 								<tr>
 									<td width="1%" class="f-s-600 text-inverse"><?php echo $key + 1; ?></td>
 
-									<td><?php echo $row['seller_shop']; ?></td>
+									<td><?php echo $row['admin_shop']; ?></td>
 									<td><?php echo number_format(intval($row['order_total_net'] * 100) / 100, 2); ?></td>
 								</tr>
 							<?php } ?>

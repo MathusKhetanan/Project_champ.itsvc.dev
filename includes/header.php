@@ -9,8 +9,8 @@ $resultBrands = $conn->query($sql);
 $sql = "SELECT *,(SELECT count(category_id) FROM product WHERE category_id = categories.category_id)as count FROM categories";
 $resultCategories = $conn->query($sql);
 
-$sql = "SELECT *,(SELECT count(seller_id) FROM product WHERE seller_id = seller.seller_id)as count FROM seller WHERE seller_status = 1";
-$resultSeller = $conn->query($sql);
+$sql = "SELECT *,(SELECT count(admin_id) FROM product WHERE admin_id = admin.admin_id)as count FROM admin WHERE admin_status = 1";
+$resultadmin = $conn->query($sql);
 
 if (isset($_SESSION['user_id'])) {
     $sql = "SELECT * FROM notifications WHERE user_id = " . $_SESSION['user_id'] . " AND DATE(show_notification) > (NOW() - INTERVAL 7 DAY) AND DATE(show_notification) < (NOW()) ORDER BY noti_id DESC LIMIT 8";
@@ -44,6 +44,56 @@ if (isset($_SESSION['user_id'])) {
     <!-- ================== END PAGE LEVEL STYLE ================== -->
 </head>
 <style>
+    /* ปุ่มแสดงรูปภาพสลิป */
+.slip-button {
+  background-color: #3498db;
+  border: none;
+  color: white;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+/* รูปแบบของหน้าต่างแสดงรูปภาพสลิป */
+.slip-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.9);
+}
+
+.slip-modal-content {
+  margin: auto;
+  width: 80%;
+  max-width: 800px;
+  position: relative;
+}
+
+/* ปุ่มปิดสลิป */
+.slip-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+
+
+
     ::-webkit-scrollbar {
         width: 8px;
     }
@@ -344,11 +394,11 @@ if (isset($_SESSION['user_id'])) {
                                     <div class="dropdown-menu-content">
                                         <h4 class="title">ร้านค้า</h4>
                                         <div class="row">
-                                            <?php foreach ($resultSeller as $item) { ?>
+                                            <?php foreach ($resultadmin as $item) { ?>
                                                 <div class="col-lg-3">
                                                     <ul class="dropdown-menu-list">
-                                                        <li><a href="<?php echo ($item['count'] == 0) ? "#" : "product.php?shop=" . $item['seller_id']; ?>"><i class="fa fa-fw fa-angle-right text-muted"></i>
-                                                                <?php echo $item['seller_shop']; ?> <span class="pull-right">(<?php echo $item['count']; ?>)</span></a>
+                                                        <li><a href="<?php echo ($item['count'] == 0) ? "#" : "product.php?shop=" . $item['admin_id']; ?>"><i class="fa fa-fw fa-angle-right text-muted"></i>
+                                                                <?php echo $item['admin_shop']; ?> <span class="pull-right">(<?php echo $item['count']; ?>)</span></a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -461,7 +511,7 @@ if (isset($_SESSION['user_id'])) {
                             </div>
                         </li>
                     <?php } ?>
-                    <?php if (isset($_SESSION['admin_id']) && !isset($_SESSION['seller_fullname'])) { // Check if it is an admin 
+                    <?php if (isset($_SESSION['admin_id']) && !isset($_SESSION['admin_fullname'])) { // Check if it is an admin 
                     ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -477,13 +527,13 @@ if (isset($_SESSION['user_id'])) {
                                 <a class="dropdown-item" href="admin/logout.php">ออกจากระบบ</a>
                             </div>
                         </li>
-                    <?php } elseif (isset($_SESSION['seller_fullname'])) { // Check if it is a seller 
+                    <?php } elseif (isset($_SESSION['admin_fullname'])) { // Check if it is a admin 
                     ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="https://media.discordapp.net/attachments/1128198864629940244/1128955900594495488/istockphoto-1300845620-612x612.png?width=473&height=473" class="user-img" alt="Profile_seller" />
+                                <img src="https://media.discordapp.net/attachments/1128198864629940244/1128955900594495488/istockphoto-1300845620-612x612.png?width=473&height=473" class="user-img" alt="Profile_admin" />
                                 <span class="d-none d-xl-inline">
-                                    <?php echo isset($_SESSION['seller_fullname']) ? $_SESSION['seller_fullname'] : "เข้าสู่ระบบ"; ?>
+                                    <?php echo isset($_SESSION['admin_fullname']) ? $_SESSION['admin_fullname'] : "เข้าสู่ระบบ"; ?>
                                 </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

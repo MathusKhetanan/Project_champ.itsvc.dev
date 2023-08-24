@@ -4,7 +4,7 @@ include('includes/header.php');
 
 // brand, category, shop
 
-$sql = "SELECT *,(SELECT SUM(order_qty) FROM order_detail WHERE order_detail.product_id = product.product_id) as topSell FROM product LEFT JOIN brands ON product.brand_id = brands.brand_id LEFT JOIN categories ON product.category_id = categories.category_id LEFT JOIN seller ON product.seller_id = seller.seller_id WHERE 1=1 AND product_qty > 0 AND product_status = 1";
+$sql = "SELECT *,(SELECT SUM(order_qty) FROM order_detail WHERE order_detail.product_id = product.product_id) as topSell FROM product LEFT JOIN brands ON product.brand_id = brands.brand_id LEFT JOIN categories ON product.category_id = categories.category_id LEFT JOIN admin ON product.admin_id = admin.admin_id WHERE 1=1 AND product_qty > 0 AND product_status = 1";
 if (isset($_GET['brand']) && $_GET['brand'] !== '') {
     $sql = $sql . " AND product.brand_id = " . $conn->real_escape_string($_GET['brand']);
     $sql2 = "SELECT * FROM brands WHERE brand_id = " . $conn->real_escape_string($_GET['brand']);
@@ -18,8 +18,8 @@ if (isset($_GET['category']) && $_GET['category'] !== '') {
     $row2 = $result2->fetch_assoc();
 }
 if (isset($_GET['shop']) && $_GET['shop'] !== '') {
-    $sql = $sql . " AND product.seller_id = " . $conn->real_escape_string($_GET['shop']);
-    $sql2 = "SELECT * FROM seller WHERE seller_id = " . $conn->real_escape_string($_GET['shop']);
+    $sql = $sql . " AND product.admin_id = " . $conn->real_escape_string($_GET['shop']);
+    $sql2 = "SELECT * FROM admin WHERE admin_id = " . $conn->real_escape_string($_GET['shop']);
     $result2 = $conn->query($sql2);
     $row2 = $result2->fetch_assoc();
 }
@@ -51,7 +51,7 @@ $resultCategories = $conn->query($sql);
         <?php } else if (isset($_GET['category']) && $_GET['category'] !== '') { ?>
             <h1 class="page-header">ผลลัพธ์การค้นหาประเภท "<b><?php echo $row2['category_name']; ?></b>"</h1>
         <?php } else if (isset($_GET['shop']) && $_GET['shop'] !== '') { ?>
-            <h1 class="page-header">ผลลัพธ์การค้นหาร้าน "<b><?php echo $row2['seller_shop']; ?></b>"</h1>
+            <h1 class="page-header">ผลลัพธ์การค้นหาร้าน "<b><?php echo $row2['admin_shop']; ?></b>"</h1>
         <?php } else { ?>
             <h1 class="page-header"><b>สินค้าทั้งหมด</b></h1>
         <?php } ?>
@@ -83,7 +83,7 @@ $resultCategories = $conn->query($sql);
                                 <?php } else if (isset($_GET['category']) && $_GET['category'] !== '') { ?>
                                     ประเภท "<?php echo $row2['category_name']; ?>"
                                 <?php } else if (isset($_GET['shop']) && $_GET['shop'] !== '') { ?>
-                                    ร้าน "<?php echo $row2['seller_shop']; ?>"
+                                    ร้าน "<?php echo $row2['admin_shop']; ?>"
                                 <?php } else { ?>
                                     "สินค้าทั้งหมด"
                                 <?php } ?>
@@ -129,7 +129,7 @@ $resultCategories = $conn->query($sql);
                                     <a href="product_detail.php?id=<?php echo $item['product_id']; ?>" class="item-link">
                                         <img src="<?php echo $item['product_image']; ?>" />
                                         <div class="item-info">
-                                            <h4 class="item-title"><?php echo $item['product_name']; ?></h4>
+                                        <h3 class="item-title"><b><?php echo $item['product_name']; ?></b></h3>
                                             <p class="item-desc"><?php echo trim(substr($item['product_detail'], 0, 200)); ?></p>
                                             <div class="item-price">
                                                 <?php

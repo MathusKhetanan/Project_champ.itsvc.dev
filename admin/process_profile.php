@@ -10,27 +10,27 @@
     include('../config.php');
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $seller_id = $_SESSION['seller_id'];
-      $seller_fullname = $conn->real_escape_string($_POST['seller_fullname']);
-      $seller_password = $conn->real_escape_string($_POST['seller_password']);
-      $seller_password_confirm = $conn->real_escape_string($_POST['seller_password_confirm']);
-      $seller_tel = $conn->real_escape_string($_POST['seller_tel']);
-      $seller_bank_name = $conn->real_escape_string($_POST['seller_bank_name']);
-      $seller_account_number = $conn->real_escape_string($_POST['seller_account_number']);
+      $admin_id = $_SESSION['admin_id'];
+      $admin_fullname = $conn->real_escape_string($_POST['admin_fullname']);
+      $admin_password = $conn->real_escape_string($_POST['admin_password']);
+      $admin_password_confirm = $conn->real_escape_string($_POST['admin_password_confirm']);
+      $admin_tel = $conn->real_escape_string($_POST['admin_tel']);
+      $admin_bank_name = $conn->real_escape_string($_POST['admin_bank_name']);
+      $admin_account_number = $conn->real_escape_string($_POST['admin_account_number']);
       
-      $sql = "UPDATE seller SET seller_fullname = '$seller_fullname', seller_account_number = '$seller_account_number', seller_bank_name = '$seller_bank_name', seller_tel = '$seller_tel'";
+      $sql = "UPDATE admin SET admin_fullname = '$admin_fullname', admin_account_number = '$admin_account_number', admin_bank_name = '$admin_bank_name', admin_tel = '$admin_tel'";
       
-      if ($seller_password != "" && $seller_password_confirm != "" && $seller_password == $seller_password_confirm) {
-        $sql .= ", seller_password = MD5('$seller_password')";
+      if ($admin_password != "" && $admin_password_confirm != "" && $admin_password == $admin_password_confirm) {
+        $sql .= ", admin_password = MD5('$admin_password')";
       }
       
-      $sql .= " WHERE seller_id = $seller_id";
+      $sql .= " WHERE admin_id = $admin_id";
       
       if ($conn->query($sql)) {
-        $_SESSION['seller_fullname'] = $_POST['seller_fullname'];
-        $_SESSION['seller_tel'] = $_POST['seller_tel'];
-        $_SESSION['seller_bank_name'] = $_POST['seller_bank_name'];
-        $_SESSION['seller_account_number'] = $_POST['seller_account_number'];
+        $_SESSION['admin_fullname'] = $_POST['admin_fullname'];
+        $_SESSION['admin_tel'] = $_POST['admin_tel'];
+        $_SESSION['admin_bank_name'] = $_POST['admin_bank_name'];
+        $_SESSION['admin_account_number'] = $_POST['admin_account_number'];
 
         // Display success message using SweetAlert
         echo "<script>

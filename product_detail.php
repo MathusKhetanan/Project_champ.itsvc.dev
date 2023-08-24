@@ -2,7 +2,7 @@
 include('config.php');
 include('includes/header.php');
 
-$sql = "SELECT * FROM product LEFT JOIN brands ON product.brand_id = brands.brand_id LEFT JOIN categories ON product.category_id = categories.category_id LEFT JOIN seller ON product.seller_id = seller.seller_id WHERE product_id = " . $conn->real_escape_string($_GET['id']) . " AND product_status = 1";
+$sql = "SELECT * FROM product LEFT JOIN brands ON product.brand_id = brands.brand_id LEFT JOIN categories ON product.category_id = categories.category_id LEFT JOIN admin ON product.admin_id = admin.admin_id WHERE product_id = " . $conn->real_escape_string($_GET['id']) . " AND product_status = 1";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
@@ -44,12 +44,13 @@ $resultReview = $conn->query($sql);
                 <div class="product-info">
                     <!-- BEGIN product-info-header -->
                     <div class="product-info-header">
-                        <h1 class="product-title">
+                    <b><h1 class="product-title">
                             <!-- <span class="badge bg-primary">41% OFF</span>  -->
-                            <?php echo $row['product_name']; ?>
+                            <?php echo $row['product_name']; ?></b></h4>
+                                
                         </h1>
                         <ul class="product-category">
-                            <li>ร้าน: <a href="product.php?shop=<?php echo $row['seller_id']; ?>"><?php echo $row['seller_shop']; ?></a>
+                            <li>ร้าน: <a href="product.php?shop=<?php echo $row['admin_id']; ?>"><?php echo $row['admin_shop']; ?></a>
                             </li>
                             <li>/</li>
                             <li>ประเภท: <a href="product.php?category=<?php echo $row['category_id']; ?>"><?php echo $row['category_name']; ?></a>
@@ -116,7 +117,7 @@ $resultReview = $conn->query($sql);
                         <?php } elseif (!isset($_SESSION['user_id'])) { ?>
                             <button class="btn btn-inverse btn-theme btn-lg width-200" onclick="redirectToLogin()">เพิ่มลงในตะกร้า</button>
                         <?php } else { ?>
-                            <button class="btn btn-inverse btn-theme btn-lg width-200" onclick="addCart(<?php echo $row['seller_id']; ?>,'<?php echo $row['seller_shop']; ?>',<?php echo $row['product_id']; ?>, '<?php echo $row['product_name']; ?>', <?php echo $row['product_price']; ?>, '<?php echo $row['product_image']; ?>')">เพิ่มลงในตะกร้า</button>
+                            <button class="btn btn-inverse btn-theme btn-lg width-200" onclick="addCart(<?php echo $row['admin_id']; ?>,'<?php echo $row['admin_shop']; ?>',<?php echo $row['product_id']; ?>, '<?php echo $row['product_name']; ?>', <?php echo $row['product_price']; ?>, '<?php echo $row['product_image']; ?>')">เพิ่มลงในตะกร้า</button>
                         <?php } ?>
 
                         <script>
@@ -257,7 +258,7 @@ $resultReview = $conn->query($sql);
                             <a href="product_detail.php?id=<?php echo $item['product_id']; ?>" class="item-link">
                                 <img src="<?php echo $item['product_image']; ?>" />
                                 <div class="item-info">
-                                    <h4 class="item-title"><?php echo $item['product_name']; ?></h4>
+                                <h1 class="item-title"><b><?php echo $item['product_name']; ?></b></h1>
                                     <p class="item-desc"><?php echo trim(substr($item['product_detail'], 0, 200)); ?></p>
                                     <div class="item-price">
                                         <?php

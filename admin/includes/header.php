@@ -97,7 +97,7 @@ if (!isset($_SESSION)) {
             <li class="dropdown navbar-user">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="https://media.discordapp.net/attachments/1128198864629940244/1128955900594495488/istockphoto-1300845620-612x612.png?width=473&height=473" class="user-img" alt="" />
-                    <span class="d-none d-md-inline"><?php echo $_SESSION['seller_fullname']; ?></span> <b class="caret"></b>
+                    <span class="d-none d-md-inline"><?php echo $_SESSION['admin_fullname']; ?></span> <b class="caret"></b>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a href="profile.php" class="dropdown-item">แก้ไขข้อมูลส่วนตัว</a>
@@ -127,7 +127,7 @@ if (!isset($_SESSION)) {
                         </div>
                         <div class="info text-center">
                             <!-- <b class="caret pull-right"></b> -->
-                            <?php echo $_SESSION['seller_fullname']; ?>
+                            <?php echo $_SESSION['admin_fullname']; ?>
                             <small>ผู้ดูแลระบบ<br />บริษัทขายเครื่องกรองนํ้า A & P</small>
                         </div>
                     </a>
@@ -138,7 +138,7 @@ if (!isset($_SESSION)) {
             <ul class="nav">
                 <li class="nav-header">ร้านค้า</li>
 
-                <li class="<?php echo (in_array(explode(".php", basename($_SERVER['REQUEST_URI']))[0], ["index", "seller"])) ? "active" : ""; ?>">
+                <li class="<?php echo (in_array(explode(".php", basename($_SERVER['REQUEST_URI']))[0], ["index", "admin"])) ? "active" : ""; ?>">
                     <a href="index.php">
                         <i class="icon-screen-desktop"></i>
                         <span>รายงานยอดขาย</span>

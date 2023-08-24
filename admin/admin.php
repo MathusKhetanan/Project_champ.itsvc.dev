@@ -3,7 +3,7 @@ include('../config.php');
 include('includes/authentication.php');
 include('includes/header.php');
 
-$sql = "SELECT * FROM seller";
+$sql = "SELECT * FROM admin";
 $result = $conn->query($sql);
 ?>
 
@@ -34,8 +34,7 @@ $result = $conn->query($sql);
       <table id="data-table-default" class="table table-bordered">
         <thead>
           <tr>
-            <th width="1%"></th>
-            <th class="text-nowrap">ชื่อร้านค้า</th>
+          <th class="text-nowrap">ลําดับ</th>
             <th class="text-nowrap">ชื่อบัญชีผู้ขาย</th>
             <th width="15rem" class="text-nowrap">อีเมล</th>
             <th class="text-nowrap">ชื่อ-นามสกลุผู้ขาย</th>
@@ -43,23 +42,23 @@ $result = $conn->query($sql);
             <th class="text-nowrap text-center">ชื่อธนคาร</th>
             <th class="text-nowrap text-center">เลขที่บัญชี</th>
             <th class="text-nowrap text-center">ตัวเลือก</th>
+
           </tr>
         </thead>
         <tbody>
           <?php foreach ($result as $key => $row) { ?>
             <tr>
               <td width="1%" class="f-s-600 text-inverse"><?php echo $key + 1; ?></td>
-              <td><?php echo $row['seller_shop']; ?></td>
-              <td><?php echo $row['seller_username']; ?></td>
-              <td><?php echo $row['seller_email']; ?></td>
-              <td><?php echo $row['seller_username']; ?></td>
-              <td><?php echo $row['seller_tel']; ?></td>
-              <td><?php echo $row['seller_bank_name']; ?></td>
-              <td><?php echo $row['seller_account_number']; ?></td>
-              <td class="text-center">
-                <a class="btn btn-danger" onclick="confirmDelete('<?php echo $row['seller_id']; ?>')">ลบ</a>
-              </td>
+              <td><?php echo $row['admin_username']; ?></td>
+              <td><?php echo $row['admin_email']; ?></td>
+              <td><?php echo $row['admin_username']; ?></td>
+              <td><?php echo $row['admin_tel']; ?></td>
+              <td><?php echo $row['admin_bank_name']; ?></td>
+              <td><?php echo $row['admin_account_number']; ?></td>
+              <td class="text-center"><form action="process_admin.status.php" method="POST"><button type="submit" class="btn btn-<?php echo ($row['admin_username']===NULL)? "warning": (((bool)$row['admin_status'])?"success": "danger"); ?>" name="change_status" value="<?php echo $row['admin_id']; ?>" <?php echo ($row['admin_username']===NULL)?"disabled": ""; ?> ><?php echo ($row['admin_username']===NULL)? "ยังไม่ยืนยันตัวตน":(((bool)$row['admin_status'])?"เปิดใช้งาน": "ปิดใช้งาน"); ?></button></form></td>
+          </tr>
             </tr>
+            
           <?php } ?>
         </tbody>
       </table>
@@ -71,7 +70,7 @@ $result = $conn->query($sql);
 <!-- end #content -->
 
 <script>
-  function confirmDelete(sellerId) {
+  function confirmDelete(adminId) {
     Swal.fire({
       title: "ยืนยันการลบข้อมูล",
       text: "คุณต้องการลบข้อมูลแอดมินนี้หรือไม่?",
@@ -83,7 +82,7 @@ $result = $conn->query($sql);
       cancelButtonText: "ยกเลิก",
     }).then((result) => {
       if (result.isConfirmed) {
-        location.href = `process_admin.delete.php?id=${sellerId}&action=delete`;
+        location.href = `process_admin.delete.php?id=${adminId}&action=delete`;
       }
     });
   }

@@ -4,7 +4,7 @@
   include('includes/header.php'); 
 
   $product_id = $conn->real_escape_string($_GET['id']);
-  $sql = "SELECT * FROM product WHERE product_id = $product_id AND seller_id = ".$_SESSION['seller_id'];
+  $sql = "SELECT * FROM product WHERE product_id = $product_id AND admin_id = ".$_SESSION['admin_id'];
   $result = $conn->query($sql);
   $row = $result->fetch_assoc();
 

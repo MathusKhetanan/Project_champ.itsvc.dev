@@ -30,20 +30,20 @@
         <div class="row">
           <div class="col-4">
             <div class="form-group">
-              <label for="seller_shop">ชื่อร้าน</label>
-              <input type="text" class="form-control" id="seller_shop" name="seller_shop" placeholder="ชื่อร้าน" data-parsley-required="true" value="<?php echo $_SESSION['seller_shop']; ?>">
+              <label for="admin_shop">ชื่อร้าน</label>
+              <input type="text" class="form-control" id="admin_shop" name="admin_shop" placeholder="ชื่อร้าน" data-parsley-required="true" value="<?php echo $_SESSION['admin_shop']; ?>">
             </div>
           </div>
           <div class="col-4">
             <div class="form-group">
-              <label for="seller_detail">รายละเอียดร้าน</label>
-              <textarea class="form-control" id="seller_detail" name="seller_detail" placeholder="รายละเอียดร้าน" data-parsley-required="true" rows="4"><?php echo $_SESSION['seller_detail']; ?></textarea>
+              <label for="admin_detail">รายละเอียดร้าน</label>
+              <textarea class="form-control" id="admin_detail" name="admin_detail" placeholder="รายละเอียดร้าน" data-parsley-required="true" rows="4"><?php echo $_SESSION['admin_detail']; ?></textarea>
             </div>
           </div>
           <div class="col-4">
             <div class="form-group">
-              <label for="seller_address">ที่อยู่ร้าน</label>
-              <textarea class="form-control" id="seller_address" name="seller_address" placeholder="ที่อยู่ร้าน" data-parsley-required="true" rows="4"><?php echo $_SESSION['seller_address']; ?></textarea>
+              <label for="admin_address">ที่อยู่ร้าน</label>
+              <textarea class="form-control" id="admin_address" name="admin_address" placeholder="ที่อยู่ร้าน" data-parsley-required="true" rows="4"><?php echo $_SESSION['admin_address']; ?></textarea>
             </div>
           </div>
         </div>
@@ -66,55 +66,55 @@
           <div class="col-4">
             <div class="form-group">
               <label>รหัสผู้ขาย</label>
-              <input type="text" class="form-control" placeholder="รหัสผู้ขาย" value="<?php echo $_SESSION['seller_id']; ?>" readonly>
+              <input type="text" class="form-control" placeholder="รหัสผู้ขาย" value="<?php echo $_SESSION['admin_id']; ?>" readonly>
             </div>
           </div>
           <div class="col-4">
             <div class="form-group">
               <label>ชื่อบัญชีผู้ขาย</label>
-              <input type="text" class="form-control" value="<?php echo $_SESSION['seller_username']; ?>" readonly>
+              <input type="text" class="form-control" value="<?php echo $_SESSION['admin_username']; ?>" readonly>
             </div>
           </div>
           <div class="col-4">
             <div class="form-group">
               <label>อีเมล</label>
-              <input type="text" class="form-control" value="<?php echo $_SESSION['seller_email']; ?>" readonly>
+              <input type="text" class="form-control" value="<?php echo $_SESSION['admin_email']; ?>" readonly>
             </div>
           </div>
           <div class="col-4">
             <div class="form-group">
-              <label for="seller_fullname">ชื่อ-สกุลผู้ขาย</label>
-              <input type="text" class="form-control" id="seller_fullname" name="seller_fullname" placeholder="ชื่อ-สกุลผู้ขาย" data-parsley-required="true" value="<?php echo $_SESSION['seller_fullname']; ?>">
+              <label for="admin_fullname">ชื่อ-สกุลผู้ขาย</label>
+              <input type="text" class="form-control" id="admin_fullname" name="admin_fullname" placeholder="ชื่อ-สกุลผู้ขาย" data-parsley-required="true" value="<?php echo $_SESSION['admin_fullname']; ?>">
             </div>
           </div>
           <div class="col-4">
             <div class="form-group">
-              <label for="seller_tel">เบอร์ติดต่อ</label>
-              <input type="text" class="form-control" id="seller_tel" name="seller_tel" placeholder="เบอร์ติดต่อ" data-parsley-required="true" value="<?php echo $_SESSION['seller_tel']; ?>">
+              <label for="admin_tel">เบอร์ติดต่อ</label>
+              <input type="text" class="form-control" id="admin_tel" name="admin_tel" placeholder="เบอร์ติดต่อ" data-parsley-required="true" value="<?php echo $_SESSION['admin_tel']; ?>">
             </div>
           </div>
           <div class="col-4">
 <div class="form-group">
-<label for="seller_bank_name">ชื่อธนาคาร</label>
-<input type="text" class="form-control" id="seller_bank_name" name="seller_bank_name" placeholder="ชื่อธนาคาร" data-parsley-required="true" value="ธนาคารกรุงไทย">
+<label for="admin_bank_name">ชื่อธนาคาร</label>
+<input type="text" class="form-control" id="admin_bank_name" name="admin_bank_name" placeholder="ชื่อธนาคาร" data-parsley-required="true" value="ธนาคารกรุงไทย">
 </div>
 </div>
 <div class="col-4">
 <div class="form-group">
-<label for="seller_account_number">เลขที่บัญชี</label>
-<input type="text" class="form-control" id="seller_account_number" name="seller_account_number" placeholder="เลขที่บัญชี" data-parsley-required="true" value="827-0-35966-1	">
+<label for="admin_account_number">เลขที่บัญชี</label>
+<input type="text" class="form-control" id="admin_account_number" name="admin_account_number" placeholder="เลขที่บัญชี" data-parsley-required="true" value="827-0-35966-1	">
 </div>
 </div>
           <div class="col-4">
             <div class="form-group">
-              <label for="seller_password">รหัสผ่าน (หากไม่เปลี่ยน โปรดปล่อยว่าง)</label>
-							<input type="password" id="seller_password" name="seller_password" placeholder="รหัสผ่าน" class="form-control" data-parsley-equalto="#seller_password_confirm" />
+              <label for="admin_password">รหัสผ่าน (หากไม่เปลี่ยน โปรดปล่อยว่าง)</label>
+							<input type="password" id="admin_password" name="admin_password" placeholder="รหัสผ่าน" class="form-control" data-parsley-equalto="#admin_password_confirm" />
             </div>
           </div>
           <div class="col-4">
             <div class="form-group">
-              <label for="seller_password_confirm">ยืนยันรหัสผ่าน (หากไม่เปลี่ยน โปรดปล่อยว่าง)</label>
-              <input type="password" id="seller_password_confirm" name="seller_password_confirm" placeholder="ยืนยันรหัสผ่าน" class="form-control" data-parsley-equalto="#seller_password" />
+              <label for="admin_password_confirm">ยืนยันรหัสผ่าน (หากไม่เปลี่ยน โปรดปล่อยว่าง)</label>
+              <input type="password" id="admin_password_confirm" name="admin_password_confirm" placeholder="ยืนยันรหัสผ่าน" class="form-control" data-parsley-equalto="#admin_password" />
             </div>
           </div>
         </div>

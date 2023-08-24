@@ -11,10 +11,10 @@ $resultTrending = $conn->query($sql);
 $sql = "SELECT * FROM brands";
 $resultBrands = $conn->query($sql);
 
-$sql = "SELECT *, DATE_FORMAT(orders.createdAt, '%d/%m/%Y %H:%i:%s') AS formattedCreatedAt FROM orders LEFT JOIN seller ON orders.seller_id = seller.seller_id WHERE user_id = $user_id ORDER BY orders.createdAt DESC"; // Order by createdAt in descending order
+$sql = "SELECT *, DATE_FORMAT(orders.createdAt, '%d/%m/%Y %H:%i:%s') AS formattedCreatedAt FROM orders LEFT JOIN admin ON orders.admin_id = admin.admin_id WHERE user_id = $user_id ORDER BY orders.createdAt DESC"; // Order by createdAt in descending order
 $resultdate = $conn->query($sql);
 
-$sql = "SELECT orders.*, seller.seller_fullname, seller.seller_tel, DATE_FORMAT(orders.createdAt, '%d/%m/%Y %H:%i:%s') AS formattedCreatedAt FROM orders LEFT JOIN seller ON orders.seller_id = seller.seller_id WHERE user_id = $user_id ORDER BY orders.createdAt DESC"; // Order by createdAt in descending order
+$sql = "SELECT orders.*, admin.admin_fullname, admin.admin_tel, DATE_FORMAT(orders.createdAt, '%d/%m/%Y %H:%i:%s') AS formattedCreatedAt FROM orders LEFT JOIN admin ON orders.admin_id = admin.admin_id WHERE user_id = $user_id ORDER BY orders.createdAt DESC"; // Order by createdAt in descending order
 $result = $conn->query($sql);
 // เพิ่มข้อมูลในตาราง
 for ($i = 0; $i < 10; $i++) {
@@ -57,7 +57,7 @@ for ($i = 0; $i < 10; $i++) {
                 <?php foreach ($result as $key => $row) { ?>
                   <tr>
                     <td width="1%" class="f-s-600 text-inverse"><?php echo $key + 1; ?></td>
-                    <td><?php echo $row['seller_fullname']; ?></td>
+                    <td><?php echo $row['admin_fullname']; ?></td>
                     <td><?php echo (floor($row['order_total']) == $row['order_total']) ? number_format($row['order_total'], 0) : number_format($row['order_total'], 2); ?></td>
                     <td class="text-center"><span class="badge bg-<?php echo $StatusColor[$row['order_status']]; ?>" style="font-size: 14px"><?php echo $Status[$row['order_status']]; ?></span></td>
                     <td><?php echo isset($row['formattedCreatedAt']) ? $row['formattedCreatedAt'] : ''; ?></td>

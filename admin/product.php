@@ -3,10 +3,10 @@ include('../config.php');
 include('includes/authentication.php');
 include('includes/header.php');
 
-$seller_id = $_SESSION['seller_id'];
+$admin_id = $_SESSION['admin_id'];
 $sql = "SELECT * FROM product 
           LEFT JOIN categories ON product.category_id = categories.category_id
-          LEFT JOIN brands ON product.brand_id = brands.brand_id WHERE seller_id = $seller_id";
+          LEFT JOIN brands ON product.brand_id = brands.brand_id WHERE admin_id = $admin_id";
 $result = $conn->query($sql);
 ?>
 <!-- begin #content -->
@@ -53,7 +53,8 @@ $result = $conn->query($sql);
                         <tr>
                             <td><?php echo $key + 1; ?></td>
                             <td><img src="../<?php echo $row['product_image']; ?>" class="img-rounded height-30" /></td>
-                            <td><?php echo $row['product_name']; ?></td>
+                            <td><b><?php echo $row['product_name']; ?></b></td>
+
                             <td><?php echo $row['brand_name']; ?></td>
                             <td><?php echo $row['category_name']; ?></td>
                             <td>

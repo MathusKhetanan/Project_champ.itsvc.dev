@@ -1,52 +1,63 @@
-<?php
-include('../config.php');
-include('includes/authentication.php');
-include('includes/header.php');
+<!DOCTYPE html>
+<html lang="en">
 
-// Function to hash the password using SHA-512
-function hashPassword($password) {
-    return hash('sha512', $password);
-}
+<head>
+    <!-- เรียกใช้ไฟล์ SweetAlert ผ่าน CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
+</head>
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get and sanitize the data from the form
-    $seller_shop = $_POST['seller_shop'];
-    $seller_detail = $_POST['seller_detail'];
-    $seller_address = $_POST['seller_address'];
-    $seller_username = $_POST['seller_username'];
-    $seller_email = $_POST['seller_email'];
-    $seller_fullname = $_POST['seller_fullname'];
-    $seller_tel = $_POST['seller_tel'];
-    $seller_bank_name = $_POST['seller_bank_name'];
-    $seller_account_number = $_POST['seller_account_number'];
-    $seller_password = $_POST['seller_password'];
-    $seller_password_confirm = $_POST['seller_password_confirm'];
+<body>
+    <?php
+    include('../config.php');
+    include('includes/authentication.php');
+    include('includes/header.php');
 
-    // Check if passwords match
-    if ($seller_password !== $seller_password_confirm) {
-        echo "รหัสผ่านไม่ตรงกัน";
-        exit(); // Stop further execution
+    // Function to hash the password using SHA-512
+    function hashPassword($password)
+    {
+        return hash('sha512', $password);
     }
 
-    // Hash the password before storing it in the database
-    $hashed_password = hashPassword($seller_password);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Get and sanitize the data from the form
+        $admin_shop = $_POST['admin_shop'];
+        $admin_detail = $_POST['admin_detail'];
+        $admin_address = $_POST['admin_address'];
+        $admin_username = $_POST['admin_username'];
+        $admin_email = $_POST['admin_email'];
+        $admin_fullname = $_POST['admin_fullname'];
+        $admin_tel = $_POST['admin_tel'];
+        $admin_bank_name = $_POST['admin_bank_name'];
+        $admin_account_number = $_POST['admin_account_number'];
+        $admin_password = $_POST['admin_password'];
+        $admin_password_confirm = $_POST['admin_password_confirm'];
 
-    // Validate email format
-    if (!filter_var($seller_email, FILTER_VALIDATE_EMAIL)) {
-        echo "รูปแบบอีเมลไม่ถูกต้อง";
-        exit();
-    }
+        // Check if passwords match
+        if ($admin_password !== $admin_password_confirm) {
+            echo "รหัสผ่านไม่ตรงกัน";
+            exit(); // Stop further execution
+        }
 
-    // Using a prepared statement to insert the data
-    $stmt = $conn->prepare("INSERT INTO seller (seller_shop, seller_detail, seller_address, seller_username, seller_email, seller_fullname, seller_tel, seller_bank_name, seller_account_number, seller_password, seller_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        // Hash the password before storing it in the database
+        $hashed_password = hashPassword($admin_password);
 
-    // Set seller_status to 1
-    $seller_status = 1;
+        // Validate email format
+        if (!filter_var($admin_email, FILTER_VALIDATE_EMAIL)) {
+            echo "รูปแบบอีเมลไม่ถูกต้อง";
+            exit();
+        }
 
-    $stmt->bind_param("sssssssssss", $seller_shop, $seller_detail, $seller_address, $seller_username, $seller_email, $seller_fullname, $seller_tel, $seller_bank_name, $seller_account_number, $hashed_password, $seller_status);
+        // Using a prepared statement to insert the data
+        $stmt = $conn->prepare("INSERT INTO admin (admin_shop, admin_detail, admin_address, admin_username, admin_email, admin_fullname, admin_tel, admin_bank_name, admin_account_number, admin_password, admin_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-    if ($stmt->execute()) {
-        echo "<script>
+        // Set admin_status to 1
+        $admin_status = 1;
+
+        $stmt->bind_param("sssssssssss", $admin_shop, $admin_detail, $admin_address, $admin_username, $admin_email, $admin_fullname, $admin_tel, $admin_bank_name, $admin_account_number, $hashed_password, $admin_status);
+
+        if ($stmt->execute()) {
+            echo "<script>
             Swal.fire({
                 icon: 'success',
                 title: 'เพิ่มข้อมูลร้านค้าสำเร็จ',
@@ -56,8 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 window.location.href = 'admin.php';
             });
         </script>";
-    } else {
-        echo "<script>
+        } else {
+            echo "<script>
             Swal.fire({
                 icon: 'error',
                 title: 'เพิ่มข้อมูลร้านค้าไม่สำเร็จ',
@@ -66,17 +77,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 window.history.back();
             });
         </script>";
+        }
     }
-}
-?>
+    ?>
 
-<!-- ... ส่วนที่เหลือของ HTML ... -->
-
+    <!-- ... ส่วนที่เหลือของ HTML ... -->
 
 
-<script>
-    $(document).ready(function() {
-        $(".default-select2").select2();
-    });
-</script>
-<?php include('includes/footer.php'); ?>
+
+    <script>
+        $(document).ready(function() {
+            $(".default-select2").select2();
+        });
+    </script>
+    <?php include('includes/footer.php'); ?>
+</body>
+
+</html>

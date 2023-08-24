@@ -9,8 +9,8 @@ $resultBrands = $conn->query($sql);
 $sql = "SELECT *,(SELECT count(category_id) FROM product WHERE category_id = categories.category_id)as count FROM categories";
 $resultCategories = $conn->query($sql);
 
-$sql = "SELECT *,(SELECT count(seller_id) FROM product WHERE seller_id = seller.seller_id)as count FROM seller WHERE seller_status = 1";
-$resultSeller = $conn->query($sql);
+$sql = "SELECT *,(SELECT count(admin_id) FROM product WHERE admin_id = admin.admin_id)as count FROM admin WHERE admin_status = 1";
+$resultadmin = $conn->query($sql);
 
 if (isset($_SESSION['user_id'])) {
     $sql = "SELECT * FROM notifications WHERE user_id = " . $_SESSION['user_id'] . " AND DATE(show_notification) > (NOW() - INTERVAL 7 DAY) AND DATE(show_notification) < (NOW()) ORDER BY noti_id DESC LIMIT 8";
@@ -348,13 +348,13 @@ p {
                                     <div class="dropdown-menu-content">
                                         <h4 class="title">ร้านค้า</h4>
                                         <div class="row">
-                                            <?php foreach ($resultSeller as $item) { ?>
+                                            <?php foreach ($resultadmin as $item) { ?>
                                             <div class="col-lg-3">
                                                 <ul class="dropdown-menu-list">
                                                     <li><a
-                                                            href="<?php echo ($item['count'] == 0) ? "#" : "product.php?shop=" . $item['seller_id']; ?>"><i
+                                                            href="<?php echo ($item['count'] == 0) ? "#" : "product.php?shop=" . $item['admin_id']; ?>"><i
                                                                 class="fa fa-fw fa-angle-right text-muted"></i>
-                                                            <?php echo $item['seller_shop']; ?> <span
+                                                            <?php echo $item['admin_shop']; ?> <span
                                                                 class="pull-right">(<?php echo $item['count']; ?>)</span></a>
                                                     </li>
                                                 </ul>
@@ -477,7 +477,7 @@ p {
                         </div>
                     </li>
                     <?php } ?>
-                    <?php if (isset($_SESSION['admin_id']) && !isset($_SESSION['seller_fullname'])) { // Check if it is an admin 
+                    <?php if (isset($_SESSION['admin_id']) && !isset($_SESSION['admin_fullname'])) { // Check if it is an admin 
                     ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -496,7 +496,7 @@ p {
                         </div>
                     </li>
 
-                    <?php } elseif (isset($_SESSION['seller_fullname'])) { // Check if it is a seller 
+                    <?php } elseif (isset($_SESSION['admin_fullname'])) { // Check if it is a admin 
                     ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -504,7 +504,7 @@ p {
                             <img src="https://media.discordapp.net/attachments/1128198864629940244/1128955900594495488/istockphoto-1300845620-612x612.png?width=473&height=473"
                                 class="user-img" alt="" />
                             <span class="d-none d-xl-inline">
-                                <?php echo isset($_SESSION['seller_fullname']) ? $_SESSION['seller_fullname'] : "เข้าสู่ระบบ"; ?>
+                                <?php echo isset($_SESSION['admin_fullname']) ? $_SESSION['admin_fullname'] : "เข้าสู่ระบบ"; ?>
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

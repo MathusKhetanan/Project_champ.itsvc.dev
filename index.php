@@ -94,7 +94,7 @@ $resultBrands = $conn->query($sql);
                         <a href="product_detail.php?id=<?php echo $item['product_id']; ?>" class="item-link">
                             <img src="<?php echo $item['product_image']; ?>" alt="<?php echo $item['product_name']; ?> Image" width="300" height="200">
                             <div class="item-info">
-                                <h4 class="item-title"><?php echo $item['product_name']; ?></h4>
+                            <h4 class="item-title"><b><?php echo $item['product_name']; ?></b></h4>
                                 <p class="item-desc"><?php echo trim(substr($item['product_detail'], 0, 200)); ?></p>
                                 <div class="item-price">
                                     <?php
@@ -144,7 +144,7 @@ foreach ($resultBrands as $row) {
                                 <a href="product_detail.php?id=<?php echo $item['product_id']; ?>" class="item-link">
                                     <img src="<?php echo $item['product_image']; ?>" alt="<?php echo $item['product_name']; ?> Image" width="300" height="200" />
                                     <div class="item-info">
-                                        <h4 class="item-title"><?php echo $item['product_name']; ?></h4>
+                                    <h4 class="item-title"><b><?php echo $item['product_name']; ?></b></h4>
                                         <p class="item-desc"><?php echo trim(substr($item['product_detail'], 0, 200)); ?></p>
                                         <div class="item-price"><?php echo number_format(floor($item['product_price']), 0, '', ','); ?> ฿</div>
 

@@ -10,17 +10,17 @@
   include('../config.php');
 
   if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $seller_id = $_SESSION['seller_id'];
-    $seller_shop = $conn->real_escape_string($_POST['seller_shop']);
-    $seller_detail = $conn->real_escape_string($_POST['seller_detail']);
-    $seller_address = $conn->real_escape_string($_POST['seller_address']);
+    $admin_id = $_SESSION['admin_id'];
+    $admin_shop = $conn->real_escape_string($_POST['admin_shop']);
+    $admin_detail = $conn->real_escape_string($_POST['admin_detail']);
+    $admin_address = $conn->real_escape_string($_POST['admin_address']);
 
-    $sql = "UPDATE seller SET seller_shop = '$seller_shop', seller_detail = '$seller_detail', seller_address = '$seller_address' WHERE seller_id = " . $seller_id;
+    $sql = "UPDATE admin SET admin_shop = '$admin_shop', admin_detail = '$admin_detail', admin_address = '$admin_address' WHERE admin_id = " . $admin_id;
     
     if($conn->query($sql)){
-      $_SESSION['seller_shop'] = $seller_shop;
-      $_SESSION['seller_detail'] = $seller_detail;
-      $_SESSION['seller_address'] = $seller_address;
+      $_SESSION['admin_shop'] = $admin_shop;
+      $_SESSION['admin_detail'] = $admin_detail;
+      $_SESSION['admin_address'] = $admin_address;
       
       // Display success message using SweetAlert
       echo "<script>

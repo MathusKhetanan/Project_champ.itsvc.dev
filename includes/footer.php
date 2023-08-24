@@ -24,8 +24,9 @@
     Omise.setPublicKey("pkey_test_5r0gn5997jah59d6ns1");
 
     let cartObject = JSON.parse(localStorage.getItem('items')) || [];
-		var cartGroupSeller = [];
-		const payOmise = () => {
+    let cartGroupadmin = [];
+
+    const payOmise = () => {
         var form = document.querySelector('form[action="process_checkout.php"]');
         let amount = parseFloat($('input[name="amount"]').val()) * 100; // แปลงเป็น satangs
 
@@ -48,9 +49,9 @@
         Omise.createToken("card", tokenParameters, function(statusCode, response) {
             if (statusCode === 200) {
                 const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
-                groupSeller(newCartObject)
+                groupadmin(newCartObject)
                 console.log(newCartObject.reduce((a, b) => a + b.price * b.qty, 0))
-                form.items.value = JSON.stringify(cartGroupSeller);
+                form.items.value = JSON.stringify(cartGroupadmin);
                 form.amount.value = newCartObject.reduce((a, b) => a + b.price * b.qty, 0) * 100;
                 form.omiseToken.value = response.id;
                 form.submit();
@@ -60,20 +61,20 @@
         });
     }
 
-    const groupSeller = (newCartObject) => {
-        cartGroupSeller = [];
+    const groupadmin = (newCartObject) => {
+        cartGroupadmin = [];
         newCartObject.map((item) => {
-            let checkItem = cartGroupSeller.find((x) => x.key == item.seller)
+            let checkItem = cartGroupadmin.find((x) => x.key == item.admin)
             if (checkItem) {
                 checkItem.order = [...checkItem.order, item]
-                cartGroupSeller.map((x) => x.seller === item.seller ? checkItem : x);
+                cartGroupadmin.map((x) => x.admin === item.admin ? checkItem : x);
             } else {
                 const newItem = {
-                    key: item.seller,
+                    key: item.admin,
                     shop: item.shop,
                     order: [item]
                 }
-                cartGroupSeller = [...cartGroupSeller, newItem];
+                cartGroupadmin = [...cartGroupadmin, newItem];
             }
         })
     }
@@ -108,7 +109,7 @@
     }
     const renderCart = () => {
         const cartObject = JSON.parse(localStorage.getItem('items')) || [];
-        groupSeller(cartObject)
+        groupadmin(cartObject)
         $(".table-cart").html("")
         $(`#cart-item-*`).html("")
         if (cartObject.length <= 0) {
@@ -118,7 +119,7 @@
             $("button.sw-btn-next").hide();
         } else {
             $("button.sw-btn-next").show();
-            cartGroupSeller.map((seller) => {
+            cartGroupadmin.map((admin) => {
                 $(".table-cart").append(`
                                     <thead id="cart-head">
                                         <tr>
@@ -130,9 +131,9 @@
                                         </tr>
                                     </thead>
                                 `);
-                $(".table-cart").append(`<tbody id="cart-item-${seller.key}">`)
-                seller.order.map((item) => {
-                    $(`#cart-item-${seller.key}`).append(`
+                $(".table-cart").append(`<tbody id="cart-item-${admin.key}">`)
+                admin.order.map((item) => {
+                    $(`#cart-item-${admin.key}`).append(`
                                         <tr>
                         <td class="cart-product">
                             <div class="product-img" style="width: 5rem;">
@@ -157,7 +158,7 @@
                         </td>
 
                         <td class="cart-actions text-center">
-                            <div class="qty-desc" style="cursor: pointer;" onclick="removeItemCart(${seller.key}, ${item.id})">
+                            <div class="qty-desc" style="cursor: pointer;" onclick="removeItemCart(${admin.key}, ${item.id})">
                                 <i class="fas fa-trash-alt"></i> <!-- ไอคอนถังขยะ -->
                             </div>
                         </td>
@@ -184,14 +185,14 @@
             `);
         }
     }
-    const addCart = (seller, shop, id, name, price, img) => {
+    const addCart = (admin, shop, id, name, price, img) => {
         const checkItem = cartObject.find((x) => x.id === id);
         if (checkItem) {
             checkItem.qty = parseInt(checkItem.qty) + 1;
             cartObject.map((x) => x.id === id ? checkItem : x);
         } else {
             cartObject = [...cartObject, {
-                seller,
+                admin,
                 shop,
                 id,
                 name,
@@ -208,11 +209,11 @@
         localStorage.setItem("items", JSON.stringify(cartObject));
         renderCountCart();
     }
-    const removeItemCart = (seller, id) => {
+    const removeItemCart = (admin, id) => {
         cartObject = cartObject.filter((x) => x.id !== id)
         localStorage.setItem("items", JSON.stringify(cartObject));
         const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
-        groupSeller(newCartObject)
+        groupadmin(newCartObject)
         renderCart();
         renderCountCart();
     }
@@ -247,7 +248,30 @@
     // อัปเดตราคารวมโดยตบอดเวลาทุก 5 วินาที
     setInterval(updateUserFullname, 1000); // 5000 มิลลิวินาที = 5 วินาที
 </script>
+<script>
+// ปุ่มแสดงรูปภาพสลิป
+var showSlipButton = document.getElementById("showSlipButton");
+// หน้าต่างแสดงรูปภาพสลิป
+var slipModal = document.getElementById("slip-modal");
+// ปุ่มปิดสลิป
+var closeSlipButton = document.getElementById("closeSlipButton");
+// รูปภาพสลิป
+var slipImage = document.getElementById("slip-image");
 
+// เมื่อคลิกที่ปุ่มแสดงรูปภาพสลิป
+showSlipButton.onclick = function() {
+  // แสดงหน้าต่างแสดงรูปภาพสลิป
+  slipModal.style.display = "block";
+  // ใส่ URL รูปภาพสลิปที่คุณต้องการแสดง
+  slipImage.src = "slip";
+}
+
+// เมื่อคลิกที่ปุ่มปิดสลิป
+closeSlipButton.onclick = function() {
+  // ปิดหน้าต่างแสดงรูปภาพสลิป
+  slipModal.style.display = "none";
+}
+</script>
 </body>
 
 </html>
@@ -304,12 +328,7 @@
                         <li><a href="#" data-abc="true"> เกี่ยวกับเรา </a></li>
                     </ul>
                 </aside>
-                <aside class="col-sm-2 col-md-2">
-                    <h5 class="title">ดาวน์โหลดแอปพลิเคชั่น</h5>
-                    <a href="#" class="d-block mb-2" data-abc="true">
-                        <img class="img-responsive" src="https://cdn.discordapp.com/attachments/1120961499196821596/1141927560905773136/playstorn.webp" height="40" width="140" alt="โลโก้ A&P">
-                    </a>
-                </aside>
+              
             </div>
             </output>
         </section>

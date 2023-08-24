@@ -58,7 +58,7 @@ $result = $conn->query($sql);
                                     <?php if ($row['order_status'] == "paid") { ?>
                                         <button type="submit" class="btn btn-<?php echo $StatusColor['preparing']; ?>" name="change_status" value="<?php echo $row['order_id']; ?>"><?php echo $Status['preparing']; ?></button>
                                     <?php } else if ($row['order_status'] == "preparing") { ?>
-                                        <input type="text" class="form-control w-50 mx-auto mb-1" id="order_tracking" name="order_tracking" placeholder="กรอกหมายเลขพัสดุ" data-parsley-required="true">
+                                        <input type="text" class="form-control w-100 mx-auto mb-1" id="order_tracking" name="order_tracking" placeholder="กรอกหมายเลขออเดอร์" data-parsley-required="true">
                                         <button type="submit" class="btn btn-<?php echo $StatusColor['shipping']; ?>" name="change_status" value="<?php echo $row['order_id']; ?>"><?php echo $Status['shipping']; ?></button>
                                     <?php } else if ($row['order_status'] == "shipping") { ?>
                                         <button type="button" class="btn btn-<?php echo $StatusColor['successful']; ?>" name="change_status" value="<?php echo $row['order_id']; ?>" disabled><?php echo "รอลูกค้ารับสินค้า"; ?></button>

@@ -2,22 +2,22 @@
 include('../config.php');
 include('includes/authentication.php');
 include('includes/header.php');
-$seller_id = $_SESSION['seller_id'];
-$sql = "SELECT *, COALESCE(ROUND(SUM(order_total_net), 2), 0) as sumTotal FROM orders WHERE seller_id = $seller_id AND order_status = 'successful'";
+$admin_id = $_SESSION['admin_id'];
+$sql = "SELECT *, COALESCE(ROUND(SUM(order_total_net), 2), 0) as sumTotal FROM orders WHERE admin_id = $admin_id AND order_status = 'successful'";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
-$seller_id = $_SESSION['seller_id'];
-$sql = "SELECT COALESCE(SUM(withdraw_money), 0) as withdrawPending, COALESCE(SUM(withdraw_fee), 0) as withdrawFeePending FROM withdraw WHERE seller_id = $seller_id AND withdraw_status = 'pending' OR withdraw_status = 'wait_confirm'";
+$admin_id = $_SESSION['admin_id'];
+$sql = "SELECT COALESCE(SUM(withdraw_money), 0) as withdrawPending, COALESCE(SUM(withdraw_fee), 0) as withdrawFeePending FROM withdraw WHERE admin_id = $admin_id AND withdraw_status = 'pending' OR withdraw_status = 'wait_confirm'";
 $result = $conn->query($sql);
 $row2 = $result->fetch_assoc();
 
-$seller_id = $_SESSION['seller_id'];
-$sql = "SELECT COALESCE(SUM(withdraw_money), 0) as withdrawSuccessful, COALESCE(SUM(withdraw_fee), 0) as withdrawFeeSuccessful FROM withdraw WHERE seller_id = $seller_id AND withdraw_status = 'successful'";
+$admin_id = $_SESSION['admin_id'];
+$sql = "SELECT COALESCE(SUM(withdraw_money), 0) as withdrawSuccessful, COALESCE(SUM(withdraw_fee), 0) as withdrawFeeSuccessful FROM withdraw WHERE admin_id = $admin_id AND withdraw_status = 'successful'";
 $result = $conn->query($sql);
 $row3 = $result->fetch_assoc();
 
-$sql = "SELECT * FROM withdraw WHERE seller_id = $seller_id";
+$sql = "SELECT * FROM withdraw WHERE admin_id = $admin_id";
 $result = $conn->query($sql);
 ?>
 
@@ -93,7 +93,7 @@ $result = $conn->query($sql);
         <p class="text-center">* ค่าธรรมเนียม 3% ของยอดที่ถอน</p>
       </div>
       <div class="col-xl-1 col-md-3">
-        <button type="submit" class="btn btn-purple btn-lg w-100" <?php echo ($_SESSION['seller_payment'] == "") ? "disabled" : ""; ?>><?php echo ($_SESSION['seller_payment'] == "") ? "กรุณาตรวจสอบบัญชีของท่าน" : "ถอนเงิน"; ?></button>
+        <button type="submit" class="btn btn-purple btn-lg w-100" <?php echo ($_SESSION['admin_payment'] == "") ? "disabled" : ""; ?>><?php echo ($_SESSION['admin_payment'] == "") ? "กรุณาตรวจสอบบัญชีของท่าน" : "ถอนเงิน"; ?></button>
       </div>
       <!-- end col-3 -->
     </div>
