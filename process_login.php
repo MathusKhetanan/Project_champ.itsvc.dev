@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_email'] = $row['user_email'];
             $_SESSION['user_address'] = $row['user_address'];
             $_SESSION['user_tel'] = $row['user_tel'];
-            $_SESSION['user_pet'] = $row['user_pet'];
+            
 
             // Redirect to the appropriate dashboard with a success message
             $dashboard_url = "index.php"; // Change to your user dashboard URL

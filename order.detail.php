@@ -70,24 +70,23 @@
 										<!-- begin table-responsive -->
 										<div class="table-responsive">
 											<table class="table table-invoice">
-											<thead>
-    <tr>
-        <th>ชื่อสินค้า</th>
-        <th class="text-center" width="10%">ราคา</th>
-        <th class="text-center" width="10%">จำนวน</th>
-        <th class="text-right" width="10%">รวม</th>
-        <th class="text-right" width="20%">สลิปการชำระเงิน</th> <!-- เพิ่มหัวข้อสำหรับสลิปการชำระเงิน -->
-        <th class="text-right" width="0%">ตัวเลือก</th>
-    </tr>
-</thead>
+												<thead>
+													<tr>
+														<th>ชื่อสินค้า</th>
+														<th class="text-center" width="10%">ราคา</th>
+														<th class="text-center" width="10%">จำนวน</th>
+														<th class="text-right" width="10%">รวม</th>
+														<th class="text-right" width="0%">ตัวเลือก</th>
+													</tr>
+												</thead>
 
 												<tbody>
 													<?php
-													$total = 0;
+													$isFirstProduct = true; // กำหนดค่าเริ่มต้นของ $isFirstProduct เป็น true
+													$total = 0; // กำหนดค่าเริ่มต้นของ $total เป็น 0
 													foreach ($result as $key => $item) {
 														$sql2 = "SELECT * FROM product_review WHERE order_id = " . $item['order_id'] . " AND product_id = " . $item['product_id'];
 														$result2 = $conn->query($sql2);
-														$total += $item['order_subtotal'];
 													?>
 														<tr>
 															<td>
@@ -97,29 +96,27 @@
 															<td class="text-center">x <?php echo $item['order_qty']; ?></td>
 															<td class="text-right"><?php echo $item['order_subtotal']; ?></td>
 															<td class="text-right">
-															<button id="showSlipButton" class="slip-button">แสดงสลิป</button>
-
-<div id="slip-modal" class="slip-modal">
-  <div class="slip-modal-content">
-    <img id="slip-image" src="" alt="รูปภาพสลิป">
-    <button id="closeSlipButton" class="slip-close-button">ปิด</button>
-  </div>
-</div>
-
-</td>
-
-															<td class="text-right">
 																<form action="product_detail.php?id=<?php echo $item['product_id']; ?>" method="post">
 																	<button type="submit" class="btn btn-lime" name="order_id" value="<?php echo $item['order_id']; ?>" <?php echo ($row['order_status'] != "successful" || $result2->num_rows > 0) ? "disabled" : ""; ?>>เขียนรีวิว</button>
 																</form>
 															</td>
 														</tr>
-													<?php } ?>
+													<?php
+														$isFirstProduct = false; // กำหนดค่า $isFirstProduct เป็น false เมื่อเราได้มีการแสดงสลิปสำหรับสินค้าแรกแล้ว
+														$total += $item['order_subtotal']; // เพิ่มราคารวมสำหรับสินค้านี้ลงใน $total
+													}
+													?>
+
 												</tbody>
 											</table>
 										</div>
 										<!-- end table-responsive -->
 										<!-- begin invoice-price -->
+										<h5>หลักฐานการโอน</h5>
+										<!-- แสดงรูปภาพ "สลิปการโอนเงิน" ที่ดึงมาจากฐานข้อมูล -->
+										<img src="data:image/jpeg;base64,<?php echo base64_encode($slip); ?>" alt="สลิปการโอนเงิน" style="max-width: 100%;">
+										<br>
+										<br>
 										<div class="invoice-price">
 											<div class="invoice-price-right">
 												<small>รวมทั้งหมด</small> <span class="f-w-600"><?php echo $total; ?> ฿</span>

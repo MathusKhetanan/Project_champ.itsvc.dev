@@ -1,4 +1,4 @@
-	<?php
+<?php
 	include('config.php');
 	include('includes/authentication.php');
 	include('includes/header.php');
@@ -170,16 +170,16 @@
 
 			top: 10px;
 		}
+
 		/* เริ่มต้นโดยซ่อนส่วนนี้ */
-#hidden-step-3 {
-    display: none;
-}
+		#hidden-step-3 {
+			display: none;
+		}
 
-/* แสดงส่วนนี้เมื่อมีเงื่อนไขที่เหมาะสม เช่น เมื่อมีการอัปโหลดสลิป */
-#hidden-step-3.visible {
-    display: block;
-}
-
+		/* แสดงส่วนนี้เมื่อมีเงื่อนไขที่เหมาะสม เช่น เมื่อมีการอัปโหลดสลิป */
+		#hidden-step-3.visible {
+			display: block;
+		}
 	</style>
 
 	<!-- BEGIN #checkout-cart -->
@@ -293,104 +293,103 @@
 							<div id="step-3">
 								<!-- รายละเอียดการชำระเงินและแนบสลิป -->
 								<!-- ส่วนของรายละเอียดการชำระเงินและแนบสลิป -->
-								<?php
-								$sql = "SELECT * FROM `tbl_bank`";
-								$result = $conn->query($sql);
+								<div class="form-group row">
+    <label class="col-md-4 col-form-label text-lg-right">เลือกธนาคาร: <span class="text-danger">*</span></label>
+    <div class="col-md-8">
+        <?php
+        $sql = "SELECT * FROM `tbl_bank`";
+        $result = $conn->query($sql);
 
-								echo '<div class="form-group row">';
-								if ($result->num_rows > 0) {
-									echo '<label class="col-md-4 col-form-label text-lg-right">เลือกธนาคาร: <span class="text-danger">*</span></label>';
-									echo '<div class="col-md-8">';
-
-									while ($row = $result->fetch_assoc()) {
-										echo '<div class="form-check">';
-										echo '<input class="form-check-input" type="radio" name="bank" id="bank' . $row['id'] . '" value="' . $row['id'] . '">';
-										echo '<label class="form-check-label" for="bank' . $row['id'] . '">';
-										echo '<img src="' . $row['b_logo'] . '" alt="' . $row['b_name'] . ' Logo" width="50" height="50">'; // แสดงโลโก้
-										echo ' ' . $row['b_name'] . ' &nbsp;&nbsp;&nbsp; ' . $row['b_number'] . ' &nbsp;&nbsp;&nbsp; ' . $row['bn_name']  . ' &nbsp;&nbsp;&nbsp; ' . $row['b_owner'];;
-										echo '</label>';
-										echo '</div>';
-									}
-									echo '</div>';
-								}
-								echo '</div>';
-								?>
-
-
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="form-check">';
+                echo '<input class="form-check-input" type="radio" name="bank" id="bank' . $row['id'] . '" value="' . $row['id'] . '" required>';
+                echo '<label class="form-check-label" for="bank' . $row['id'] . '">';
+                echo '<img src="' . $row['b_logo'] . '" alt="' . $row['b_name'] . ' Logo" width="50" height="50">'; // แสดงโลโก้
+                echo ' ' . $row['b_name'] . ' &nbsp;&nbsp;&nbsp; ' . $row['b_number'] . ' &nbsp;&nbsp;&nbsp; ' . $row['bn_name']  . ' &nbsp;&nbsp;&nbsp; ' . $row['b_owner'];
+                echo '</label>';
+                echo '</div>';
+            }
+        }
+        ?>
+    </div>
+</div>
 
 								<div class="form-group row">
-									<label class="col-md-4 col-form-label text-lg-right">
-										จำนวนเงิน <span class="text-danger">*</span>
-									</label>
-									<div class="col-md-4">
-										<input type="text" placeholder="ชื่อ-สกุล" id="userFullname" name="user_fullname" data-parsley-group="step-2" class="form-control" data-parsley-required="true" readonly disabled value="<?php echo $_SESSION['user_fullname']; ?>" />
-									</div>
-								</div>
+    <label class="col-md-4 col-form-label text-lg-right">
+        จำนวนเงิน <span class="text-danger">*</span>
+    </label>
+    <div class="col-md-4">
+	<input type="text" placeholder="ชื่อ-สกุล" id="userFullname" name="user_fullname" data-parsley-group="step-3" class="form-control" data-parsley-required="true" readonly disabled value="<?php echo $_SESSION['user_fullname']; ?>" />
+    </div>
+</div>
+
 
 								<script>
 									const totalPrice = <?php echo $totalPrice; ?>;
 									document.getElementById('totalPrice').textContent = totalPrice.toFixed(2) + ' ฿';
 								</script>
-
-								<div class="form-group row">
-									<label class="col-md-4 col-form-label text-lg-right">แนบสลิป <span class="text-danger">*</span></label>
-									<div class="col-md-4">
-										<input type="file" class="form-control-file" name="slip" accept=".pdf,.jpg,.png" />
-									</div>
-										<div id="hidden-step-3">
-							<!-- ... ส่วนที่คุณต้องการซ่อน -->
-							<div class="form-group row">
-								<label class="col-md-4 col-form-label text-lg-right">ชื่อบนบัตร <span class="text-danger">*</span></label>
-								<div class="col-md-4">
-									<input type="text" class="form-control required" name="cardHolder" placeholder="" value="TEST" />
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-md-4 col-form-label text-lg-right">หมายเลขบัตร <span class="text-danger">*</span></label>
-								<div class="col-md-4">
-									<input type="text" class="form-control required" name="cardNumber" placeholder="" value="4242424242424242" />
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-md-4 col-form-label text-lg-right">วันหมดอายุ <span class="text-danger">*</span></label>
-								<div class="col-md-8">
-									<div class="width-100">
-										<div class="row row-space-0">
-											<div class="col-5">
-												<input type="text" name="mm" placeholder="MM" class="form-control required p-l-5 p-r-5 text-center" value="02" />
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-lg-right">แนบสลิป <span class="text-danger">*</span></label>
+    <div class="col-md-4">
+        <input type="file" class="form-control-file" name="slip" accept=".pdf,.jpg,.png" required />
+        <small class="text-muted">รองรับไฟล์ PDF, JPG, และ PNG</small>
+    </div>
+</div>
+									<div id="hidden-step-3">
+										<!-- ... ส่วนที่คุณต้องการซ่อน -->
+										<div class="form-group row">
+											<label class="col-md-4 col-form-label text-lg-right">ชื่อบนบัตร <span class="text-danger">*</span></label>
+											<div class="col-md-4">
+												<input type="text" class="form-control required" name="cardHolder" placeholder="" value="TEST" />
 											</div>
-											<div class="col-2 text-center">
-												<div class="text-muted p-t-5 m-t-2">/</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-md-4 col-form-label text-lg-right">หมายเลขบัตร <span class="text-danger">*</span></label>
+											<div class="col-md-4">
+												<input type="text" class="form-control required" name="cardNumber" placeholder="" value="4242424242424242" />
 											</div>
-											<div class="col-5">
-												<input type="text" name="yy" placeholder="YY" class="form-control required p-l-5 p-r-5 text-center" value="26" />
+										</div>
+										<div class="form-group row">
+											<label class="col-md-4 col-form-label text-lg-right">วันหมดอายุ <span class="text-danger">*</span></label>
+											<div class="col-md-8">
+												<div class="width-100">
+													<div class="row row-space-0">
+														<div class="col-5">
+															<input type="text" name="mm" placeholder="MM" class="form-control required p-l-5 p-r-5 text-center" value="02" />
+														</div>
+														<div class="col-2 text-center">
+															<div class="text-muted p-t-5 m-t-2">/</div>
+														</div>
+														<div class="col-5">
+															<input type="text" name="yy" placeholder="YY" class="form-control required p-l-5 p-r-5 text-center" value="26" />
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-md-4 col-form-label text-lg-right">CSC <span class="text-danger">*</span></label>
+											<div class="col-md-8">
+												<div class="width-100 pull-left m-r-10">
+													<input type="text" name="number" placeholder="" class="form-control required p-l-5 p-r-5 text-center" value="123" />
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-md-4 col-form-label text-lg-right">CSC <span class="text-danger">*</span></label>
-								<div class="col-md-8">
-									<div class="width-100 pull-left m-r-10">
-										<input type="text" name="number" placeholder="" class="form-control required p-l-5 p-r-5 text-center" value="123" />
-									</div>
-								</div>
+								</fieldset>
 							</div>
 						</div>
+						</fieldset>
 					</div>
-					</fieldset>
-				</div>
+			</div>
 		</div>
-		</fieldset>
+		</form>
 	</div>
-</div>
-</div>
-</form>
-</div>
 
-</div>
-</div>
+	</div>
+	</div>
 
 
-<?php include('includes/footer.php'); ?>
+	<?php include('includes/footer.php'); ?>

@@ -16,8 +16,7 @@
   }
   $sql = "SET sql_mode = '';";
   $conn->query($sql);
-  $sql = "UPDATE `withdraw` SET `withdraw_status` = 'successful' WHERE withdraw_status = 'wait_confirm' AND DATE(updatedAt+ INTERVAL 10 DAY) <= DATE(NOW())";
-  $conn->query($sql);
+ 
   
   $Status = array(
     'paid' => 'ชำระเงินแล้ว',
@@ -36,17 +35,6 @@
     'failed' => 'danger'
   );
 
-  $StatusWithdraw = array(
-    'pending' => 'กำลังรอถอนเงิน',
-    'successful' => 'ถอนเงินสำเร็จ',
-    'wait_confirm' => 'รอผู้ขายยืนยัน',
-    'canceled' => 'ถูกยกเลิก'
-  );
-  $StatusWithdrawColor = array(
-    'pending' => 'warning',
-    'successful' => 'success',
-    'wait_confirm' => 'yellow',
-    'canceled' => 'gray'
-  );
+
 
   

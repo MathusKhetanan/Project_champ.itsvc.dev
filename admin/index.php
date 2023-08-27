@@ -54,7 +54,31 @@ $sql = "SELECT *, (COALESCE(SUM(order_subtotal), 0))as order_total
         ORDER BY order_total DESC";
 $resultSumOrderTotalCategory = $conn->query($sql);
 ?>
+<?php
+// ตัวแปรสำหรับแปลงวันที่เป็นรูปแบบพุทธศักราช
+$thaiMonths = array(
+    '01' => 'มกราคม',
+    '02' => 'กุมภาพันธ์',
+    '03' => 'มีนาคม',
+    '04' => 'เมษายน',
+    '05' => 'พฤษภาคม',
+    '06' => 'มิถุนายน',
+    '07' => 'กรกฎาคม',
+    '08' => 'สิงหาคม',
+    '09' => 'กันยายน',
+    '10' => 'ตุลาคม',
+    '11' => 'พฤศจิกายน',
+    '12' => 'ธันวาคม',
+);
 
+// วันที่ปัจจุบัน
+$currentDate = date('Y-m-d');
+
+// แปลงวันที่ปัจจุบันเป็นวันที่แบบพุทธศักราช
+list($year, $month, $day) = explode('-', $currentDate);
+$thaiYear = $year + 543;
+$thaiDate = "{$day} {$thaiMonths[$month]} พ.ศ. {$thaiYear}";
+?>
 <!-- begin #content -->
 <div id="content" class="content">
 	<!-- begin breadcrumb -->
@@ -86,14 +110,14 @@ $resultSumOrderTotalCategory = $conn->query($sql);
 		<div class="col-6">
 			<!-- begin panel -->
 			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">รายงานยอดขายเดือนนี้ทั้งหมด</h4>
-				</div>
-				<div class="panel-body">
-					<h2>ยอดขายของเดือนนี้: <?php echo number_format(intval($rowSumOrderTotal['order_total_net'] * 100) / 100, 2); ?> ฿</h2>
-				</div>
-			</div>
-			<!-- end panel -->
+    <div class="panel-heading">
+        <h4 class="panel-title">รายงานยอดขาย ณ วันที่ <?php echo $thaiDate; ?></h4>
+    </div>
+    <div class="panel-body">
+        <h2>ยอดขายของวันนี้: <?php echo number_format(intval($rowSumOrderTotal['order_total_net'] * 100) / 100, 2); ?> ฿</h2>
+    </div>
+</div>
+<!-- end panel -->
 
 			<!-- begin panel -->
 			<div class="panel panel-default">

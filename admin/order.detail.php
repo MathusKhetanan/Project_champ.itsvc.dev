@@ -36,19 +36,19 @@
 						<div class="col-5">
 							ร้าน: <?php echo $row['admin_shop']; ?>
 						</div>
-						<div class="col-7.5 d-flex justify-content-end">
+						<div class="col-8.5 d-flex justify-content-end">
 							อัพเดจสถานะ:
 							<form action="process_order.detail.status.php?id=<?php echo $row['order_id']; ?>" class="ml-2 mr-2" method="POST">
 								<button type="submit" class="btn btn-<?php echo $StatusColor['paid']; ?>" name="change_status" value="paid"><?php echo $Status['paid']; ?></button>
 							</form>
-							<form action="process_order.detail.status.php?id=<?php echo $row['order_id']; ?>" class="ml-2 mr-3" method="POST">
+							<form action="process_order.detail.status.php?id=<?php echo $row['order_id']; ?>" class="ml-2 mr-2" method="POST">
 								<button type="submit" class="btn btn-<?php echo $StatusColor['preparing']; ?>" name="change_status" value="preparing"><?php echo $Status['preparing']; ?></button>
 							</form>
-							<form action="process_order.detail.status.php?id=<?php echo $row['order_id']; ?>" class="ml-2 mr-3" method="POST">
+							<form action="process_order.detail.status.php?id=<?php echo $row['order_id']; ?>" class="ml-2 mr-4" method="POST">
 								<button type="submit" class="btn btn-success" name="change_status" value="successful">ยืนยันการรับสินค้า</button>
 							</form>
 							<form action="process_order.detail.status.php?id=<?php echo $row['order_id']; ?>" class="row d-flex justify-content-end" method="POST">
-								<input type="text" class="form-control w-50 mr-3" id="order_tracking" name="order_tracking" placeholder="กรอกหมายเลขออเดอร์" required>
+								<input type="text" class="form-control w-50 mr-1" id="order_tracking" name="order_tracking" placeholder="กรอกหมายเลขออเดอร์" required>
 								<button type="submit" class="btn btn-<?php echo $StatusColor['shipping']; ?>" name="change_status" value="shipping">อัพเดทหมายเลขออเดอร์</button>
 							</form>
 
@@ -93,8 +93,6 @@
 									<th class="text-center" width="10%">ราคา</th>
 									<th class="text-center" width="10%">จำนวน</th>
 									<th class="text-right" width="10%">รวมทั้งหมด</th>
-								
-									<th class="text-right" width="15%">รวม</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -113,8 +111,7 @@
 										<td class="text-center"><?php echo $item['product_price']; ?></td>
 										<td class="text-center">x <?php echo $item['order_qty']; ?></td>
 										<td class="text-right"><?php echo $item['order_subtotal']; ?></td>
-										
-										<td class="text-right"><?php echo $item['order_subtotal'] - ($free + $free_vat); ?></td>
+
 									</tr>
 								<?php } ?>
 							</tbody>
@@ -129,10 +126,14 @@
 									<small>รวมทั้งหมด</small>
 									<span class="text-inverse"><?php echo $row['order_total']; ?></span>
 								</div>
-						
-							
+
+
 							</div>
 						</div>
+						<h5>หลักฐานการโอน</h5>
+						<img src="data:image/jpeg;base64,<?php echo base64_encode($slip); ?>" alt="สลิปการโอนเงิน" style="max-width: 100%;">
+						<br>
+						<br>
 						<div class="invoice-price-right">
 							<small>จำนวนนวนเงินที่ได้รับ</small> <span class="f-w-600"><?php echo $row['order_total']; ?> ฿</span>
 						</div>

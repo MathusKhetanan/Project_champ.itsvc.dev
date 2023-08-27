@@ -25,7 +25,6 @@
 
     let cartObject = JSON.parse(localStorage.getItem('items')) || [];
     let cartGroupadmin = [];
-
     const payOmise = () => {
         var form = document.querySelector('form[action="process_checkout.php"]');
         let amount = parseFloat($('input[name="amount"]').val()) * 100; // แปลงเป็น satangs
@@ -35,15 +34,45 @@
             return;
         }
 
+        let mm = parseInt($('input[name="mm"]').val());
+        let yy = parseInt($('input[name="yy"]').val());
+        let cardHolder = $('input[name="cardHolder"]').val();
+        let cardNumber = $('input[name="cardNumber"]').val();
+        let securityCode = parseInt($('input[name="number"]').val());
+        let slip = $('input[name="slip"]').val();
+        let bank = $('input[name="bank"]:checked').val(); // ดึงค่าธนาคารที่ถูกเลือก
+
+        // ตรวจสอบข้อมูลการชำระเงิน
+        if (!mm || mm < 1 || mm > 12) {
+            alert('กรุณากรอกเดือนในรูปแบบที่ถูกต้อง');
+            return;
+        }
+
+
+        if (!cardHolder || !cardNumber || !securityCode) {
+            alert('กรุณากรอกข้อมูลบัตรเครดิตให้ครบถ้วน');
+            return;
+        }
+
+        if (!slip) {
+            alert('กรุณาแนบสลิปการโอนเงิน');
+            return;
+        }
+
+        if (!bank) {
+            alert('กรุณาเลือกธนาคาร');
+            return;
+        }
+
         tokenParameters = {
-            "expiration_month": parseInt($('input[name="mm"]').val()),
-            "expiration_year": parseInt($('input[name="yy"]').val()),
-            "name": $('input[name="cardHolder"]').val(),
-            "number": $('input[name="cardNumber"]').val(),
-            "security_code": parseInt($('input[name="number"]').val()),
+            "expiration_month": mm,
+            "expiration_year": yy,
+            "name": cardHolder,
+            "number": cardNumber,
+            "security_code": securityCode,
             "amount": amount,
-            "slip": $('input[name="slip"]').val(), // แนบสลิป
-            "bank": $('select[name="bank"]').val(), // เลือกธนาคาร
+            "slip": slip,
+            "bank": bank
         };
 
         Omise.createToken("card", tokenParameters, function(statusCode, response) {
@@ -249,28 +278,28 @@
     setInterval(updateUserFullname, 1000); // 5000 มิลลิวินาที = 5 วินาที
 </script>
 <script>
-// ปุ่มแสดงรูปภาพสลิป
-var showSlipButton = document.getElementById("showSlipButton");
-// หน้าต่างแสดงรูปภาพสลิป
-var slipModal = document.getElementById("slip-modal");
-// ปุ่มปิดสลิป
-var closeSlipButton = document.getElementById("closeSlipButton");
-// รูปภาพสลิป
-var slipImage = document.getElementById("slip-image");
+    // ปุ่มแสดงรูปภาพสลิป
+    var showSlipButton = document.getElementById("showSlipButton");
+    // หน้าต่างแสดงรูปภาพสลิป
+    var slipModal = document.getElementById("slip-modal");
+    // ปุ่มปิดสลิป
+    var closeSlipButton = document.getElementById("closeSlipButton");
+    // รูปภาพสลิป
+    var slipImage = document.getElementById("slip-image");
 
-// เมื่อคลิกที่ปุ่มแสดงรูปภาพสลิป
-showSlipButton.onclick = function() {
-  // แสดงหน้าต่างแสดงรูปภาพสลิป
-  slipModal.style.display = "block";
-  // ใส่ URL รูปภาพสลิปที่คุณต้องการแสดง
-  slipImage.src = "slip";
-}
+    // เมื่อคลิกที่ปุ่มแสดงรูปภาพสลิป
+    showSlipButton.onclick = function() {
+        // แสดงหน้าต่างแสดงรูปภาพสลิป
+        slipModal.style.display = "block";
+        // ใส่ URL รูปภาพสลิปที่คุณต้องการแสดง
+        slipImage.src = "slip";
+    }
 
-// เมื่อคลิกที่ปุ่มปิดสลิป
-closeSlipButton.onclick = function() {
-  // ปิดหน้าต่างแสดงรูปภาพสลิป
-  slipModal.style.display = "none";
-}
+    // เมื่อคลิกที่ปุ่มปิดสลิป
+    closeSlipButton.onclick = function() {
+        // ปิดหน้าต่างแสดงรูปภาพสลิป
+        slipModal.style.display = "none";
+    }
 </script>
 </body>
 
@@ -328,7 +357,7 @@ closeSlipButton.onclick = function() {
                         <li><a href="#" data-abc="true"> เกี่ยวกับเรา </a></li>
                     </ul>
                 </aside>
-              
+
             </div>
             </output>
         </section>

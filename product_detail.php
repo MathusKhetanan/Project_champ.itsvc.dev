@@ -35,7 +35,7 @@ $resultReview = $conn->query($sql);
                 <div class="product-image">
                     <!-- BEGIN product-main-image -->
                     <div class="product-main-image" data-id="main-image">
-                        <img src="<?php echo $row['product_image']; ?>" onError="this.src='https://thaigifts.or.th/wp-content/uploads/2017/03/no-image.jpg'" />
+                        <img src="<?php echo $row['product_image']; ?>" onError="this.src='https://media.discordapp.net/attachments/1128198864629940244/1144291779957510274/istockphoto-1221460403-170667a_prev_ui.png?width=473&height=473'"/>
                     </div>
                     <!-- END product-main-image -->
                 </div>
@@ -256,7 +256,7 @@ $resultReview = $conn->query($sql);
                         <!-- BEGIN item -->
                         <div class="item item-thumbnail">
                             <a href="product_detail.php?id=<?php echo $item['product_id']; ?>" class="item-link">
-                                <img src="<?php echo $item['product_image']; ?>" />
+                                <img src="<?php echo $item['product_image']; ?>"onError="this.src='https://media.discordapp.net/attachments/1128198864629940244/1144291779957510274/istockphoto-1221460403-170667a_prev_ui.png?width=473&height=473'"/>
                                 <div class="item-info">
                                 <h1 class="item-title"><b><?php echo $item['product_name']; ?></b></h1>
                                     <p class="item-desc"><?php echo trim(substr($item['product_detail'], 0, 200)); ?></p>

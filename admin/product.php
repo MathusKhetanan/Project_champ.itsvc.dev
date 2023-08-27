@@ -4,27 +4,23 @@ include('includes/authentication.php');
 include('includes/header.php');
 
 $admin_id = $_SESSION['admin_id'];
+$admin_id = 13;
 $sql = "SELECT * FROM product 
-          LEFT JOIN categories ON product.category_id = categories.category_id
-          LEFT JOIN brands ON product.brand_id = brands.brand_id WHERE admin_id = $admin_id";
+        LEFT JOIN categories ON product.category_id = categories.category_id
+        LEFT JOIN brands ON product.brand_id = brands.brand_id 
+        WHERE product.admin_id = $admin_id";
 $result = $conn->query($sql);
+
 ?>
-<!-- begin #content -->
 <div id="content" class="content">
-    <!-- begin breadcrumb -->
     <ol class="breadcrumb float-xl-right">
         <li class="breadcrumb-item"><a href="./">หน้าหลัก</a></li>
         <li class="breadcrumb-item active">จัดการสินค้า</li>
     </ol>
-    <!-- end breadcrumb -->
-    <!-- begin page-header -->
+
     <h1 class="page-header">
         จัดการสินค้า
-        <!-- <small>header small text goes here...</small> -->
     </h1>
-    <!-- end page-header -->
-
-    <!-- begin panel -->
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">จัดการสินค้า</h4>
@@ -52,7 +48,7 @@ $result = $conn->query($sql);
                     <?php foreach ($result as $key => $row) { ?>
                         <tr>
                             <td><?php echo $key + 1; ?></td>
-                            <td><img src="../<?php echo $row['product_image']; ?>" class="img-rounded height-30" /></td>
+                            <td><img src="../<?php echo $row['product_image']; ?>" class="img-rounded height-30"onError="this.src='https://media.discordapp.net/attachments/1128198864629940244/1144291779957510274/istockphoto-1221460403-170667a_prev_ui.png?width=473&height=473'"/></td>
                             <td><b><?php echo $row['product_name']; ?></b></td>
 
                             <td><?php echo $row['brand_name']; ?></td>
@@ -71,13 +67,14 @@ $result = $conn->query($sql);
                         </tr>
                     <?php } ?>
                 </tbody>
+
             </table>
         </div>
     </div>
-    <!-- end panel -->
+
 
 </div>
-<!-- end #content -->
+
 
 <script>
     function confirmDelete(id) {

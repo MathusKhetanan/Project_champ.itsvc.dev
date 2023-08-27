@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- เรียกใช้ไฟล์ SweetAlert ผ่าน CDN -->
+    <!-- Include SweetAlert CSS and JavaScript from CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
 </head>
-
 <body>
     <?php
     include('../config.php');
-    include('includes/authentication.php');
-    include('includes/header.php');
 
-    // Function to hash the password using SHA-512
+    // Function to hash the password using PASSWORD_ARGON2ID if available, or fallback to PASSWORD_DEFAULT
     function hashPassword($password)
     {
-        return hash('sha512', $password);
+        if (defined('PASSWORD_ARGON2ID')) {
+            return password_hash($password, PASSWORD_ARGON2ID);
+        } else {
+            return password_hash($password, PASSWORD_DEFAULT);
+        }
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -34,20 +34,33 @@
         $admin_password_confirm = $_POST['admin_password_confirm'];
 
         // Check if passwords match
-        if ($admin_password !== $admin_password_confirm) {
-            echo "รหัสผ่านไม่ตรงกัน";
-            exit(); // Stop further execution
-        }
+      // Check if passwords match
+if ($admin_password !== $admin_password_confirm) {
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'รหัสผ่านไม่ตรงกัน',
+            text: 'กรุณาตรวจสอบรหัสผ่านอีกครั้ง',
+            customClass: 'custom-sweetalert' // Add the custom class
+        });
+    </script>";
+} else {
+    // Hash the password before storing it in the database
+    $hashed_password = hashPassword($admin_password);
 
-        // Hash the password before storing it in the database
-        $hashed_password = hashPassword($admin_password);
-
-        // Validate email format
-        if (!filter_var($admin_email, FILTER_VALIDATE_EMAIL)) {
-            echo "รูปแบบอีเมลไม่ถูกต้อง";
-            exit();
-        }
-
+    // Validate email format
+    if (!filter_var($admin_email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'รูปแบบอีเมลไม่ถูกต้อง',
+                text: 'กรุณากรอกอีเมลให้ถูกต้อง',
+                customClass: 'custom-sweetalert' // Add the custom class
+            }).then(() => {
+                window.location.href = 'admin.php';
+            });
+        </script>";
+    } else {
         // Using a prepared statement to insert the data
         $stmt = $conn->prepare("INSERT INTO admin (admin_shop, admin_detail, admin_address, admin_username, admin_email, admin_fullname, admin_tel, admin_bank_name, admin_account_number, admin_password, admin_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -58,39 +71,31 @@
 
         if ($stmt->execute()) {
             echo "<script>
-            Swal.fire({
-                icon: 'success',
-                title: 'เพิ่มข้อมูลร้านค้าสำเร็จ',
-                showConfirmButton: false,
-                timer: 1500
-            }).then(() => {
-                window.location.href = 'admin.php';
-            });
-        </script>";
+                Swal.fire({
+                    icon: 'success',
+                    title: 'เพิ่มข้อมูลร้านค้าสำเร็จ',
+                    text: 'ร้านค้าได้ถูกเพิ่มเข้าสู่ระบบ',
+                    customClass: 'custom-sweetalert' // Add the custom class
+                }).then(() => {
+                    window.location.href = 'admin.php';
+                });
+            </script>";
         } else {
             echo "<script>
-            Swal.fire({
-                icon: 'error',
-                title: 'เพิ่มข้อมูลร้านค้าไม่สำเร็จ',
-                text: 'กรุณาลองใหม่อีกครั้ง',
-            }).then(() => {
-                window.history.back();
-            });
-        </script>";
+                Swal.fire({
+                    icon: 'error',
+                    title: 'เพิ่มข้อมูลร้านค้าไม่สำเร็จ',
+                    text: 'กรุณาลองใหม่อีกครั้ง',
+                    customClass: 'custom-sweetalert' // Add the custom class
+                }).then(() => {
+                    window.location.href = 'admin.php';
+                });
+            </script>";
         }
     }
+}
+    }
     ?>
-
     <!-- ... ส่วนที่เหลือของ HTML ... -->
-
-
-
-    <script>
-        $(document).ready(function() {
-            $(".default-select2").select2();
-        });
-    </script>
-    <?php include('includes/footer.php'); ?>
 </body>
-
 </html>

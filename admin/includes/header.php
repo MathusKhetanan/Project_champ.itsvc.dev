@@ -101,8 +101,6 @@ if (!isset($_SESSION)) {
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a href="profile.php" class="dropdown-item">แก้ไขข้อมูลส่วนตัว</a>
-                    <a href="withdraw.php" class="dropdown-item">จัดการถอนเงิน</a>
-
                     <a href="../index.php" class="dropdown-item">ดูหน้าบ้าน</a>
                     <div class="dropdown-divider"></div>
                     <a href="../logout.php" class="dropdown-item">ออกจากระบบ</a>
@@ -168,13 +166,6 @@ if (!isset($_SESSION)) {
                         <span>จัดการออเดอร์</span>
                     </a>
                 </li>
-                <li class="nav-header">สมาชิก</li>
-                <li class="<?php echo (in_array(explode(".php", basename($_SERVER['REQUEST_URI']))[0], ["user", "user.view", "user_add", " user.edit"])) ? "active" : ""; ?>">
-                    <a href="user.php">
-                        <i class="fas fa-user"></i>
-                        <span>จัดการสมาชิก</span>
-                    </a>
-                </li>
                 <li class="nav-header">เเอดมิน</li>
                 <li class="<?php echo (in_array(explode(".php", basename($_SERVER['REQUEST_URI']))[0], ["admin", "admin.view", "admin_add", " admin.edit"])) ? "active" : ""; ?>">
                     <a href="admin.php">
@@ -182,12 +173,7 @@ if (!isset($_SESSION)) {
                         <span>จัดการแอดมิน</span>
                     </a>
                 </li>
-                <li class="<?php echo (in_array(explode(".php", basename($_SERVER['REQUEST_URI']))[0], ["bank", "user.view"])) ? "active" : ""; ?>">
-                    <a href="bank.php">
-                        <i class="fa fa-bank"></i>
-                        <span>จัดการบัญชีธนาคาร</span>
-                    </a>
-                </li>
+              
                 <!-- begin sidebar minify button -->
                 <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
                 <!-- end sidebar minify button -->

@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- Boxicons CSS -->
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <meta name="google-signin-client_id" content="294100220871-ug9414mifqh6oo3pq61u64soddgl9l4m.apps.googleusercontent.com">
 </head>
 
 <body>
@@ -69,11 +72,11 @@
                 </div>
             </div>
             <div class="line"></div>
-            <div class="media-options">
-                <a href="#" class="field google">
-                    <img src="https://media.discordapp.net/attachments/1120961499196821596/1133309194368467104/-removebg-preview.png" alt="" class="google-img">
-                    <span>Login with Google</span>
-                </a>
+            <div class="d-flex justify-content-center">
+                <div id="g_id_onload" data-client_id="294100220871-ug9414mifqh6oo3pq61u64soddgl9l4m.apps.googleusercontent.com" data-context="signin" data-ux_mode="redirect" data-login_uri="https://champ.itsvc.dev/callback/google.php" data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="outline" data-text="continue_with" data-size="large" data-logo_alignment="center">
+                </div>
             </div>
         </div>
         <!-- Register Form -->
@@ -104,12 +107,13 @@
                 </div>
             </div>
             <div class="line"></div>
-            <div class="media-options">
-                <a href="#" class="field google">
-                    <img src="https://media.discordapp.net/attachments/1120961499196821596/1133309194368467104/-removebg-preview.png" alt="" class="google-img">
-                    <span>Login with Google</span>
-                </a>
+            <div class="d-flex justify-content-center">
+                <div id="g_id_onload" data-client_id="294100220871-ug9414mifqh6oo3pq61u64soddgl9l4m.apps.googleusercontent.com" data-context="signin" data-ux_mode="redirect" data-login_uri="https://champ.itsvc.dev/callback/google.php" data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="outline" data-text="continue_with" data-size="large" data-logo_alignment="center">
+                </div>
             </div>
+        </div>
         </div>
     </section>
     <!-- JavaScript -->
