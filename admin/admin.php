@@ -41,7 +41,6 @@ $result = $conn->query($sql);
             <th class="text-nowrap">เบอร์ติดต่อ</th>
             <th class="text-nowrap text-center">ชื่อธนคาร</th>
             <th class="text-nowrap text-center">เลขที่บัญชี</th>
-            <th class="text-nowrap text-center">ตัวเลือก</th>
 
           </tr>
         </thead>
@@ -55,7 +54,6 @@ $result = $conn->query($sql);
               <td><?php echo $row['admin_tel']; ?></td>
               <td><?php echo $row['admin_bank_name']; ?></td>
               <td><?php echo $row['admin_account_number']; ?></td>
-              <td class="text-center"><form action="process_admin.status.php" method="POST"><button type="submit" class="btn btn-<?php echo ($row['admin_username']===NULL)? "warning": (((bool)$row['admin_status'])?"success": "danger"); ?>" name="change_status" value="<?php echo $row['admin_id']; ?>" <?php echo ($row['admin_username']===NULL)?"disabled": ""; ?> ><?php echo ($row['admin_username']===NULL)? "ยังไม่ยืนยันตัวตน":(((bool)$row['admin_status'])?"เปิดใช้งาน": "ปิดใช้งาน"); ?></button></form></td>
           </tr>
             </tr>
             

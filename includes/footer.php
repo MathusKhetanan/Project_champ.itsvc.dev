@@ -21,74 +21,82 @@
 <script src="dist/js/demo/table-manage-default.demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.21/dist/sweetalert2.all.min.js"></script>
 <script>
-    Omise.setPublicKey("pkey_test_5r0gn5997jah59d6ns1");
+ Omise.setPublicKey("pkey_test_5r0gn5997jah59d6ns1");
 
-    let cartObject = JSON.parse(localStorage.getItem('items')) || [];
-    let cartGroupadmin = [];
-    const payOmise = () => {
-        var form = document.querySelector('form[action="process_checkout.php"]');
-        let amount = parseFloat($('input[name="amount"]').val()) * 100; // แปลงเป็น satangs
+let cartObject = JSON.parse(localStorage.getItem('items')) || [];
+let cartGroupadmin = [];
 
-        if (amount < 2000) { // 2000000 satangs เท่ากับ 20 บาท
-            alert('จำนวนเงินต้องไม่น้อยกว่า 20 บาท (2000 satangs)');
-            return;
-        }
+const payOmise = () => {
+    var form = document.querySelector('form[action="process_checkout.php"]');
+    let amount = parseFloat($('input[name="amount"]').val()) * 100; // แปลงเป็น satangs
 
-        let mm = parseInt($('input[name="mm"]').val());
-        let yy = parseInt($('input[name="yy"]').val());
-        let cardHolder = $('input[name="cardHolder"]').val();
-        let cardNumber = $('input[name="cardNumber"]').val();
-        let securityCode = parseInt($('input[name="number"]').val());
-        let slip = $('input[name="slip"]').val();
-        let bank = $('input[name="bank"]:checked').val(); // ดึงค่าธนาคารที่ถูกเลือก
-
-        // ตรวจสอบข้อมูลการชำระเงิน
-        if (!mm || mm < 1 || mm > 12) {
-            alert('กรุณากรอกเดือนในรูปแบบที่ถูกต้อง');
-            return;
-        }
-
-
-        if (!cardHolder || !cardNumber || !securityCode) {
-            alert('กรุณากรอกข้อมูลบัตรเครดิตให้ครบถ้วน');
-            return;
-        }
-
-        if (!slip) {
-            alert('กรุณาแนบสลิปการโอนเงิน');
-            return;
-        }
-
-        if (!bank) {
-            alert('กรุณาเลือกธนาคาร');
-            return;
-        }
-
-        tokenParameters = {
-            "expiration_month": mm,
-            "expiration_year": yy,
-            "name": cardHolder,
-            "number": cardNumber,
-            "security_code": securityCode,
-            "amount": amount,
-            "slip": slip,
-            "bank": bank
-        };
-
-        Omise.createToken("card", tokenParameters, function(statusCode, response) {
-            if (statusCode === 200) {
-                const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
-                groupadmin(newCartObject)
-                console.log(newCartObject.reduce((a, b) => a + b.price * b.qty, 0))
-                form.items.value = JSON.stringify(cartGroupadmin);
-                form.amount.value = newCartObject.reduce((a, b) => a + b.price * b.qty, 0) * 100;
-                form.omiseToken.value = response.id;
-                form.submit();
-            } else {
-                window.location.href = 'process_checkout.php';
-            }
-        });
+    if (amount < 2000) {
+        alert('จำนวนเงินต้องไม่น้อยกว่า 20 บาท (2000 satangs)');
+        return;
     }
+
+    let mm = parseInt($('input[name="mm"]').val());
+    let yy = parseInt($('input[name="yy"]').val());
+    let cardHolder = $('input[name="cardHolder"]').val();
+    let cardNumber = $('input[name="cardNumber"]').val();
+    let securityCode = parseInt($('input[name="securityCode"]').val());
+    let bank = $('input[name="bank"]:checked').val();
+    let slipFile = document.querySelector('input[name="slip"]').files[0];
+
+    // ตรวจสอบข้อมูลการชำระเงิน
+    if (!mm || mm < 1 || mm > 12) {
+        alert('กรุณากรอกเดือนในรูปแบบที่ถูกต้อง');
+        return;
+    }
+
+    if (!slipFile) {
+        alert('กรุณาแนบสลิปการโอนเงิน');
+        return;
+    }
+
+    // เพิ่มฟังก์ชันสำหรับดึงข้อมูลสลิป
+    const getSlipData = () => {
+        let slipFile = document.querySelector('input[name="slip"]').files[0];
+        if (slipFile) {
+            // ทำสิ่งที่คุณต้องการกับ slipFile ที่ถูกเลือกที่นี่
+            console.log('ชื่อไฟล์: ' + slipFile.name);
+            console.log('ประเภทไฟล์: ' + slipFile.type);
+            console.log('ขนาดไฟล์: ' + slipFile.size + ' ไบต์');
+        }
+    }
+
+    // สร้าง Token จาก Omise
+    let tokenParameters = {
+        "expiration_month": mm,
+        "expiration_year": yy,
+        "name": cardHolder,
+        "number": cardNumber,
+        "security_code": securityCode,
+        "amount": amount
+    };
+
+    Omise.createToken("card", tokenParameters, function(statusCode, response) {
+        if (statusCode === 200) {
+            // เมื่อได้รับ Token สำเร็จ
+            const newCartObject = JSON.parse(localStorage.getItem('items')) || [];
+
+            // นับราคารวมของสินค้าในตะกร้า
+            const totalPrice = newCartObject.reduce((a, b) => a + b.price * b.qty, 0);
+
+            // กำหนดค่าในฟอร์ม
+            form.items.value = JSON.stringify(cartGroupadmin);
+            form.amount.value = totalPrice * 100; // แปลงเป็น satangs
+            form.omiseToken.value = response.id;
+
+            // ส่งฟอร์มไปยัง process_checkout.php
+            form.submit();
+        } else {
+            // เมื่อไม่สามารถสร้าง Token ได้
+            alert('ไม่สามารถสร้าง Token ได้ กรุณาตรวจสอบข้อมูลบัตรเครดิตอีกครั้ง');
+        }
+    });
+}
+
 
     const groupadmin = (newCartObject) => {
         cartGroupadmin = [];
@@ -249,6 +257,47 @@
     renderCart();
     renderCountCart();
 </script>
+<script>
+    function getSlipData() {
+        const slipInput = document.querySelector('input[name="slip"]');
+        const fileName = slipInput.files[0].name;                               
+        // แสดงชื่อไฟล์ที่เลือก
+        alert("คุณได้แนบไฟล์: " + fileName);
+
+        // เรียกใช้งานฟังก์ชันที่ส่งข้อมูลไปยังฝั่งเซิร์ฟเวอร์
+        uploadSlip();
+    }
+
+    // ฟังก์ชันสำหรับอัปโหลดสลิปไปยังเซิร์ฟเวอร์
+    function uploadSlip() {
+        const slipInput = document.querySelector('input[name="slip"]');
+        const slipFile = slipInput.files[0];
+
+        // สร้าง FormData เพื่อส่งไฟล์ไปยังฝั่งเซิร์ฟเวอร์
+        const formData = new FormData();
+        formData.append('slip', slipFile);
+
+        // ใช้ AJAX ส่งไฟล์ไปยังฝั่งเซิร์ฟเวอร์
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'upload.php'); // แก้ไขเป็น URL ของไฟล์ที่จะรับไฟล์
+
+        
+        // หลังจากส่งไฟล์แล้ว
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                // การส่งไฟล์สำเร็จ
+                // แสดงข้อความหรือทำอย่างอื่นตามที่คุณต้องการ
+               
+            } else {
+                // เกิดข้อผิดพลาดในการส่งไฟล์
+                alert("เกิดข้อผิดพลาดในการส่งไฟล์");
+            }
+        };
+        // ส่ง FormData
+        xhr.send(formData);
+    }
+</script>
+
 <script src="dist/js/demo/form-wizards-validation.checkout.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
 <script>
@@ -335,14 +384,14 @@
                     </article>
                 </aside>
 
-                <aside class="col-sm-3 col-md-2">
+                <aside class="col-sm-3 col-md-3">
                     <h5 class="title">สินค้า</h5>
                     <ul class="list-unstyled">
                         <li><a href="product.php" data-abc="true">สินค้าทั้งหมด</a></li>
                         <li><a href="product.php" data-abc="true">สินค้าเครื่องกรองนํ้า</a></li>
                     </ul>
                 </aside>
-                <aside class="col-sm-3 col-md-2">
+                <aside class="col-sm-3 col-md-3">
                     <h5 class="title">บริการช่วยเหลือ</h5>
                     <ul class="list-unstyled">
                         <li><a href="#" data-abc="true" aria-label="เงื่อนไขการแก้ไข">เงื่อนไขการแก้ไข</a></li>

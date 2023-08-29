@@ -8,7 +8,8 @@
 <body>
 <?php
 require '../../vendor/autoload.php';
-include('../config.php'); // รวมไฟล์ config.php เพื่อเชื่อมต่อฐานข้อมูล
+include('../config.php');
+session_start(); // เรียกใช้ session_start() สำหรับการใช้งาน $_SESSION
 
 if (isset($_POST['credential'])) {
     $client = new Google\Client(['client_id' => "294100220871-ug9414mifqh6oo3pq61u64soddgl9l4m.apps.googleusercontent.com"]);
@@ -16,13 +17,13 @@ if (isset($_POST['credential'])) {
     if ($payload) {
         if ($payload['email_verified'] == false) {
             // Email has not been verified by Google
-            header("Location: ../login.php"); // ไปยังหน้า login.php
+            header("Location: ../login.php");
             exit;
         }
 
         $email = $payload['email'];
 
-        // ตรวจสอบว่าอีเมลนี้มีในฐานข้อมูลหรือไม่
+        // Check if this email exists in the database
         $sql = "SELECT * FROM user WHERE user_email = ?";
         $stmt = $conn->prepare($sql);
 
@@ -36,8 +37,8 @@ if (isset($_POST['credential'])) {
         $user = $result->fetch_assoc();
 
         if ($user) {
-            // พบผู้ใช้ในฐานข้อมูล ให้ทำการล็อกอิน
-            // ทำการล็อกอินผู้ใช้ตามต้องการ
+            // User exists in the database
+            $_SESSION['user_id'] = $user['user_id']; // Set user_id in the session
             echo '<script>
             Swal.fire({
                 icon: "success",
@@ -53,18 +54,17 @@ if (isset($_POST['credential'])) {
             </script>';
             exit;
         } else {
-            // ไม่พบอีเมลนี้ในฐานข้อมูล
-            // หรือสร้างบัญชีผู้ใช้ใหม่ด้วยข้อมูลจาก Google
-            $fullname = $payload['name']; // คุณอาจต้องแก้ไขตามความเหมาะสม
-            createUser($email, $fullname); // สร้างผู้ใช้ใหม่
-            header("Location: index.php"); // ไปยังหน้า index.php
+            // User doesn't exist in the database, create a new user
+            $fullname = $payload['name'];
+            createUser($email, $fullname);
+            header("Location: index.php");
             exit;
         }
 
         $stmt->close();
     } else {
-        // เกิดข้อผิดพลาดจาก Google API
-        header("Location: login.php"); // ไปยังหน้า login.php
+        // Error from Google API
+        header("Location: login.php");
         exit;
     }
 }
@@ -93,7 +93,8 @@ function createUser($email, $fullname) {
     $stmt->bind_param("sss", $username, $fullname, $email);
 
     if ($stmt->execute()) {
-        // สร้างผู้ใช้สำเร็จ
+        // User created successfully
+        $_SESSION['user_id'] = $stmt->insert_id; // Set user_id in the session
         echo '<script>
         Swal.fire({
             icon: "success",
@@ -110,12 +111,12 @@ function createUser($email, $fullname) {
         header("Location: ../index.php");
         exit;
     } else {
-        // สร้างผู้ใช้ไม่สำเร็จ
+        // User creation failed
         echo '<script>
         Swal.fire({
             icon: "error",
             title: "Login Failed!",
-            text: "เข้าสู้ระบบไม่สําเร็จโปรดสมัครบัญชีของคุณ",
+            text: "เข้าสู้ระบบไม่สำเร็จโปรดสมัครบัญชีของคุณ",
             confirmButtonColor: "#d33",
             confirmButtonText: "OK"
         }).then((result) => {
