@@ -384,28 +384,21 @@ const payOmise = () => {
                     </article>
                 </aside>
 
-                <aside class="col-sm-3 col-md-3">
+                <aside class="col-sm-5 col-md-3">
                     <h5 class="title">สินค้า</h5>
                     <ul class="list-unstyled">
                         <li><a href="product.php" data-abc="true">สินค้าทั้งหมด</a></li>
                         <li><a href="product.php" data-abc="true">สินค้าเครื่องกรองนํ้า</a></li>
                     </ul>
                 </aside>
-                <aside class="col-sm-3 col-md-3">
+                <aside class="col-sm-5 col-md-3">
                     <h5 class="title">บริการช่วยเหลือ</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" data-abc="true" aria-label="เงื่อนไขการแก้ไข">เงื่อนไขการแก้ไข</a></li>
-                        <li><a href="#" data-abc="true" aria-label="นโยบายส่วนบุคคล">นโยบายส่วนบุคคล</a></li>
-                        <li><a href="#" data-abc="true" aria-label="วิธีการแก้ไข">วิธีการแก้ไข</a></li>
+                        <li><a href="Terms_conditions.php" data-abc="true" aria-label="เงื่อนไขการแก้ไข">ข้อกำหนดและเงื่อนไข</a></li>
+                        <li><a href="Privacy_Policy.php" data-abc="true" aria-label="นโยบายส่วนบุคคล">นโยบายส่วนบุคคล</a></li>
                         <li><a href="howtopayment.php" data-abc="true">ช่องทางการชําระเงิน</a></li>
                     </ul>
-                </aside>
-                <aside class="col-sm-3 col-md-2">
-                    <h5 class="title">ติดต่อเรา</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" data-abc="true"> เกี่ยวกับเรา </a></li>
-                    </ul>
-                </aside>
+              
 
             </div>
             </output>

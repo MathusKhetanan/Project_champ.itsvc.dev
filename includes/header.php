@@ -47,7 +47,6 @@
       <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/1.10.20/dataTables.bootstrap4.min.css" rel="stylesheet" />
       <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.2.1/responsive.bootstrap4.min.css" rel="stylesheet" />
       <!-- ================== END PAGE LEVEL STYLE ================== -->
-
   </head>
   <style>
       /* ปุ่มแสดงรูปภาพสลิป */
@@ -324,6 +323,7 @@
           /* จัดข้อความกึ่งกลางตามแนวนอน */
       }
   </style>
+
   </head>
   <!-- BEGIN #top-nav -->
   <div id="top-nav" class="top-nav">

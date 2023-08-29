@@ -1,4 +1,4 @@
-			<?php
+<?php
 			include('config.php');
 			include('includes/authentication.php');
 			include('includes/header.php');
@@ -113,29 +113,31 @@
 											<!-- end table-responsive -->
 											<!-- begin invoice-price -->
 											<!-- Replace the existing code for displaying the payment slip image -->
-											<h5>หลักฐานการโอน</h5>
-											<?php
-// Query to fetch the latest slip_path for any user's payment slips
-$sql = "SELECT ps.slip_path
-        FROM payment_slips ps
-        ORDER BY ps.uploaded_at DESC
-        LIMIT 1";
+<?php
+echo '<h5>หลักฐานการโอน</h5>';
 
-// Execute the query
-$result = $conn->query($sql);
+// เพิ่มโค้ดด้านล่างนี้เพื่อดึงรูปสลิปที่ล่าสุดและแสดงผล
+$user_id = $_SESSION['user_id'];
+
+// Query เพื่อดึงรูปสลิปที่ล่าสุดของผู้ใช้นี้
+$sql = "SELECT slip_path FROM payment_slips WHERE user_id = ? ORDER BY slip_id DESC LIMIT 1";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $latest_slip_path = $row['slip_path'];
-    
+
+    // แสดงรูปสลิป
     echo '<div class="slip-container">';
-    echo '<img src="' . $latest_slip_path . '" alt="สลิปการโอนเงิน" style="max-width: 40%;"><br>';
+    echo '<img src="' . $latest_slip_path . '" alt="สลิปการโอนเงิน" style="max-width: 30%;"><br>';
     echo '</div><br><br>';
 } else {
-    echo 'ไม่พบข้อมูลสลิปการโอนเงิน';
+    echo 'ไม่พบข้อมูลสลิปการโอนเงินสำหรับผู้ใช้นี้';
 }
 ?>
-
 
 
 

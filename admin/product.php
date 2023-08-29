@@ -54,7 +54,7 @@ $result = $conn->query($sql);
                             <td><?php echo $row['brand_name']; ?></td>
                             <td><?php echo $row['category_name']; ?></td>
                             <td>
-                                <div class="ellipsis-3" style="width: 10rem;"><?php echo $row['product_detail']; ?></div>
+                                <div class="ellipsis-2" style="width: 10rem;"><?php echo $row['product_detail']; ?></div>
                             </td>
                             <td><?php echo $row['product_price']; ?></td>
                             <td><?php echo $row['product_qty']; ?></td>
