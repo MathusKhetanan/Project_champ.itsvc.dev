@@ -40,7 +40,6 @@ if (move_uploaded_file($_FILES['slip']['tmp_name'], $slipPath)) {
 
     } else {
         // ไม่มีการอัปโหลดสลิปหรือเกิดข้อผิดพลาด
-        echo "กรุณาเลือกและอัปโหลดสลิปการชำระเงิน";
     }
 
 
